@@ -86,7 +86,8 @@ class ZopeInstance:
         os.chdir(self.instance_backup_dir)
         command = 'sudo tar xzf '+self.instance_backup_dir+os.sep+'Products.tar.gz && ' + \
                   'sudo rsync -a ' + self.instance_backup_dir+os.sep+self.instance_products + \
-                  ' ' + self.instance_products + ' && ' + \
+                               ' ' + self.instance_products + ' && ' + \
+                  'sudo chown -R zope:zope ' + self.instance_products + ' && ' + \
                   'sudo ' + self.instance_dir+os.sep+'bin'+os.sep+'zopectl restart && ' + \
                   'sudo rm -rf ' + self.instance_backup_dir+os.sep+'var'
         os.system(command)
