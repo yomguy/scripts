@@ -1,12 +1,24 @@
 #!/usr/bin/python
-# Backups zope instances
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2007 Guillaume Pellerin <yomguy@parisson.com>
+# All rights reserved.
+#
+# This software is licensed as described in the file COPYING, which
+# you should have received as part of this distribution.
+#
+# Author: Guillaume Pellerin <yomguy@parisson.com>
+
 
 import os
 import sys
 from optparse import OptionParser
 
-class ZopeInstance:
 
+class ZopeInstance:
+    """Expose Zope instances to several python methods that simplifies admins' life
+    (backup, recover, import, etc...)"""
+    
     def __init__(self, version, instance, backup_dir):
         self.backup_dir = backup_dir
         self.versions = ['2.7', '2.9', '2.8', '2.10']
