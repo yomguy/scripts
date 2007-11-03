@@ -76,7 +76,7 @@ class ZopeInstance:
                       'Products.tar.gz ' + self.instance_products
             os.system(command)
         if os.path.exists(self.instance_var):
-            command = 'sudo tar czf --exclude="Data.fs" ' + self.instance_backup_dir + os.sep + \
+            command = 'sudo tar czf --exclude-from="Data.fs" ' + self.instance_backup_dir + os.sep + \
                       'var.tar.gz ' + self.instance_var
             os.system(command)
         print self.instance + ' backuped !'
