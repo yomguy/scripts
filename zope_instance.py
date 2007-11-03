@@ -44,6 +44,7 @@ class ZopeInstance:
                         'instance' + os.sep + self.instance
         self.instance_data = self.instance_dir + os.sep + 'var' + os.sep + 'Data.fs'
         self.instance_products =self.instance_dir + os.sep + 'Products' + os.sep
+        self.instance_var =self.instance_dir + os.sep + 'var' + os.sep
         self.instance_backup_dir = self.backup_dir + os.sep + version + os.sep + instance
         self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
 
@@ -74,6 +75,10 @@ class ZopeInstance:
             command = 'sudo tar czf ' + self.instance_backup_dir + os.sep + \
                       'Products.tar.gz ' + self.instance_products
             os.system(command)
+        if os.path.exists(self.instance_var):
+            command = 'sudo tar czf --exclude="Data.fs" ' + self.instance_backup_dir + os.sep + \
+                      'var.tar.gz ' + self.instance_var
+            os.system(command)
         print self.instance + ' backuped !'
 
     def recover(self):
@@ -85,11 +90,18 @@ class ZopeInstance:
             print self.instance_data + ' does not exists !'
         os.chdir(self.instance_backup_dir)
         command = 'sudo tar xzf '+self.instance_backup_dir+os.sep+'Products.tar.gz && ' + \
-                  'sudo rsync -a ' + self.instance_backup_dir+os.sep+self.instance_products + \
-                               ' ' + self.instance_products + ' && ' + \
+                  'sudo rsync -a --delete ' + self.instance_backup_dir+os.sep+self.instance_products + \
+                               ' ' + self.instance_products + os.sep + ' && ' + \
                   'sudo chown -R zope:zope ' + self.instance_products + ' && ' + \
-                  'sudo ' + self.instance_dir+os.sep+'bin'+os.sep+'zopectl restart && ' + \
                   'sudo rm -rf ' + self.instance_backup_dir+os.sep+'var'
+        os.system(command)
+        command = 'sudo tar xzf '+self.instance_backup_dir+os.sep+'var.tar.gz && ' + \
+                  'sudo rsync -a --delete ' + self.instance_backup_dir + os.sep  + self.instance_var + \
+                                ' ' + self.instance_var + os.sep + ' && ' + \
+                  'sudo chown -R zope:zope ' + self.instance_var + ' && ' + \
+                  'sudo rm -rf ' + self.instance_backup_dir+os.sep+'var'
+        os.system(command)
+        command = 'sudo ' + self.instance_dir+os.sep+'bin'+os.sep+'zopectl restart'            
         os.system(command)
         print self.instance + ' recovered !'
 
