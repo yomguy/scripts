@@ -76,18 +76,12 @@ class ZopeInstance:
                       'Products.tar.gz ' + self.instance_products
             os.system(command)
         if os.path.exists(self.instance_var):
-            command = 'sudo tar -czf -X Data.fs ' + self.instance_backup_dir + os.sep + \
+            command = 'sudo tar czf ' + self.instance_backup_dir + os.sep + \
                       'var.tar.gz ' + self.instance_var
             os.system(command)
         print self.instance + ' backuped !'
 
     def recover(self):
-        command = 'sudo ' + self.repozo + ' -Rvz -r ' + self.instance_backup_dir + os.sep + \
-                    'Data -o ' + self.instance_data
-        if os.path.exists(self.instance_data):
-            os.system(command)
-        else:
-            print self.instance_data + ' does not exists !'
         os.chdir(self.instance_backup_dir)
         command = 'sudo tar xzf '+self.instance_backup_dir+os.sep+'Products.tar.gz && ' + \
                   'sudo rsync -a --delete ' + self.instance_backup_dir+os.sep+self.instance_products + \
@@ -103,8 +97,13 @@ class ZopeInstance:
         os.system(command)
         command = 'sudo ' + self.instance_dir+os.sep+'bin'+os.sep+'zopectl restart'            
         os.system(command)
+        command = 'sudo ' + self.repozo + ' -Rvz -r ' + self.instance_backup_dir + os.sep + \
+                    'Data -o ' + self.instance_data
+        if os.path.exists(self.instance_data):
+            os.system(command)
+        else:
+            print self.instance_data + ' does not exists !'
         print self.instance + ' recovered !'
-
         
     def import_from(self, user, server):
         command = 'sudo rsync -a --rsh="ssh -l '+user+'" ' + \
