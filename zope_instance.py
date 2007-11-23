@@ -43,7 +43,8 @@ class ZopeInstance(ZopeInstall):
     (backup, recover, import, etc...)"""
     
     def __init__(self, version, instance):
-        self.version = version
+        ZopeInstall.__init__(self)
+	self.version = version
         self.instance = instance
         self.instance_dir = self.instance_main_dir + os.sep + 'zope' + version + os.sep + \
                         'instance' + os.sep + self.instance
@@ -64,7 +65,7 @@ class ZopeInstance(ZopeInstall):
 
     def backup(self, backup_dir):
         self.backup_dir = backup_dir
-	self.instance_backup_dir = self.backup_dir + os.sep + version + os.sep + instance
+	self.instance_backup_dir = self.backup_dir + os.sep + self.version + os.sep + self.instance
 
         path = self.instance_backup_dir+ os.sep + 'Data'
         if not os.path.exists(path):
