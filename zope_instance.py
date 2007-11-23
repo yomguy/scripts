@@ -44,10 +44,6 @@ class ZopeInstance(ZopeInstall):
     
     def __init__(self, version, instance, backup_dir):
         self.backup_dir = backup_dir
-        self.versions = ['2.7', '2.9', '2.8', '2.10']
-        self.instance_main_dir = '/var/lib'
-        self.zope_main_dir = '/usr/lib'
-          
         self.version = version
         self.instance = instance
         self.instance_dir = self.instance_main_dir + os.sep + 'zope' + version + os.sep + \
