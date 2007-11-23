@@ -42,8 +42,7 @@ class ZopeInstance(ZopeInstall):
     """Expose Zope instances to several python methods that simplifies admins' life
     (backup, recover, import, etc...)"""
     
-    def __init__(self, version, instance, backup_dir):
-        self.backup_dir = backup_dir
+    def __init__(self, version, instance):
         self.version = version
         self.instance = instance
         self.instance_dir = self.instance_main_dir + os.sep + 'zope' + version + os.sep + \
@@ -51,7 +50,6 @@ class ZopeInstance(ZopeInstall):
         self.instance_data = self.instance_dir + os.sep + 'var' + os.sep + 'Data.fs'
         self.instance_products =self.instance_dir + os.sep + 'Products' + os.sep
         self.instance_var =self.instance_dir + os.sep + 'var' + os.sep
-        self.instance_backup_dir = self.backup_dir + os.sep + version + os.sep + instance
         self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
 
     def get_instances(self):
@@ -64,7 +62,10 @@ class ZopeInstance(ZopeInstall):
                 #print dict
         return dict
 
-    def backup(self):
+    def backup(self, backup_dir):
+        self.backup_dir = backup_dir
+	self.instance_backup_dir = self.backup_dir + os.sep + version + os.sep + instance
+
         path = self.instance_backup_dir+ os.sep + 'Data'
         if not os.path.exists(path):
             os.makedirs(path)
