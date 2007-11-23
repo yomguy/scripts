@@ -11,18 +11,15 @@ from zope_instance import *
 backup_dir = '/home/momo/backups/zope/'
 
 z = ZopeInstall()
-versions = z.versions
+instances = z.get_instances()
 instance_main_dir = z.instance_main_dir
 
 def backup_all():
-    for version in versions:
-       dir = instance_main_dir + os.sep + 'zope' + version + os.sep + 'instance'
-       if os.path.exists(dir):
-           instances = os.listdir(dir)
-           for instance in instances:
-               z = ZopeInstance(version, instance)
-               z.backup(backup_dir)
-	       #print instance 
+    for version in instances:
+    	for instance in instances[version]:
+            z = ZopeInstance(version, instance)
+            #z.backup(backup_dir)
+	    print version + ': ' + instance + ' backuped !'
 
 if __name__ == '__main__':
     backup_all()

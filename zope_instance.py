@@ -38,6 +38,18 @@ class ZopeInstall:
 	self.zope_main_dir = '/usr/lib'
 
 
+    def get_instances(self):
+        """Return all instances in all zope versions installed"""
+        dict = {}
+        for version in self.versions:
+            #print version
+            path = self.instance_main_dir + os.sep + 'zope' + version + os.sep + 'instance'
+            if os.path.exists(path):
+                dict[version] = os.listdir(path)
+                #print dict
+        return dict
+
+
 class ZopeInstance(ZopeInstall):
     """Expose Zope instances to several python methods that simplifies admins' life
     (backup, recover, import, etc...)"""
@@ -53,17 +65,8 @@ class ZopeInstance(ZopeInstall):
         self.instance_var =self.instance_dir + os.sep + 'var' + os.sep
         self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
 
-    def get_instances(self):
-        dict = {}
-        for version in self.versions:
-            #print version
-            path = self.instance_main_dir + os.sep + 'zope' + version + os.sep + 'instance'
-            if os.path.exists(path):
-                dict[version] = os.listdir(path)
-                #print dict
-        return dict
-
     def backup(self, backup_dir):
+    	"""Backup the instance"""
         self.backup_dir = backup_dir
 	self.instance_backup_dir = self.backup_dir + os.sep + self.version + os.sep + self.instance
 
@@ -90,6 +93,7 @@ class ZopeInstance(ZopeInstall):
         print self.instance + ' backuped !'
 
     def recover(self):
+        """Recover the instance from a backup"""
         os.chdir(self.instance_backup_dir)
         command = 'tar xzf '+self.instance_backup_dir+os.sep+'Products.tar.gz && ' + \
                   'rsync -a --delete ' + self.instance_backup_dir+os.sep+self.instance_products + \
