@@ -208,13 +208,6 @@ db1 = {'host':   'localhost',
           'port':    '3306'}
 
 
-#db1 = {'host':   '66.70.82.200',
-          #'user':    'eprafr',
-          #'passwd':  'trc47AM9',
-          #'db':      'eprafr',
-          #'port':    '3306'}
-
-
 db2 = {'host':   'localhost',
           'user':    'epra',
           'passwd':  'testepra',
