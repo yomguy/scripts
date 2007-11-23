@@ -28,7 +28,17 @@ import sys
 from optparse import OptionParser
 
 
-class ZopeInstance:
+class ZopeInstall:
+    """This give the main parameters of the Zope installations respectively to the
+       distribution used"""
+
+    def __init__(self):
+        self.versions = ['2.7', '2.9', '2.8', '2.10']
+	self.instance_main_dir = '/var/lib'
+	self.zope_main_dir = '/usr/lib'
+
+
+class ZopeInstance(ZopeInstall):
     """Expose Zope instances to several python methods that simplifies admins' life
     (backup, recover, import, etc...)"""
     
