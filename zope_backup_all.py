@@ -18,7 +18,8 @@ def backup_all():
     for version in instances:
     	for instance in instances[version]:
             z = ZopeInstance(version, instance)
-            #z.backup(backup_dir)
+	    print z.get_instance_dir()
+            z.backup(backup_dir)
 	    print version + ': ' + instance + ' backuped !'
 
 if __name__ == '__main__':

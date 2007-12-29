@@ -65,6 +65,9 @@ class ZopeInstance(ZopeInstall):
         self.instance_var =self.instance_dir + os.sep + 'var' + os.sep
         self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
 
+    def get_instance_dir(self):
+        return self.instance_dir
+    
     def backup(self, backup_dir):
     	"""Backup the instance"""
         self.backup_dir = backup_dir
