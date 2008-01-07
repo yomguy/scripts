@@ -61,9 +61,10 @@ class ZopeInstance(ZopeInstall):
         self.instance_dir = self.instance_main_dir + os.sep + 'zope' + version + os.sep + \
                         'instance' + os.sep + self.instance
         self.instance_data = self.instance_dir + os.sep + 'var' + os.sep + 'Data.fs'
-        self.instance_products =self.instance_dir + os.sep + 'Products' + os.sep
-        self.instance_var =self.instance_dir + os.sep + 'var' + os.sep
-        self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
+        self.instance_products = self.instance_dir + os.sep + 'Products' + os.sep
+        self.instance_var = self.instance_dir + os.sep + 'var' + os.sep
+        self.instance_etc = self.instance_dir + os.sep + 'etc' + os.sep
+	self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
 
     def get_instance_dir(self):
         return self.instance_dir
@@ -92,6 +93,10 @@ class ZopeInstance(ZopeInstall):
         if os.path.exists(self.instance_var):
             command = 'tar czf ' + self.instance_backup_dir + os.sep + \
                       'var.tar.gz ' + self.instance_var + ' --exclude=Data.fs'
+            os.system(command)
+        if os.path.exists(self.instance_etc):
+            command = 'tar czf ' + self.instance_backup_dir + os.sep + \
+                      'etc.tar.gz ' + self.instance_etc
             os.system(command)
         print self.instance + ' backuped !'
 
