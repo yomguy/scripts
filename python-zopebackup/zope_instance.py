@@ -78,9 +78,10 @@ class ZopeInstance(ZopeInstall):
         if not os.path.exists(path):
             os.makedirs(path)
         if os.path.exists(self.instance_data):
-            command = self.repozo +' -Bvz -r ' + path + ' -f ' + self.instance_data
+            command = 'export PYTHONPATH='+ self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + \
+	              'lib/python/ && '+ self.repozo +' -Bvz -r ' + path + ' -f ' + self.instance_data
             os.system(command)
-            command = 'chmod 700 ' + path + os.sep + '*'
+            command = 'chmod -R 700 ' + path + os.sep
             os.system(command)
         else:
             print self.instance_data + ' does not exists !'
