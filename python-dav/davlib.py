@@ -17,7 +17,8 @@ import urllib
 import string
 import types
 import mimetypes
-import qp_xml
+#import qp_xml
+from xml.utils import qp_xml
 
 
 INFINITY = 'infinity'

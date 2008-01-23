@@ -164,11 +164,18 @@ def lock_test():
   r = _dav().lock('/dav/locktest/locknull')
 
 def test():
+  f = open('hello.txt','r')
+  text = '<br>'.join(f.readlines())
+  print text
+  
   _dav().setauth(USERNAME,PASSWORD)
-  _dav().mkcol(BASE+'/test/',{"Authorization":"Basic %s" % encodedUSERPASS})
-  _dav().put(BASE+'/test/foo.html','\n AZEFZEKKKKK \n',None,None,{"Authorization":"Basic %s" % encodedUSERPASS})
-  _dav().get(BASE+'/test/foo.html',{"Authorization":"Basic %s" % encodedUSERPASS})
-  #_dav().getprops(BASE+'/foo.html', 'author', 'foober', 'title')
+  auth_dict = {"Authorization":"Basic %s" % encodedUSERPASS}
+  auth = auth_dict['Authorization']
+  print auth
+  _dav().mkcol(BASE+'/test/',auth)
+  _dav().put(BASE+'/test/foo.html',text,None,None,auth_dict)
+  _dav().get(BASE+'/test/foo.html',auth_dict)
+  _dav().getprops(BASE+'/test/foo.html', 'author', 'foober', 'title')
   #_dav().mkcol(BASE+'/dav/',{"Authorization":"Basic %s" % encodedUSERPASS})
   #_dav().put(BASE+'/foo.html','\n OKKKKKKKKKKK \n',{"Authorization":"Basic %s" % encodedUSERPASS})
   #_dav().options('/dav/foo.html')
