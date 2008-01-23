@@ -10,10 +10,15 @@ import StringIO
 import base64
 from xml.utils import qp_xml
 
-HOST = 'localhost'
-PORT = '1980'
+HOST = 'parisson.com'
+#HOST = 'localhost'
+PORT = '1976'
 BASE = 'http://%s:%s' % (HOST, PORT)
 USERNAME = 'zope'
+DESTDIR =  'parisson.com_2/Members/yomguy/dav'
+#DESTDIR = 'dav'
+#FILE = 'vc07_lop_nobd_100bpm.wav.mp3'
+FILE = '04_Idjut_Boys_-_Rebirth_Evil_Vibrations.mp3'
 PASSWORD = sys.argv[1]
 encodedUSERPASS = base64.encodestring(USERNAME+":"+PASSWORD)
 
@@ -38,7 +43,7 @@ class mydav(davlib.DAV):
     print "STATUS:", response.status
     print "REASON:", response.reason
     for hdr in response.msg.headers:
-      print string.strip(hdr)
+      print string.strip    (hdr)
     print '-'*70
     if response.status == 207:
       #print response.doc.dump()
@@ -164,18 +169,21 @@ def lock_test():
   r = _dav().lock('/dav/locktest/locknull')
 
 def test():
-  f = open('hello.txt','r')
-  text = '<br>'.join(f.readlines())
-  print text
-  
   _dav().setauth(USERNAME,PASSWORD)
   auth_dict = {"Authorization":"Basic %s" % encodedUSERPASS}
   auth = auth_dict['Authorization']
   print auth
-  _dav().mkcol(BASE+'/test/',auth)
-  _dav().put(BASE+'/test/foo.html',text,None,None,auth_dict)
-  _dav().get(BASE+'/test/foo.html',auth_dict)
-  _dav().getprops(BASE+'/test/foo.html', 'author', 'foober', 'title')
+
+  f = open(FILE,'r')
+  #_dav().mkcol(BASE+'/'+DESTDIR,auth)
+  _dav().put(BASE+'/'+DESTDIR+'/'+FILE,f.read(),None,None,auth_dict)
+
+  #_data = _dav().get(BASE+'/test/'+FILE,auth_dict)
+  #f = open(FILE,'w')
+  #f.write(_data)
+  #f.close()
+
+  #_dav().getprops(BASE+'/test/foo.html', 'author', 'foober', 'title')
   #_dav().mkcol(BASE+'/dav/',{"Authorization":"Basic %s" % encodedUSERPASS})
   #_dav().put(BASE+'/foo.html','\n OKKKKKKKKKKK \n',{"Authorization":"Basic %s" % encodedUSERPASS})
   #_dav().options('/dav/foo.html')
