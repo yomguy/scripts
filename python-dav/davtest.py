@@ -14,7 +14,7 @@ HOST = 'localhost'
 PORT = '1980'
 BASE = 'http://%s:%s' % (HOST, PORT)
 USERNAME = 'zope'
-PASSWORD = 'washncellarz'
+PASSWORD = sys.argv[1]
 encodedUSERPASS = base64.encodestring(USERNAME+":"+PASSWORD)
 
 
