@@ -12,10 +12,11 @@ from xml.utils import qp_xml
 
 HOST = 'parisson.com'
 #HOST = 'localhost'
-PORT = '1976'
+PORT = '1983'
 BASE = 'http://%s:%s' % (HOST, PORT)
 USERNAME = 'zope'
-DESTDIR =  'parisson.com_2/Members/yomguy/dav'
+DESTDIR = 'CRFPA/formations/formations-en-ligne/cours-audio/droit_penal_cours/'
+#DESTDIR =  'parisson.com_2/Members/yomguy/dav'
 #DESTDIR = 'dav'
 #FILE = 'vc07_lop_nobd_100bpm.wav.mp3'
 FILE = '04_Idjut_Boys_-_Rebirth_Evil_Vibrations.mp3'

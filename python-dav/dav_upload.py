@@ -2,6 +2,7 @@
 # DAV testing hack
 #
 
+import os
 import sys
 import davlib
 import string
@@ -12,12 +13,14 @@ from xml.utils import qp_xml
 
 HOST = 'parisson.com'
 #HOST = 'localhost'
-PORT = '1976'
+PORT = '1983'
 BASE = 'http://%s:%s' % (HOST, PORT)
-USERNAME = 'zope'
-DESTDIR =  'parisson.com_2/Members/yomguy/dav'
+USERNAME = 'admin'
+DESTDIR = 'CRFPA/formations/formations-en-ligne/cours-audio/droit_penal_cours/'
+#DESTDIR =  'parisson.com_2/Members/yomguy/dav'
 #DESTDIR = 'dav'
-FILE = 'vc07_lop_nobd_100bpm.wav.mp3'
+SOURCEDIR = '/home/momo/music/mp3' 
+FILE = 'lll-0001.mp3'
 #FILE = '04_Idjut_Boys_-_Rebirth_Evil_Vibrations.mp3'
 PASSWORD = sys.argv[1]
 
@@ -104,13 +107,13 @@ def lock_test():
   # test a locknull resource
   r = _dav().lock('/dav/locktest/locknull')
 
-def upload(base, dest_dir, file, username, password, encodeduserpass):
+def upload(base, dest_dir, source_dir, file, username, password, encodeduserpass):
   _dav().setauth(username, password)
   auth_dict = {"Authorization":"Basic %s" % encodeduserpass}
   auth = auth_dict['Authorization']
   print auth
 
-  f = open(file,'r')
+  f = open(source_dir + os.sep + file,'r')
   #_dav().mkcol(BASE+'/'+DESTDIR,auth)
   _dav().put(base+'/'+dest_dir+'/'+file,f.read(),None,None,auth_dict)
 
@@ -125,4 +128,4 @@ if __name__ == '__main__':
     sys.exit(1)
 
   encodedUSERPASS = base64.encodestring(USERNAME+":"+PASSWORD)
-  upload(BASE, DESTDIR, FILE, USERNAME, PASSWORD, encodedUSERPASS)
+  upload(BASE, DESTDIR, SOURCEDIR, FILE, USERNAME, PASSWORD, encodedUSERPASS)
