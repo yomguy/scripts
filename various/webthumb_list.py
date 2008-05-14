@@ -6,8 +6,8 @@
 import os
 import sys
 
-img_dir = '/var/www/img/thumbs'
-site_list_file = '/var/www/img/thumbs/url_list.txt'
+img_dir = '/var/www/img/webthumbs'
+site_list_file = '/var/www/img/webthumbs/webthumb_list.txt'
 
 def main(site_list_file, img_dir):
     site_list = open(site_list_file,'r')

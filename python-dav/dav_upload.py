@@ -11,8 +11,8 @@ import StringIO
 import base64
 from xml.utils import qp_xml
 
-HOST = 'parisson.com'
-#HOST = 'localhost'
+#HOST = 'parisson.com'
+HOST = 'localhost'
 PORT = '1983'
 BASE = 'http://%s:%s' % (HOST, PORT)
 USERNAME = 'admin'

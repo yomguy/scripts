@@ -56,7 +56,7 @@ class ZopeInstance(ZopeInstall):
     
     def __init__(self, version, instance):
         ZopeInstall.__init__(self)
-	self.version = version
+	    self.version = version
         self.instance = instance
         self.instance_dir = self.instance_main_dir + os.sep + 'zope' + version + os.sep + \
                         'instance' + os.sep + self.instance
