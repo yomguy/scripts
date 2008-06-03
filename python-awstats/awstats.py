@@ -5,6 +5,8 @@ import sys
 import string
 
 class ApacheConfig:
+    """Implements the whole configuration of Apache server"""
+    
     def __init__(self, conf_dir):
         self.conf_dir = conf_dir
         self.conf_list = os.listdir(self.conf_dir)
@@ -13,6 +15,7 @@ class ApacheConfig:
         self.conf_number = len(self.confs)
         
     def get_confs(self):
+        """return a dictionnary describing all the Apache domains"""
         confs = []
         for conf in self.conf_list:
             c = ApacheVitualHost(self.conf_dir+os.sep+conf)
@@ -46,13 +49,17 @@ class ApacheConfig:
                 logs[conf['domain']] = conf['conf']['CustomLog']
         return logs
 
+
 class ApacheVitualHost:
+    """Implements an Apache virtualhost"""
+    
     def __init__(self, conf_file):
         self.conf_file = conf_file
         self.conf = self.get_conf()
         self.domain = self.get_domain()
         
     def get_conf(self):
+        """return a dictionnary describing the Apache virtualhost"""
         conf_file = open(self.conf_file)
         conf = conf_file.readlines()
         conf_dict = {}
@@ -80,7 +87,8 @@ class ApacheVitualHost:
 
 
 class AwstatsConfig:
-
+    """Implements the whole configuration of Awstats system"""
+    
     def __init__(self, conf_dir):
         self.conf_dir = conf_dir
         self.conf_list = os.listdir(self.conf_dir)
@@ -89,8 +97,8 @@ class AwstatsConfig:
         self.conf_number = len(self.confs)
         self.default_conf = 'awstats_default.conf'
         
-        
     def get_confs(self):
+        """return a dictionnary describing all the Awstats domains"""
         confs = []
         for conf in self.conf_list:
             c = AwstatsDomain(self.conf_dir+os.sep+conf)
@@ -108,6 +116,7 @@ class AwstatsConfig:
         return domains
             
     def get_custom_logs(self):
+        """return a dictionnary of all the custom log files"""
         logs = {}
         for conf in self.confs:
             if conf['conf']:
@@ -117,13 +126,14 @@ class AwstatsConfig:
 
 
 class AwstatsDomain:
+    """Implements an Awstasts domain"""
     def __init__(self, conf_file):
         self.conf_file = conf_file
         self.conf = self.get_conf()
         self.domain = self.get_domain()
         
-
     def get_conf(self):
+        """return a dictionnary describing the Awstats domain"""
         conf_file = open(self.conf_file)
         conf = conf_file.readlines()
         conf_dict = {}
@@ -150,16 +160,38 @@ class AwstatsDomain:
             return domain
 
     def set_conf(self):
-       pass 
-        
+       pass
 
+    def get_apache_conf(self):
+        return """ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+        <Directory "/usr/lib/cgi-bin">
+            AllowOverride All
+            Options ExecCGI -MultiViews +SymLinksIfOwnerMatch
+            Order allow,deny
+            Allow from all
+        </Directory>
 
-a = ApacheConfig('/etc/apache2/sites-available/')
-w = AwstatsConfig('/etc/awstats/')
+        Alias /awstats-icon/ "/usr/share/awstats/icon/"
+        <Directory /usr/share/awstats/icon>
+            AllowOverride None
+            Options None
+            Order allow,deny
+            Allow from all
+        </Directory>
+        """
 
-print a.get_domains()
-print a.get_custom_logs()
+def main():
+    a = ApacheConfig('/etc/apache2/sites-available/')
+    w = AwstatsConfig('/etc/awstats/')
 
-print w.get_confs(  )
-print w.get_domains()
-print w.get_custom_logs()
+    print a.get_domains()
+    print a.get_custom_logs()
+
+    #print w.get_confs()
+    print w.get_domains()
+    print w.get_custom_logs()
+    print         
+
+if __name__ == '__main__':
+    main()
+
