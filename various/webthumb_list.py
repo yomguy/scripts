@@ -14,6 +14,7 @@ def main(site_list_file, img_dir):
     site_list = open(site_list_file,'r')
     for site in site_list.readlines():
         site = site[0:len(site)-1]
+        print site
         get_thumbnail('http://'+site, img_dir+os.sep+site+'.png','large')
         #command = 'webthumb http://'+ site +' | pnmscale -xysize 650 400 | ' + \
         #          'pnmtopng | convert -crop 510x275+5+60 - ' + img_dir + os.sep + site +'.png'
