@@ -41,6 +41,7 @@ def get_thumbnail(url, output_path, size='medium2'):
     <apikey>%s</apikey>
     <request>
         <url>%s</url>
+        <output_type>png</output_type>
     </request>
 </webthumb>
     """ % (WEBTHUMB_APIKEY, url)
