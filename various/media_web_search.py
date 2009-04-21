@@ -52,7 +52,7 @@ def prog_info():
     python, python-simplejson
  
  Usage :
-    $ media_web_search.py FORMAT TEXT M3U_FILE
+    $ ./media_web_search.py FORMAT TEXT M3U_FILE
 
  Where:
     FORMAT is the media type you are looking for
@@ -60,7 +60,7 @@ def prog_info():
     M3U_FILE an output M3U playlist file
 
  For example:
-    ./media_web_search.py wav "sample" search.m3u
+    ./media_web_search.py wav "sample" search_wav_samples.m3u
 
  Author:
     Guillaume Pellerin <yomguy@parisson.com>
