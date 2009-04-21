@@ -70,7 +70,7 @@ class GoogleMediaSearch(Thread):
         self.m3u = M3UPlaylist(m3u_file)
         self.text = text
         self.n = range(0,25)
-        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (mp3|ogg|flac|avi|mp4) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|mp3s|mp3|flac|ogg|wav|index) -gallery -intitle:"last modified" -intitle:(intitle|%s)' % self.format
+        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified" -intitle:(intitle|%s)' % (self.format, self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
         self.results = self.google_search()
 
