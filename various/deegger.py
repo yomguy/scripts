@@ -77,12 +77,12 @@ class DeeGGer(Thread):
         self.format = format
         self.text = text
         self.m3u_dir = m3u_dir
-        
         if not os.path.exists(self.m3u_dir):
             os.makedirs(self.m3u_dir)
-        self.m3u_file = self.m3u_dir + os.sep + 'deeger_' + self.text + '.' + self.format + '.m3u'
-        self.m3u = M3UPlaylist(self.m3u_file)        
-        self.n = range(0,256)
+        self.m3u_file = self.m3u_dir + os.sep + 'deegger_' + self.text + '.' + self.format + '.m3u'
+        self.m3u = M3UPlaylist(self.m3u_file)
+             
+        self.n = range(0,32)
         self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
         self.results = self.google_search()
@@ -94,12 +94,13 @@ class DeeGGer(Thread):
             query = urllib.urlencode({'q' : self.q, 'start': page})
             url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % (query)
             json = simplejson.loads(urllib.urlopen(url).read())
-            try:
+            #print json
+            if json['responseData']:
                 for r in json['responseData']['results']:
                     results.append(r)
-            except:
-                pass
-                #print "ERROR"
+            #except:
+                #pass
+                ##print "ERROR"
         return results
 
     def run(self):
@@ -129,11 +130,11 @@ class M3UPlaylist:
 
 class UrlMediaParser(Thread):
 
-    def __init__(self, format, text, result, m3u):
+    def __init__(self, format, text, results, m3u):
         Thread.__init__(self)
         self.format = format
         self.text = text
-        self.result = result
+        self.results = results
         self.m3u = m3u
 
     def is_in_multiple_case(self, _string, text):
@@ -148,24 +149,24 @@ class UrlMediaParser(Thread):
 
     def run(self):
         media_list = []
-        url = self.result['unescapedUrl']
+        url = self.results['unescapedUrl']
         if url:
             try:
-                u = urllib.urlopen(url)
-                data = u.read()
+                data = urllib.urlopen(url).read()
                 for line in data.split("\012"):
                     for format in self.get_multiple_case_string(self.format):
                         s = re.compile('HREF=".*\.'+ format + '">').search(line,1)
                         if s:
                             file_name = line[s.start():s.end()].split('"')[1]
                             if self.is_in_multiple_case(self.text, file_name) \
-                              or self.is_in_multiple_case(self.text, url):
+                                or self.is_in_multiple_case(self.text, url):
                                 media_list.append(url + file_name)
-                if media_list:
-                    #print media_list
-                    self.m3u.put(media_list)
             except:
                 pass
+                                          
+            if media_list:
+                #print media_list
+                self.m3u.put(media_list)
 
 
 def main():
