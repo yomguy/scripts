@@ -5,8 +5,8 @@
 
 # <yomguy@parisson.com>
 
-# This software is a computer program whose purpose is to stream audio
-# and video data through icecast2 servers.
+# This software is a computer program whose purpose is to find cool music
+# samples over internet with the help of google search ajax api.
 
 # This software is governed by the CeCILL  license under French law and
 # abiding by the rules of distribution of free software.  You can  use,
@@ -46,8 +46,7 @@ from threading import Thread
 version = '0.1'
 
 def prog_info():
-    return """ media_web_search.py v%s
- easy media crawler over google search
+    return """ media_web_search.py v%s : easy media crawler through google search
 
  Depends on:
     python, python-simplejson
@@ -61,7 +60,13 @@ def prog_info():
     M3U_FILE an output M3U playlist file
 
  For example:
-    ./media_web_search.py mp3 "daft music" search.m3u
+    ./media_web_search.py wav "sample" search.m3u
+
+ Author:
+    Guillaume Pellerin <yomguy@parisson.com>
+
+ License:
+    CeCILL v2
  """ % version
 
 
