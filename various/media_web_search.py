@@ -69,8 +69,8 @@ class GoogleMediaSearch(Thread):
         self.format = format
         self.m3u = M3UPlaylist(m3u_file)
         self.text = text
-        self.n = range(0,25)
-        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified" -intitle:(intitle|%s)' % (self.format, self.format, self.format, self.format)
+        self.n = range(0,256)
+        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
         self.results = self.google_search()
 
@@ -136,20 +136,23 @@ class UrlMediaParser(Thread):
         media_list = []
         url = self.result['unescapedUrl']
         if url:
-            u = urllib.urlopen(url)
-            data = u.read()
-            lines = data.split("\012")
-            for line in lines:
-                for format in self.get_multiple_case_string(self.format):
-                    s = re.compile('HREF=".*\.'+ format + '">').search(line.strip(),1)
-                    if s:
-                        file_name = line[s.start():s.end()].split('"')[1]
-                        if self.is_in_multiple_case(self.text, file_name) \
-                         or self.is_in_multiple_case(self.text, url):
-                            media_list.append(url + file_name)
-            if media_list:
-                #print media_list
-                self.m3u.put(media_list)
+            try:
+                u = urllib.urlopen(url)
+                data = u.read()
+                lines = data.split("\012")
+                for line in lines:
+                    for format in self.get_multiple_case_string(self.format):
+                        s = re.compile('HREF=".*\.'+ format + '">').search(line.strip(),1)
+                        if s:
+                            file_name = line[s.start():s.end()].split('"')[1]
+                            if self.is_in_multiple_case(self.text, file_name) \
+                            or self.is_in_multiple_case(self.text, url):
+                                media_list.append(url + file_name)
+                if media_list:
+                    #print media_list
+                    self.m3u.put(media_list)
+            except:
+                pass
 
 
 def main():
