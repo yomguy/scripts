@@ -46,21 +46,21 @@ from threading import Thread
 version = '0.1'
 
 def prog_info():
-    return """ media_web_search.py v%s : easy media crawler through google search
+    return """ deegger.py v%s : easy media crawler through google search
 
  Depends on:
     python, python-simplejson
  
  Usage :
-    $ ./media_web_search.py FORMAT TEXT M3U_FILE
+    $ ./deegger.py FORMAT TEXT M3U_DIR
 
  Where:
     FORMAT is the media type you are looking for
     TEXT is your google text query
-    M3U_FILE an output M3U playlist file
+    M3U_DIR an output M3U playlist directory
 
  For example:
-    ./media_web_search.py wav "sample" search_wav_samples.m3u
+    ./deegger.py wav "sample" /var/www/m3u
 
  Author:
     Guillaume Pellerin <yomguy@parisson.com>
@@ -70,13 +70,18 @@ def prog_info():
  """ % version
 
 
-class GoogleMediaSearch(Thread):
+class DeeGGer(Thread):
 
-    def __init__(self, format, text, m3u_file):
+    def __init__(self, format, text, m3u_dir):
         Thread.__init__(self)
         self.format = format
-        self.m3u = M3UPlaylist(m3u_file)
         self.text = text
+        self.m3u_dir = m3u_dir
+        
+        if not os.path.exists(self.m3u_dir):
+            os.makedirs(self.m3u_dir)
+        self.m3u_file = self.m3u_dir + os.sep + 'deeger_' + self.text + '.' + self.format + '.m3u'
+        self.m3u = M3UPlaylist(self.m3u_file)        
         self.n = range(0,256)
         self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
@@ -121,6 +126,7 @@ class M3UPlaylist:
             self.m3u.write(url + '\n')
             self.m3u.flush
 
+
 class UrlMediaParser(Thread):
 
     def __init__(self, format, text, result, m3u):
@@ -147,14 +153,13 @@ class UrlMediaParser(Thread):
             try:
                 u = urllib.urlopen(url)
                 data = u.read()
-                lines = data.split("\012")
-                for line in lines:
+                for line in data.split("\012"):
                     for format in self.get_multiple_case_string(self.format):
-                        s = re.compile('HREF=".*\.'+ format + '">').search(line.strip(),1)
+                        s = re.compile('HREF=".*\.'+ format + '">').search(line,1)
                         if s:
                             file_name = line[s.start():s.end()].split('"')[1]
                             if self.is_in_multiple_case(self.text, file_name) \
-                            or self.is_in_multiple_case(self.text, url):
+                              or self.is_in_multiple_case(self.text, url):
                                 media_list.append(url + file_name)
                 if media_list:
                     #print media_list
@@ -165,8 +170,8 @@ class UrlMediaParser(Thread):
 
 def main():
     if len(sys.argv) == 4:
-        g = GoogleMediaSearch(sys.argv[1], sys.argv[2], sys.argv[3])
-        g.start()
+        d = DeeGGer(sys.argv[1], sys.argv[2], sys.argv[3])
+        d.start()
     else:
         text = prog_info()
         sys.exit(text)
