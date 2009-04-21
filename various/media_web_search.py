@@ -47,7 +47,10 @@ version = '0.1'
 
 def prog_info():
     return """ media_web_search.py v%s
- easy media search over google search
+ easy media crawler over google search
+
+ Depends on:
+    python, python-simplejson
  
  Usage :
     $ media_web_search.py FORMAT TEXT M3U_FILE
@@ -58,7 +61,7 @@ def prog_info():
     M3U_FILE an output M3U playlist file
 
  For example:
-    ./media_web_search.py mp3 "daft" search.m3u
+    ./media_web_search.py mp3 "daft music" search.m3u
  """ % version
 
 
