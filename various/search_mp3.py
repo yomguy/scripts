@@ -47,25 +47,31 @@ version = '0.1'
 
 def prog_info():
     return """ search_mp3.py v%s
-
+ easy media search over google search
+ 
  Usage :
-    $ search_mp3.py TEXT M3U_FILE
+    $ search_media.py FORMAT TEXT M3U_FILE
 
  Where:
+    FORMAT is the media type you are looking for
     TEXT is your google text query
-    M3U_FILE an output M3U playlist file""" % version
+    M3U_FILE an output M3U playlist file
 
-class GoogleMediaSearch:
+ For example:
+    ./search_mp3.py mp3 "daft" search.m3u
+ """ % version
 
-    def __init__(self, text, m3u_file):
-        self.format = 'mp3'
+class GoogleMediaSearch(Thread):
+
+    def __init__(self, format, text, m3u_file):
+        Thread.__init__(self)
+        self.format = format
         self.m3u = M3UPlaylist(m3u_file)
         self.text = text
         self.n = range(0,25)
-        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (mp3|ogg|flac|avi|mp4) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|mp3s|mp3|flac|ogg|index) -gallery -intitle:"last modified" -intitle:(intitle|%s)' % self.format
+        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (mp3|ogg|flac|avi|mp4) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|mp3s|mp3|flac|ogg|wav|index) -gallery -intitle:"last modified" -intitle:(intitle|%s)' % self.format
         self.q = '%s %s' % (self.text, self.media_q)
         self.results = self.google_search()
-        self.get_media_links()
 
     def google_search(self):
         results = []
@@ -79,10 +85,10 @@ class GoogleMediaSearch:
                     results.append(r)
             except:
                 pass
+                #print "ERROR"
         return results
 
-    def get_media_links(self):
-        links = []
+    def run(self):
         for result in self.results:
             m = UrlMediaParser(self.format, self.text, result, self.m3u)
             m.start()
@@ -94,7 +100,6 @@ class M3UPlaylist:
         self.m3u_file = m3u_file
         self.m3u = open(self.m3u_file, 'w')
         self.init_m3u()
-        self.id = 1
         
     def init_m3u(self):
         self.m3u.write('#EXTM3U\n')
@@ -102,11 +107,10 @@ class M3UPlaylist:
 
     def put(self, url_list):
         for url in url_list:
-            info = '#EXTINF:%s,%s' % (str(self.id), url +'\n')
+            info = '#EXTINF:'',%s' % (url +'\n')
             self.m3u.write(info)
             self.m3u.write(url + '\n')
             self.m3u.flush
-            self.id += 1
 
 class UrlMediaParser(Thread):
 
@@ -117,32 +121,40 @@ class UrlMediaParser(Thread):
         self.result = result
         self.m3u = m3u
 
+    def is_in_multiple_case(self, _string, text):
+        return _string in text \
+                or _string.upper() in text \
+                or _string.lower() in text \
+                or _string.capitalize() in text
+
+    def get_multiple_case_string(self, _string):
+        return _string.upper(), _string.lower() , _string.capitalize()
+
+
     def run(self):
         media_list = []
         url = self.result['unescapedUrl']
         if url:
-            try:
-                u = urllib.urlopen(url)
-                data = u.read()
-                lines = data.split("\012")
-                for line in lines:
-                    s = re.compile('HREF=".*\.'+ self.format + '">').search(line.strip(),1)
+            u = urllib.urlopen(url)
+            data = u.read()
+            lines = data.split("\012")
+            for line in lines:
+                for format in self.get_multiple_case_string(self.format):
+                    s = re.compile('HREF=".*\.'+ format + '">').search(line.strip(),1)
                     if s:
                         file_name = line[s.start():s.end()].split('"')[1]
-                        if self.text.upper() in file_name or \
-                                self.text.lower() in file_name or \
-                                self.text.capitalize() in file_name:
+                        if self.is_in_multiple_case(self.text, file_name) \
+                         or self.is_in_multiple_case(self.text, url):
                             media_list.append(url + file_name)
-                if media_list:
-                    #print media_list
-                    self.m3u.put(media_list)
-            except:
-                pass
+            if media_list:
+                #print media_list
+                self.m3u.put(media_list)
 
 
 def main():
-    if len(sys.argv) == 3:
-        g = GoogleMediaSearch(sys.argv[1], sys.argv[2])
+    if len(sys.argv) == 4:
+        g = GoogleMediaSearch(sys.argv[1], sys.argv[2], sys.argv[3])
+        g.start()
     else:
         text = prog_info()
         sys.exit(text)
