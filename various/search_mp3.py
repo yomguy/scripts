@@ -36,9 +36,10 @@
 
 # Author: Guillaume Pellerin <yomguy@parisson.com>
 
+import os
+import re
 import sys
 import urllib
-import re
 import simplejson
 from threading import Thread
 
@@ -48,14 +49,17 @@ def prog_info():
     return """ search_mp3.py v%s
 
  Usage :
-    $ search_mp3.py TEXT
+    $ search_mp3.py TEXT M3U_FILE
 
-    where TEXT is your google text query""" % version
+ Where:
+    TEXT is your google text query
+    M3U_FILE an output M3U playlist file""" % version
 
 class GoogleMediaSearch:
 
-    def __init__(self, text):
+    def __init__(self, text, m3u_file):
         self.format = 'mp3'
+        self.m3u = M3UPlaylist(m3u_file)
         self.text = text
         self.n = range(0,25)
         self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (mp3|ogg|flac|avi|mp4) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|mp3s|mp3|flac|ogg|index) -gallery -intitle:"last modified" -intitle:(intitle|%s)' % self.format
@@ -80,16 +84,38 @@ class GoogleMediaSearch:
     def get_media_links(self):
         links = []
         for result in self.results:
-            m = MediaParser(self.format, self.text, result)
+            m = UrlMediaParser(self.format, self.text, result, self.m3u)
             m.start()
 
-class MediaParser(Thread):
 
-    def __init__(self, format, text, result):
+class M3UPlaylist:
+
+    def __init__(self, m3u_file):
+        self.m3u_file = m3u_file
+        self.m3u = open(self.m3u_file, 'w')
+        self.init_m3u()
+        self.id = 1
+        
+    def init_m3u(self):
+        self.m3u.write('#EXTM3U\n')
+        self.m3u.flush()
+
+    def put(self, url_list):
+        for url in url_list:
+            info = '#EXTINF:%s,%s' % (str(self.id), url +'\n')
+            self.m3u.write(info)
+            self.m3u.write(url + '\n')
+            self.m3u.flush
+            self.id += 1
+
+class UrlMediaParser(Thread):
+
+    def __init__(self, format, text, result, m3u):
         Thread.__init__(self)
         self.format = format
         self.text = text
         self.result = result
+        self.m3u = m3u
 
     def run(self):
         media_list = []
@@ -108,14 +134,15 @@ class MediaParser(Thread):
                                 self.text.capitalize() in file_name:
                             media_list.append(url + file_name)
                 if media_list:
-                    print media_list
+                    #print media_list
+                    self.m3u.put(media_list)
             except:
                 pass
 
 
 def main():
-    if len(sys.argv) == 2:
-        g = GoogleMediaSearch(sys.argv[1])
+    if len(sys.argv) == 3:
+        g = GoogleMediaSearch(sys.argv[1], sys.argv[2])
     else:
         text = prog_info()
         sys.exit(text)
