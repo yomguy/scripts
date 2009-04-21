@@ -46,11 +46,11 @@ from threading import Thread
 version = '0.1'
 
 def prog_info():
-    return """ search_mp3.py v%s
+    return """ media_web_search.py v%s
  easy media search over google search
  
  Usage :
-    $ search_media.py FORMAT TEXT M3U_FILE
+    $ media_web_search.py FORMAT TEXT M3U_FILE
 
  Where:
     FORMAT is the media type you are looking for
@@ -58,8 +58,9 @@ def prog_info():
     M3U_FILE an output M3U playlist file
 
  For example:
-    ./search_mp3.py mp3 "daft" search.m3u
+    ./media_web_search.py mp3 "daft" search.m3u
  """ % version
+
 
 class GoogleMediaSearch(Thread):
 
