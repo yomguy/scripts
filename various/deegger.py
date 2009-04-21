@@ -82,7 +82,7 @@ class DeeGGer(Thread):
         self.m3u_file = self.m3u_dir + os.sep + 'deegger_' + self.text + '.' + self.format + '.m3u'
         self.m3u = M3UPlaylist(self.m3u_file)
              
-        self.n = range(0,32)
+        self.n = range(0,128)
         self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
         self.results = self.google_search()
