@@ -83,8 +83,8 @@ class DeeGGer(Thread):
         self.m3u = M3UPlaylist(self.m3u_file)
              
         self.n = range(0,128)
-        #self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
-        self.media_q = 'intitle:"index.of" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery' % (self.format, self.format, self.format)
+        self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
+        #self.media_q = 'intitle:"index.of" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery' % (self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
         self.results = self.google_search()
 
@@ -161,6 +161,7 @@ class UrlMediaParser(Thread):
                         s = re.compile('href=".*\.'+ format + '">').search(line,1)
                         if s:
                             file_name = line[s.start():s.end()].split('"')[1]
+                            print file_name
                             if self.is_in_multiple_case(self.text, file_name) or \
                                self.is_in_multiple_case(self.text, self.url):
                                 media_list.append(self.url + file_name)
