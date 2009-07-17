@@ -14,14 +14,12 @@ def main(site_list_file, img_dir):
     site_list = open(site_list_file,'r')
     for site in site_list.readlines():
         site = site[0:len(site)-1]
-        print site
-	file = site.replace('/','_')
-	file = img_dir+os.sep+site+'.png'
-        get_thumbnail('http://'+site, file,'large')
-        #command = 'webthumb http://'+ site +' | pnmscale -xysize 650 400 | ' + \
-        #          'pnmtopng | convert -crop 510x275+5+60 - ' + img_dir + os.sep + site +'.png'
-        #print command
-        #os.system(command)
+        if site:
+	    print site
+            file = site.replace('/','_')
+            file = img_dir+os.sep+file+'.png'
+            print file
+            get_thumbnail('http://'+site, file,'large')
     site_list.close()
     print 'Webthumbs created !'
 

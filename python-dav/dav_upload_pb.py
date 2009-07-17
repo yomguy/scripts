@@ -16,12 +16,13 @@ HOST = 'localhost'
 PORT = '1983'
 BASE = 'http://%s:%s' % (HOST, PORT)
 USERNAME = 'zope'
-#DESTDIR = 'crfpa/formations/formations-en-ligne/cours-audio/'
-DESTDIR = 'crfpa/test/'
+DESTDIR = 'CRFPA/formations/formations-en-ligne/cours-audio/'
+#DESTDIR = 'CRFPA/'
 TITLE = 'Pre-barreau_-_Augustins_-_CRFPA_-_'
 SOURCEDIR = '/home/augustins/audio/media/CRFPA/2008/'
 #PASSWORD = sys.argv[1]
 PASSWORD = 'wasncellar;z'
+COURSES = 'pre-barreau_courses_crfpa.txt'
 
 
 
@@ -121,6 +122,15 @@ def upload(base, title, dest_dir, source_dir, username, password, encodeduserpas
       f = open(source_dir + os.sep +_dir + os.sep + file,'r')
       _dav().put(base+'/'+_dest_dir+'/'+file,f.read(),None,None,auth_dict)
 
+def init(base, title, dest_dir, source_dir, username, password, encodeduserpass):
+  _dav().setauth(username, password)
+  auth_dict = {"Authorization":"Basic %s" % encodeduserpass}
+  auth = auth_dict['Authorization']
+  print auth
+  f = open(COURSES, 'r')
+  courses = f.readlines()
+  for course in courses:
+    _dav().mkcol(base+'/'+dest_dir+course.lower()+'/'+'Archives_Audio',auth)
 
 if __name__ == '__main__':
   if HOST == 'FILL THIS IN':
@@ -131,4 +141,6 @@ if __name__ == '__main__':
     sys.exit(1)
 
   encodedUSERPASS = base64.encodestring(USERNAME+":"+PASSWORD)
-  upload(BASE, TITLE, DESTDIR, SOURCEDIR, USERNAME, PASSWORD, encodedUSERPASS)
+  #upload(BASE, TITLE, DESTDIR, SOURCEDIR, USERNAME, PASSWORD, encodedUSERPASS)
+  init(BASE, TITLE, DESTDIR, SOURCEDIR, USERNAME, PASSWORD, encodedUSERPASS)
+

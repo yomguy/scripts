@@ -56,7 +56,7 @@ def get_thumbnail(url, output_path, size='medium2'):
     if type == 'text/xml':
         # This is defined as 'success' by the API. text/plain is failure.
         doc = xml.dom.minidom.parseString(body)
-
+	wait = 1
         for node in doc.getElementsByTagName("job"):
             wait = node.getAttribute('estimate')
             key = ""

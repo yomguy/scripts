@@ -184,6 +184,11 @@ def main():
     a = ApacheConfig('/etc/apache2/sites-available/')
     w = AwstatsConfig('/etc/awstats/')
 
+<<<<<<< .mine
+#print w.get_confs(  )
+print w.get_domains()
+print w.get_custom_logs()
+=======
     print a.get_domains()
     print a.get_custom_logs()
 
@@ -195,3 +200,4 @@ def main():
 if __name__ == '__main__':
     main()
 
+>>>>>>> .r64
