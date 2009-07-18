@@ -33,7 +33,7 @@ class ZopeInstall:
        distribution used"""
 
     def __init__(self):
-        self.versions = ['2.7', '2.9', '2.8', '2.10']
+    self.versions = ['2.7', '2.9', '2.8', '2.10']
 	self.instance_main_dir = '/var/lib'
 	self.zope_main_dir = '/usr/lib'
 
@@ -64,15 +64,32 @@ class ZopeInstance(ZopeInstall):
         self.instance_products = self.instance_dir + os.sep + 'Products' + os.sep
         self.instance_var = self.instance_dir + os.sep + 'var' + os.sep
         self.instance_etc = self.instance_dir + os.sep + 'etc' + os.sep
-	self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
+        self.instance_lib = self.instance_dir + os.sep + 'lib' + os.sep
+        self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
+        self.instance_backup_dir = self.backup_dir + os.sep + self.version + os.sep + self.instance
 
     def get_instance_dir(self):
         return self.instance_dir
-    
+
+    def tar(self, name, sub_dir):
+        if os.path.exists(sub_dir):
+            command = 'tar czf ' + self.instance_backup_dir + os.sep + \
+                      name + '.tar.gz ' + sub_dir
+            os.system(command)
+
+    def untar(self, name, sub_dir):
+        os.chdir(self.instance_backup_dir)
+        command = 'tar xzf '+self.instance_backup_dir+os.sep+name+'.tar.gz && ' + \
+                  'rsync -a --delete ' + self.instance_backup_dir+os.sep+sub_dir + \
+                               ' ' + sub_dir + os.sep + ' && ' + \
+                  'chown -R zope:zope ' + sub_dir + ' && ' + \
+                  'rm -rf ' + self.instance_backup_dir+os.sep+name
+        os.system(command)
+
     def backup(self, backup_dir):
     	"""Backup the instance"""
         self.backup_dir = backup_dir
-	self.instance_backup_dir = self.backup_dir + os.sep + self.version + os.sep + self.instance
+	    
 
         path = self.instance_backup_dir+ os.sep + 'Data'
         if not os.path.exists(path):
@@ -87,43 +104,32 @@ class ZopeInstance(ZopeInstall):
             print self.instance_data + ' does not exists !'
         if not os.path.exists(self.instance_backup_dir):
             os.makedirs(self.instance_backup_dir)
-        if os.path.exists(self.instance_products):
-            command = 'tar czf ' + self.instance_backup_dir + os.sep + \
-                      'Products.tar.gz ' + self.instance_products
-            os.system(command)
-        if os.path.exists(self.instance_var):
-            command = 'tar czf ' + self.instance_backup_dir + os.sep + \
-                      'var.tar.gz ' + self.instance_var + ' --exclude=Data.fs'
-            os.system(command)
-        if os.path.exists(self.instance_etc):
-            command = 'tar czf ' + self.instance_backup_dir + os.sep + \
-                      'etc.tar.gz ' + self.instance_etc
-            os.system(command)
+
+        self.tar('Products', self.instance_products)
+        self.tar('var', self.instance_var)
+        self.tar('etc', self.instance_etc)
+        self.tar('lib', self.instance_lib)
+
         print self.instance + ' backuped !'
 
     def recover(self):
         """Recover the instance from a backup"""
-        os.chdir(self.instance_backup_dir)
-        command = 'tar xzf '+self.instance_backup_dir+os.sep+'Products.tar.gz && ' + \
-                  'rsync -a --delete ' + self.instance_backup_dir+os.sep+self.instance_products + \
-                               ' ' + self.instance_products + os.sep + ' && ' + \
-                  'chown -R zope:zope ' + self.instance_products + ' && ' + \
-                  'rm -rf ' + self.instance_backup_dir+os.sep+'var'
-        os.system(command)
-        command = 'tar xzf '+self.instance_backup_dir+os.sep+'var.tar.gz && ' + \
-                  'rsync -a --delete ' + self.instance_backup_dir + os.sep  + self.instance_var + \
-                                ' ' + self.instance_var + os.sep + ' && ' + \
-                  'chown -R zope:zope ' + self.instance_var + ' && ' + \
-                  'rm -rf ' + self.instance_backup_dir+os.sep+'var'
-        os.system(command)
-        command = self.instance_dir+os.sep+'bin'+os.sep+'zopectl restart'            
-        os.system(command)
+
+        self.untar('Products', self.instance_products)
+        self.untar('var', self.instance_var)
+        self.untar('etc', self.instance_etc)
+        self.untar('lib', self.instance_lib)
+        
         command = self.repozo + ' -Rvz -r ' + self.instance_backup_dir + os.sep + \
                     'Data -o ' + self.instance_data
         if os.path.exists(self.instance_data):
             os.system(command)
         else:
             print self.instance_data + ' does not exists !'
+
+        command = self.instance_dir+os.sep+'bin'+os.sep+'zopectl restart'            
+        os.system(command)
+
         print self.instance + ' recovered !'
         
     def import_from(self, user, server):
