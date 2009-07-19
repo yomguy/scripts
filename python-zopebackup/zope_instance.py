@@ -33,10 +33,9 @@ class ZopeInstall:
        distribution used"""
 
     def __init__(self):
-    self.versions = ['2.7', '2.9', '2.8', '2.10']
-	self.instance_main_dir = '/var/lib'
-	self.zope_main_dir = '/usr/lib'
-
+        self.versions = ['2.7', '2.9', '2.8', '2.10']
+        self.instance_main_dir = '/var/lib'
+        self.zope_main_dir = '/usr/lib'
 
     def get_instances(self):
         """Return all instances in all zope versions installed"""
@@ -66,7 +65,6 @@ class ZopeInstance(ZopeInstall):
         self.instance_etc = self.instance_dir + os.sep + 'etc' + os.sep
         self.instance_lib = self.instance_dir + os.sep + 'lib' + os.sep
         self.repozo = self.zope_main_dir + os.sep + 'zope' + self.version + os.sep + 'bin' + os.sep + 'repozo.py'
-        self.instance_backup_dir = self.backup_dir + os.sep + self.version + os.sep + self.instance
 
     def get_instance_dir(self):
         return self.instance_dir
@@ -78,7 +76,7 @@ class ZopeInstance(ZopeInstall):
             os.system(command)
 
     def untar(self, name, sub_dir):
-        os.chdir(self.instance_backup_dir)
+        os.chdir(self.instance_dir)
         command = 'tar xzf '+self.instance_backup_dir+os.sep+name+'.tar.gz && ' + \
                   'rsync -a --delete ' + self.instance_backup_dir+os.sep+sub_dir + \
                                ' ' + sub_dir + os.sep + ' && ' + \
@@ -89,7 +87,7 @@ class ZopeInstance(ZopeInstall):
     def backup(self, backup_dir):
     	"""Backup the instance"""
         self.backup_dir = backup_dir
-	    
+        self.instance_backup_dir = self.backup_dir + os.sep + self.version + os.sep + self.instance
 
         path = self.instance_backup_dir+ os.sep + 'Data'
         if not os.path.exists(path):
