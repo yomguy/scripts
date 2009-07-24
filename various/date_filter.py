@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import os,  time, sys
 
@@ -20,6 +21,6 @@ print "%-40s %s" % ("filename:", "last modified:")
 for file in date_file_list:
     if os.path.isfile(file[1]):
         #folder, file_name = os.path.split(file[1])
-        file_date = time.strftime("%m/%d/%y %H:%M:%S", file[0])
+        file_date = time.strftime("%y/%m/%d %H:%M:%S", file[0])
         #print "%-40s %s" % (file_name, file_date)
-        print "%-40s %s" % (file[1], file_date)
+        print "%-50s %s" % (file[1], file_date)
