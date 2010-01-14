@@ -34,7 +34,7 @@ class ParissonMailLogger:
         self.user = 'logger'
         self.user_email = self.user + '@' + self.server
         self.smtp_server = smtplib.SMTP('localhost')
-        self.date = time.strftime("%a, %d %b %Y %H:%M:%S +0200", time.localtime())
+        self.date = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime())
         self.msg = self.date + ' : ' + self.service + ' has logged this information'
         self.mime_msg = MIMEMultipart()
         self.mime_msg['Subject'] = 'URGENT ! ' + self.server + ' : ' + self.service
