@@ -37,7 +37,7 @@ class ParissonMailLogger:
         self.date = time.strftime("%a, %d %b %Y %H:%M:%S +0200", time.localtime())
         self.msg = self.date + ' : ' + self.service + ' has logged this information'
         self.mime_msg = MIMEMultipart()
-        self.mime_msg['Subject'] = 'URGENT ! 'self.server + ' : ' + self.service
+        self.mime_msg['Subject'] = 'URGENT ! ' + self.server + ' : ' + self.service
         self.mime_msg['To'] = ', '.join(self.emails)
         self.mime_msg['From'] = self.user_email
         self.mime_txt = MIMEText(self.msg)
