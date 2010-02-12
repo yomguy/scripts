@@ -1,0 +1,3 @@
+#!/bin/sh
+
+rst2html -stg --stylesheet='lsr.css' --traceback tips.txt tips.html

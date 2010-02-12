@@ -1,0 +1,1058 @@
+==============================
+YomGuy's Linux Ultra Fast Tips
+==============================
+
+
+RENAME
+======
+rename more than  1 file ::
+
+ rename 's/\_wav_/\_/g' *.pdf
+ rename 's/\./\_/g' *.pdf; rename 's/\_pdf/\.pdf/' *
+
+
+REPLACE
+=======
+replace a string in a file::
+
+ sed -ie 's/old/new/' *.txt
+ sed -i -e 's/cellar/deefuzz/g' deefuzz_cellar_mp3_234.xml
+
+
+FIND & RM
+=========
+find and remove::
+
+    find ./ -iname "*.pyc" -exec rm {} \;
+    find . -name ".svn" -type d -exec rm -rf {} \;
+    find . -name 'test*' -mtime +30 -type f -print0 |xargs -0 rm -f
+
+FIND & CP
+=========
+find and copy some files::
+
+    find -iname *.pdf -exec cp \{\} /data/pellerin/castem/pdf/ \;
+
+
+FIND & LN
+=========
+
+find and link some files::
+
+    find /data/these/simuls/ -iname *.pdf > pdf.log -exec ln -s {} \;
+    find /home/momo/data/these/simuls/castax_isov_pdf/t02/* -iname *.pdf -exec ln -s {} \;
+
+
+FIND & RENAME
+==============
+_::
+
+    for i in ./*; do cd $i; rename 's/\./\_/g' *; cd ..; done
+    for i in ./*; do cd $i; rename 's/\_pdf/\.pdf/' *; cd ..; done
+
+
+FIND & MV
+=========
+_::
+
+    #isof=( 46_1 25_1 )
+    #isof=( 35 55 107 191 )
+    isof=( p_ c_ r_ vy_ vx_ tr_ hv_ hx_ hy_ )
+    #isof=( paxe vaxe iaxe v_sor p_sor p_ent v_ent t_par pp00 pp05 pp10 pp12 vp00
+    vp10 residus v_col p_col tpar ppar q- )
+    nf=${#isof[*]}
+    for (( j = 0; j <= ($nf - 1); j++ )); do
+    if [ ! -d ${isof[$j]} ]; then
+    mkdir ${isof[$j]}
+    fi
+    mv *${isof[$j]}* ${isof[$j]}
+    done
+
+
+SIX CHs:
+========
+_::
+
+    sudo chmod -R 664 *; sudo chmod -R +rX *
+
+
+LGRIND
+======
+_::
+
+    lgrind -i -lmatlab ttt.m > ttt.tex
+    lgrind -i -lf ttt.dgibi > ttt.tex
+
+ICONV
+=====
+_::
+
+    convmv -r --notest -f iso-8859-1 -t UTF-8 *
+
+EXPAND
+=======
+_::
+
+    expand -t4 acpi.py > acpi2.py
+
+OCR
+====
+_::
+
+    mogrify -format pbm *.png
+    for i in *.pbm; do ocrad --charset=iso-8859-15 -o $i.txt $i; done
+
+SOX
+=====
+_::
+
+    for i in *.wav; do sox $i -s -w $i.wav; mv $i.wav converted/$i; done
+
+CONVERT
+=======
+_::
+
+    convert -density 150x150 telecaster_video01.eps telecaster_video01.png
+    for i in `ls *.eps`; do convert -density 200x200 $i $i.png; done
+
+GCC
+===
+_::
+
+    gcc -Wall -o random rand2.c
+    gcc -Wall recapture.c -o recapture -ljack -lpthread -lrt -lsndfile
+
+HDPARM
+=======
+_::
+
+    sudo hdparm -c1 -d1 -a256 -u1 /dev/hdc
+
+
+DVDBACKUP:
+===========
+
+_::
+
+    dvdbackup -F -n DVD_TITLE -i/dev/dvd -o/home/karine/video/dvd/
+
+
+BEAGLE:
+=======
+_::
+
+    sudo apt-get install beagle; beagled --fg --debug
+    best
+
+
+UMOUNT (FORCE)
+==============
+_::
+
+    umount -l /dev/cdrom
+
+
+RAR
+===
+_::
+
+    rar a -m0 -v100000 CellarMixLive_050615_mp3.rar  CellarMixLive_050615_mp3.wav
+    rar a -m3 -v15000 Ce	llarMixLive_050615_mp3.rar  CellarMixLive_050615_mp3.wav
+
+
+SSH
+===
+_::
+    ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa
+
+Remote::
+
+    ssh -R 2222:localhost:22 parisson.com
+
+ECASOUND
+========
+ecasound -a:1 -i foo1.wav -a:2 -i foo2.wav -o jack_alsa
+cat f*.wav | ecasound -i stdin -o concat.wav
+
+
+APT
+===
+Le dï¿œpï¿œt maï¿œtre de chez debian
+
+wget http://ftp-master.debian.org/ziyi_key_2006.asc -O - | sudo apt-key add -
+
+-  Le dï¿œpï¿œt debian-marillat
+
+gpg --keyserver hkp://wwwkeys.eu.pgp.net --recv-keys 1F41B907
+gpg --armor --export 1F41B907 | sudo apt-key add -
+
+-  Le dï¿œpï¿œt volatile
+
+wget http://volatile.debian.net/ziyi-2005.asc -O - | sudo apt-key add -
+
+echo "deb http://debian.parisson.org binary/" | sudo tee -a /etc/apt/sources.list
+
+
+WAITING FOR PROCESS:
+======================
+_::
+
+    dt=10
+    prog1="psextract.sh"
+    prog2="/home/pellerin/castax/bin/psextract.sh /data/pellerin/castem/t02 8 /home/pellerin/castax_res/castax_isov_pdf/t02"
+
+    while [ ! -z `pgrep $prog1` ]; do
+    sleep $dt
+    date
+    echo "waiting for $prog1 to finish..."
+    done &&
+
+    echo "$prog1 finished, launching $prog2"
+    $prog2
+
+
+MYSQL:
+=======
+
+root pass:
+sudo /usr/bin/mysqladmin -u root password 'washnc.....'
+
+
+mysql> create database forum;
+mysql> GRANT ALL PRIVILEGES ON forum.* TO 'moderateur'@localhost
+mysql> identified by 'mot_de_passe_du_moderateur';
+
+
+The following will create a database named "intranet".
+
+mysqladmin -p create intranet
+
+Next, create the database user account that will be used to access the database.
+
+mysql -p --user=root intranet
+
+mysql> GRANT ALL PRIVILEGES ON *.* TO intranet@localhost
+IDENTIFIED BY 'webcal01' WITH GRANT OPTION;
+mysql> FLUSH PRIVILEGES;
+mysql> QUIT
+
+If you will be accessing MySQL from a different machine than the one running the web server, repeat the command above and replace 'localhost' with the hostname of the other machine.
+
+Create the calendar tables using the supplied tables-mysql.sql file:
+
+mysql -p intranet < tables-mysql.sql
+
+In the above example, "intranet" is the name of your database.
+
+CHANGE ROOT PASS
+ Alternativement, sur toutes les plate-formes, vous pouvez aussi choisir le nouveau mot de passe en utilisant le client mysql :
+
+   1. Stoppez et redï¿œmarrez mysqld avec l'option --skip-grant-tables comme dï¿œcrit plus haut.
+   2. Connectez vous au serveur mysqld avec :
+
+      shell> mysql -u root mysql
+
+   3. Exï¿œcutez la commande suivante dans le client mysql :
+
+      mysql> UPDATE user SET Password=PASSWORD('nouveaumotdepasse')
+          ->             WHERE User='root';
+      mysql> FLUSH PRIVILEGES;
+
+   4. Aprï¿œs cela, vous devriez pouvoir vous connecter avec le nouveau mot de passe.
+
+backup:
+    mysqldump -u username -p dbname table1 > dump.sql
+
+set value:
+    use novatix000501;
+    update div_royreport SET montant=0.0 ;
+
+
+TRANSCODE
+=========
+_::
+
+    ls -1 | grep .png > image_list.txt
+
+    transcode -i image_list.txt -x imlist,null -g 720x480 --use_rgb -z -y ffmpeg,null -F mpeg4 -o test1.avi -H 0 -f 29.97
+
+    transcode -z -M 2 -x v4l,v4l -i /dev/video0 --import_v4l 0,38 -p /dev/dsp -y xvid -o test.avi -w 1500 -e 32000 -E 44100 -b 96 -s 7 -c 0-250 -g 360x288 -j 0,4
+
+    ffmpeg -i video.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 1 bleriot11.wav
+
+
+KERNEL CUSTOM
+=============
+
+patch::
+
+    diff -uprN linux-2.6.15 linux-2.6.15-rt1 > patch-2.6.15-rt1-1
+    patch -p0 linux-2.6.15 > patch-2.6.15-rt1-1
+
+    api linux-source-2....
+    cd /usr/src/linux/
+
+Then run the following commands (please note that make dep is not needed any more for kernel 2.6)::
+
+    make-kpkg clean
+    fakeroot make-kpkg --revision=custom.1.0 --append-to-version=rt9.yomguy --initrd kernel_image kernel_headers modules_image
+
+ou::
+
+    fakeroot make-kpkg --append-to-version=.rt8-yomguy --initrd kernel_image kernel_headers modules_image
+
+If the compilation stops with an error, run::
+
+    make clean
+
+and then re-run the previous commands starting with::
+
+    make menuconfig
+
+Change the kernel configuration where the error occurs. If no error occurs you will find the new kernel as a Debian package called kernel-image-2.6.8.1_custom.1.0_i386.deb under /usr/src::
+
+    cd ../
+
+Now you have to install some packages that are needed by kernel 2.6. Add the following line to /etc/apt/sources.list::
+
+    deb http://www.backports.org/debian/ woody module-init-tools initrd-tools procps
+
+Then run::
+
+    apt-get update
+    apt-get install module-init-tools initrd-tools procps
+
+If you are asked the following question:
+"If you really want to remove modutils type 'yes':"
+type yes.
+
+It might also be necessary to update packages like bind9, quota, etc. - depending on your configuration. If you have problems with your existing packages try to get the appropriate package from www.backports.org.
+Install your new kernel::
+
+    dpkg -i kernel-image-2.6.8.1_custom.1.0_i386.deb
+
+Create a ramdisk of your new kernel (otherwise your system will most likely not boot)::
+
+    cd /boot/
+    mkinitrd -o /boot/initrd.img-2.6.8.1 2.6.8.1
+
+We are almost finished now. Edit the image=/vmlinuz stanza of your /etc/lilo.conf and add the line  initrd=/boot/initrd.img-2.6.8.1::
+
+    ###
+    # Boot up Linux by default.
+    #
+    default=Linux
+    #
+    image=/vmlinuz
+            label=Linux
+            read-only
+            initrd=/boot/initrd.img-2.6.8.1
+    #        restricted
+    #        alias=1
+    ###
+
+Run::
+
+    lilo
+
+to update your boot loader and reboot your machine::
+
+    shutdown -r now
+
+and if everything is ok your machine should come up with the new kernel. You can run::
+
+    uname -a
+
+
+SSH KEYS
+========
+
+www.linuxjournal.com/article/8400
+
+!! home user dir MUST be 770 !!
+
+
+
+GPG APT KEYS
+=============
+_::
+
+    sudo su
+    gpg --keyserver hkp://keyring.debian.org --recv-keys F1D53D8C4F368D5D
+    gpg --armor --export 010908312D230C5F | apt-key add -
+
+
+DEBMIRROR
+=========
+_::
+
+    wget http://ftp-master.debian.org/ziyi_key_2006.asc
+
+Avoir une partition avec de la place, par exemple /mnt/mirror (~20 Go)::
+
+    # apt-get install debmirror
+
+Pour crï¿œer / mettre ï¿œ jour le miroir (pour les 3 distribs, par exemple) :
+$ debmirror /mnt/mirror --arch=i386 --dist=woody,sarge,sid -h ftp.fr.debian.org --nosource --verbose --progress
+Ensuite, dans /etc/apt/sources.list :
+deb file:/mnt/mirror sid main non-free contrib
+Et ï¿œvidemment faire un apt-get update pour mettre ï¿œ jour.
+
+
+WIFI
+====
+
+kismet airsnort aircrack wmwave wpasupplicant kwirelessmonitor macchanger swscanner wavemon wireless-tools wifi-radar iwconfig iwlist
+
+
+ZOPE
+=====
+
+api python2.3-zodb
+
+Backup:
+python2.3 repozo.py -Bzv -r /nfs/place/where/backup/files/go  -f /path/to/Data.fs
+
+Recover
+python2.3 repozo.py -Rv -r /nfs/place/where/backup/files/go  -o /path/to/Data.fs
+
+ou
+
+Backup:/home/momo/data/tmp/test
+sudo python2.3 /usr/lib/zope2.8/bin/repozo.py -Bzv -r /home/momo/backups/parisson_zope -f  /var/lib/zope2.8/instance/parisson.com/var/Data.fs
+sudo python2.3 /usr/lib/zope2.7/bin/repozo.py -Bzv -r /home/momo/backups/ev/plone/ -f /var/lib/zope2.7/instance/plone_EV/var/Data.fs
+
+Recover:
+sudo python2.3 /usr/lib/zope2.8/bin/repozo.py -Rvz -r /home/momo/backups/parisson_zope -o /var/lib/zope2.8/instance/parisson.com/var/Data.fs
+sudo python2.3 /usr/lib/zope2.7/bin/repozo.py -Rvz -r /home/momo/backups/ev/plone -o  /var/lib/zope2.7/instance/plone_EV/var/Data.fs
+
+SHELL
+
+svn co http://svn.plone.org/svn/collective/dotipython/trunk/ipy_profile_zope.py .
+sudo su zope
+./bin/zopectl shell
+ipython2.4 -p zope
+
+>> for id,val in obj.objectItems():
+...     try: val.getId()
+...     except POSKeyError: break
+
+# "id" should now contain the id with the broken object.
+
+9. You can now delete the "bad" object:
+
+>> obj.manage_delObjects(id)
+>> get_transaction().commit()
+
+# The second line is necessary to save your change.
+
+10. In my case, I needed to re-create the bad user folder object:
+
+>> obj.manage_addUserFolder('acl_users')
+>> get_transaction().commit()
+
+If you needed to re-create a bad DTMLMethod, it would be something like:
+
+>> obj.manage_addDTMLMethod('method_id')
+>> get_transaction().commit()
+
+
+
+
+PLONE 3 / BUILDOUT
+===================
+_::
+
+    easy_install -U ZopeSkel
+    paster create --list-templates
+    paster create -t plone3_buildout myproject
+    cd myproject
+    python bootstrap.py
+    ./bin/buildout
+    vi buildout.cfg
+    ./bin/instance fg
+
+
+OV511
+=====
+_::
+
+    sudo modprobe ov511
+    sudo modprobe ovcamchip
+
+
+FUSERMOUNT
+==========
+_::
+
+    encfs /path/.test /path/test
+    (chmod 4755 /usr/bin/fusermount)
+    sudo mount -a
+    fusermount -u /path/test
+
+
+
+KERNEL REALTIME
+================
+_::
+
+    api realtime-lsm-source
+    sudo module-assistant
+    sudo modprobe realtime gid=29
+
+
+AWSTATS
+=======
+_::
+
+    sudo /usr/share/doc/awstats/examples/awstats_buildstaticpages.pl -update \
+    -config=/etc/awstats/awstats.conf \
+    -dir=/var/www/pypix.com/stats/ \
+    -awstatsprog=/usr/lib/cgi-bin/awstats.pl
+
+
+CSS
+====
+_::
+
+    #header { background: url(/images/main_header_bg.gif) repeat-x 0 0; line-height: 0.8;}
+
+
+GNUMP3D
+========
+song_format = $TRACK - $ARTIST - $ALBUM - $SONGNAME [ $GENRE - $LENGTH / $SIZE ] $NEW
+
+
+NVIDIA Debian
+=============
+_::
+
+    nvidia-installer --uninstall
+    apt-get install xserver-xorg-dev
+
+ou::
+
+    ./nvidia***.run --x-module-path=/usr/lib/xorg/modules/
+
+http://wiki.debian.org/NvidiaHowTo
+http://www.nvnews.net/vbulletin/showthread.php?t=75175
+ftp://download.nvidia.com/
+
+
+WAV 2 MODEM
+===========
+    _::
+    sox file00.wav -r 7200 file.wav
+    wavtopvf file.wav | pvftormd Rockwell 4 > standard.rmd
+
+
+PROXY
+=====
+apt::
+	export http-proxy=http://adresse_proxy:port_proxy
+	export "http_proxy=http://login:motdepasse@adresse_proxy:port_proxy"
+
+firefox::
+	foxyproxy
+
+
+COUNT
+======
+_::
+
+    ls -1 | wc -l
+
+
+PDF
+====
+_::
+    pdf2pdf
+    pdfrop --margins '5 10 5 20' --clip Annexe_equation.pdf Annexe_equation2.pdf
+
+
+FLUMOTION
+==========
+_::
+
+    sudo /usr/bin/flumotion-worker -D --daemonize-to /var/cache/flumotion -n default /etc/flumotion/workers/default.xml
+
+
+DOCBOK SGML2HTML
+================
+_::
+
+    db2html -o html telemeta.sgml
+
+
+EPSTOPDF
+=========
+_::
+
+    epstopdf sch_thev_1.ps
+    pdfcrop --margins '5 10 5 20' --clip sch_thev_1.pdf sch_thev_1.pdf
+
+
+DIFF
+====
+_::
+
+    diff -urNp ./  /home/momo/zope2.9/pre-barreau/Products/PloneTranslations/i18n/ > /home/momo/backups/pre-barreau/i18n.patch
+
+
+PYTHON
+=======
+_::
+    import time
+    time.strftime("%Y_%m_%d-%H_%M_%S")
+
+
+Exemple 10.6. openAnything ::
+
+
+    def openAnything(source):                  1
+        # try to open with urllib (if source is http, ftp, or file URL)
+        import urllib
+        try:
+            return urllib.urlopen(source)      2
+        except (IOError, OSError):
+            pass
+
+        # try to open with native open function (if source is pathname)
+        try:
+            return open(source)                3
+        except (IOError, OSError):
+            pass
+
+        # treat source as string
+        import StringIO
+        return StringIO.StringIO(str(source))  4
+
+
+
+JAVA
+====
+_::
+
+    fakeroot make-jpkg jre-1_5_0_11-linux-i586.bin
+    update-alternatives --config java
+
+
+DJANGO / TELEMETA
+==================
+_::
+    python manage.py syncdb
+    python manage.py sql telemeta
+    sqlite3 test.db
+    .list
+    .schema
+
+    ALTER TABLE "table_name"
+    [alter specification]
+
+[alter specification] is dependent on the type of alteration we wish to perform.
+For the uses cited above, the [alter specification] statements are:
+
+    * Add a column: ADD "column 1" "data type for column 1"
+    * Drop a column: DROP "column 1"
+    * Change a column name: CHANGE "old column name" "new column name" "data type for new column name"
+    * Change the data type for a column: MODIFY "column 1" "new data type"
+
+
+QUCS
+====
+_::
+
+    ps2epsi sch_exam_ex1.ps
+
+
+OGG2MP3
+=======
+_::
+
+    oggdec -o - test.ogg | lame -V 6 - test.mp3
+
+
+INSTALL DEBIAN SERVER
+=====================
+_::
+
+    sudo apt-get install apache2 php5 mysql-server postfix icecast2 zope2.9 libapache2-mod-php5 arno-iptables-firewall python htop munin munin-node fail2ban python-imaging python-zodb
+
+
+POUTRER UN SITE (!)
+===================
+_::
+
+    sudo /usr/sbin/ab -n 1000000 -c 100 http://www.redevanceculturelle.net/
+
+
+FTP RECURSIVE
+===============
+_::
+
+    yafc domain.com:/home
+    get -rp *
+
+WEP
+===
+_::
+
+    sudo airodump-ng --write yomix.cap --channel 9 eth1
+    sudo airodump-ng --write yomix.cap --bssid 00:14:A5:8B:AF:0A --channel 9 eth1
+    sudo aireplay-ng -3 -e yomix -a 00:0C:F1:3B:3D:B5 -b 00:0C:F1:3B:3D:B5 -h 00:0C:F1:3B:3D:B5 eth1
+    sudo aircrack-ng -z yomix.cap
+
+CHROOT
+======
+_::
+
+    chroot ./
+    mount -t proc none /proc
+
+SSL (apache)
+=============
+_::
+
+    sudo openssl genrsa -out privkey.pem 2048
+    sudo openssl req -new -key privkey.pem -config /etc/ssl/openssl.cnf -days 3650 -out cert.csr
+    cp server.key server.key.org
+    openssl rsa -in server.key.org -out server.key
+
+MENCODER
+========
+Mov to Flv
+
+Pour passer du format .mov ï¿œ .flv il suffit d'utiliser cette commande::
+
+    mencoder nom_de_la_video_encoder.mov -ofps 15 -ovc lavc -lavcopts vcodec=flv:acodec=mp3 -vop scale=largeur:hauteur -ffourcc FLV1 -oac mp3lame -o nom_de_sortie_de_la_video.flv
+
+(Note : Expliquer l'utilitï¿œ de -ofps xx)
+N'oublier pas de modifier la commande avec vos valeur de hauteur et de largeur .
+
+Mkv to Avi
+Pour passer du format .mkv ï¿œ .avi , il existe deux commande possible via mencoder::
+
+    mencoder nom_du_fichier.mkv -ovc copy -oac copy -o nom_du_fichier.avi
+
+    for fichier in `ls *.mkv`; do mencoder $fichier -ovc copy -oac copy -o $fichier.avi; done
+
+    mencoder -oac mp3lame -lameopts cbr=128 -ovc xvid -xvidencopts bitrate=900 nom_du_fichier.mkv -o nom_du_fichier_final.avi
+
+
+WIRED
+======
+_::
+
+    sudo apt-get install gettext cvs autotools-dev libxml2-dev libwxgtk2.6-dev wx-common libsoundtouch1-dev libsndfile1-dev libsamplerate0-dev dssi-dev libflac++-dev libvorbis-dev libasound2-dev
+
+    export LD_LIBRARY_PATH=/usr/local/lib
+
+DJANGO
+========
+
+RESET PASS
+Deep:/opt/webapps/invisible bruce$ ./manage.py shell
+Python 2.5 (r25:51918, Sep 19 2006, 08:49:13)
+Type "copyright", "credits" or "license" for more information.
+
+IPython 0.7.2 -- An enhanced Interactive Python.
+?       -> Introduction to IPython's features.
+%magic  -> Information about IPython's 'magic' % functions.
+help    -> Python's own help system.
+object? -> Details about 'object'. ?object also works, ?? prints more.
+
+In [1]: from django.contrib.auth.models import User
+
+In [2]: users = User.objects.all()
+
+In [3]: users
+Out[3]: [<User: admin>]
+
+In [4]: users[0].set_password('whatever');
+
+In [5]: users[0].save()
+
+TELEMETA IMPORT WAV
+===================
+_::
+    ./manage.py shell
+    from telemeta.models import MediaItem
+    MediaItem.objects.filter(id='BM.2006.002.001--25__01-01')
+    i = MediaItem.objects.get(id='BM.2006.002.001--25__01-01')
+    i.file=('items/2008/09/01/CNRSMH_2006_002_001_01.wav')
+    i.save()
+
+
+SVN
+====
+_::
+
+    svn propdel svn:executable mp3player.swf
+    svn merge -r 119:head http://svn.parisson.org/svn/deefuzz/trunk/
+
+DIFF
+====
+_::
+
+    diff -Naur olddir newdir > new-patch
+
+PATCH
+=====
+_::
+    patch -p0 <new-patch
+    patch -p1 <new-patch
+
+SVN
+====
+_::
+    svn-buildpackage --svn-builder="pdebuild --debsign-k yomguy@altern.org"
+
+ALIOTH
+=======
+_::
+    svn co svn+ssh://yomguy-guest@alioth.debian.org/svn/pkg-icecast/
+    http://alioth.debian.org/account/
+
+DEBUILD
+=========
+_::
+    svn-buildpackage --svn-builder="pdebuild --debsign-k yomguy@altern.org"
+
+MGE
+====
+ MGE UPS SYSTEMS distributes the PSP package for Debian GNU/Linux through the APT method.
+
+To install Personal Solution Pac on Debian or Ubuntu, add the following line in the "/etc/apt/sources.list"
+
+    * deb http://opensource.mgeups.com/stable/debian binary/
+
+Then, type the following commands, in a console as root:
+
+    * apt-get update
+    * apt-get install mgeups-psp
+
+Note that you can also use the graphical method through Synaptic, Adept, Kynaptic and Kpackage.
+
+Launch Personal Solution Pac from the menu "System" and enter the root password when prompted.
+
+FFMPEG DVDGRAB
+===============
+_::
+
+    ffmpeg2theora -f avi -x 320 -y 240 --deinterlace -v 4 -a -1 -o test.ogg video.avi
+
+    dvgrab --format raw - | ffmpeg2theora -f dv -x 320 -y 240 --deinterlace -v 4 -a -1 -o /dev/stdout | oggfwd yourserver yourport yourpass /yourmountpoint.ogg
+
+    sudo dvgrab - | vlc --no-sub-autodetect-file - :demux=rawdv ":sout=#transcode{vcodec=mp4v,vb=256,scale=1,deinterlace}:duplicate{dst=display,dst=std{access=http,mux=ts,dst=:1234}}"
+
+    dvgrab -buffers 1 - | ffmpeg -f dv -i - -f jack -i ffmpeg -vcodec libtheora -b 400k -s 768x480 -aspect 16:9 -acodec libvorbis -ab 64000 -f ogg - -map 0.0 -map 1.0 | oggfwd -d "pb_video_live" -g "Teaching"  -n "pb_video_live" localhost 8000 source2parisson /pb_video_live.ogg &
+    sleep 3
+    jack_connect jack_rack:out_1 ffmpeg:input_1
+    jack_connect jack_rack:out_2 ffmpeg:input_2
+
+
+TINYERP
+=======
+_::
+    sudo su - postgres -c "createdb -q --encoding=UNICODE parisson"
+    sudo su - postgres -c "createuser -q --createdb --adduser parisson"
+
+
+DEBIAN MUTIMEDIA
+==================
+cinelerra dvd-slideshow dvdrip libmjpegtools0 libquicktimehv mandvd mjpegtools ogmrip-mpeg pytube subtitleripper transcode
+
+RE
+==
+file:///home/momo/doc/python/diveintopython-5.4/html/regular_expressions/summary.html
+
+    * ^ reconnaï¿œt le dï¿œbut d'une chaï¿œne.
+    * $ reconnaï¿œt la fin d'une chaï¿œne.
+    * \b reconnaï¿œt la limite d'un mot.
+    * \d reconnaï¿œt un chiffre.
+    * \D reconnaï¿œt un caractï¿œre non-numï¿œrique.
+    * x? reconnaï¿œt un caractï¿œre x optionnel (autrement dit, il reconnaï¿œt un x zï¿œro ou une fois).
+    * x* reconnaï¿œt zï¿œro ou plus x.
+    * x+ reconnaï¿œt un ou plusieurs x.
+    * x{n,m} reconnaï¿œt un caractï¿œre x au moins n fois, mais pas plus de m fois.
+    * (a|b|c) reconnaï¿œt soit a soit b soit c.
+    * (x) en gï¿œnï¿œral est un groupe identifiï¿œ. Vous pouvez obtenir la valeur de ce qui a ï¿œtï¿œ reconnu ï¿œ l'aide de la mï¿œthode groups() de l'objet retournï¿œ par re.search.
+
+Patitions deefuzzer
+====================
+/boot   300 MB
+/       20 GB
+/home   136.7 GB
+swap    3 GB
+
+
+CLONING
+=======
+
+# On the MASTER machine
+
+# boot 300 Mo
+mkdir /mnt/sdb1
+# root 20 Go
+mkdir /mnt/sdb2
+# home 130 Go
+mkdir /mnt/sdb3
+
+_::
+    mount /dev/sdb1 /mnt/sdb1
+    mount /dev/sdb2 /mnt/sdb2
+    mount /dev/sdb3 /mnt/sdb3
+
+    rsync -a /boot/ /mnt/sdb1/
+    rsync -a /home/ /mnt/sdb3/
+    rsync -a --hard-links --one-file-system / /mnt/sdb2/
+
+#On the CLONED machine : boot with Debian Install CD::
+
+    mount /dev/sda2 /mnt
+    mount /dev/sda1 /mnt/boot
+    mount -o bind /dev /mnt/dev
+    mount -t proc none /mnt/proc
+    chroot /mnt
+    grub install /dev/sdb
+    exit
+
+# or ?::
+    grub-install /dev/sda
+        grub
+        root (hd0,1)
+        setup (hd0)
+    quit
+
+http://linux.derkeiler.com/Mailing-Lists/Debian/2008-05/msg01890.html
+
+# keep your packages::
+    sudo dpkg --get-selections > packages.txt
+    sudo dpkg --set-selections < packages.txt
+    sudo apt-get dselect-upgrade
+
+AMAROK
+=======
+libxine1-ffmpeg
+
+PLONE 3
+=========
+python2.4
+pil
+zodb
+elementree
+iw.fss ?
+
+RSYNC
+=====
+_::
+
+    rsync -ra --update
+    sudo rsync -a --include="*/" --include="*/Maildir/*"  --exclude="*" /home/ root@jimi.parisson.com:/home/tmp/
+
+
+SDPARM
+========
+_::
+
+    sdparm --command=ready /dev/sdc # check ready state
+    sdparm --command=start /dev/sdc # start a sleeping disk
+    sdparm --command=stop /dev/sdc # put a disk in standby
+    sdparm -al -f /dev/sdc # list all known mode flags
+    sdparm -6 -p po --clear=STANDBY /dev/sdc # turn off standby feature
+    sdparm -6 -p po --defaults /dev/sdc # establish it again
+
+ANDROID
+==========
+
+Tetherbot tunnel::
+
+    ./adb forward tcp:4444 localabstract:Tunnel
+
+    android create avd -n my_android1.5 -t 2
+    emulator -avd my_android1.5
+
+Running Scripts Externally
+
+Start python terminal::
+
+    $ adb forward tcp:4321 tcp:<AP_PORT>
+    $ export AP_PORT=4321
+
+    $ python2.6
+        Python 2.6
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> import android  # The ASE android.py module should be on your sys.path.
+        >>> droid = android.Android()
+        >>> droid.makeToast("Hello from my computer!")
+        >>> droid.speak('Hello')
+
+
+CONEXTANT
+=========
+_::
+
+    sh cnxtinstall.run -- --tty
+    pppd call free
+
+http://www.linuxant.com/drivers/hsf/full/archive/hsfmodem-7.80.02.04full/hsfmodem_7.80.02.04full_k2.6.28_13_server_ubuntu_i386.deb.zip
+
+
+
+FFMPEG H264 Android
+===================
+Convert a video to MP4 compatible with Android / Iphone::
+
+    ffmpeg -i inputfilename.ext -aspect 3:2 -s 480x320 -vcodec h264 -b 480k -r 23.976 -acodec aac -ab 96k -sameq -pass 1 outputfilename.mp4
+    Here is the command for a 4:3 aspect ratio video.
+    ffmpeg -i inputfilename.ext -aspect 3:2 -s 400x300 -vcodec h264 -b 480k -r 23.976 -acodec aac -ab 96k -padtop 10 -padbottom 10 -padleft 40 -padright 40 -sameq -pass 1 outputfilename.mp4
+    And here is the command for a 16:9 aspect ratio video.
+    ffmpeg -i inputfilename.ext -aspect 3:2 -s 480x270 -vcodec h264 -b 480k -r 23.976 -acodec aac -ab 96k -padtop 24 -padbottom 26 -sameq -pass 1 outputfilename.mp4
+
+Extracting all frames from a video file is easily achieved with FFmpeg.
+
+Here's a simple command line that will create 25 PNG images from every second of footage in the input DV file. The images will be saved in the current directory.::
+
+    ffmpeg -i input.dv -r 25 -f image2 images%05d.png
+
+The newly created files will all start with the word "images" and be numbered consecutively, including five pre-appended zeros. e.g. images000001.png.
+
+From a video that was 104 seconds long, for a random example, this command would create 2600 PNG files! Quite messy in the current directory, so instead use this command to save the files in a sub-directory called extracted_images::
+
+    ffmpeg -i input.dv -r 25 -f image2 extracted_images/images%05d.png
+
+Moving on, let's say you just wanted 25 frames from the first 1 second, then this line will work::
+
+    ffmpeg -i input.dv -r 25 -t 00:00:01 -f image2 images%05d.png
+
+The -t flag in FFmpeg specifies the length of time to transcode. This can either be in whole seconds or hh:mm:ss format.
+
+Making things a little more complex we can create images from all frames, beginning at the tenth second, and continuing for 5 seconds, with this line::
+
+    ffmpeg -i input.dv -r 25 -ss 00:00:10 -t 00:00:05 -f image2 images%05d.png
+
+The -ss flag is used to denote start position, again in whole seconds or hh:mm:ss format.
+
+Maybe extracting an image from every single frame in a video, resulting in a large number of output files, is not what you need. Here's how to create a single indicative poster frame, of the video clip, from the first second of footage::
+
+    ffmpeg -i input.dv -r 1  -t 00:00:01 -f image2 images%05d.png
+
+Notice that the -r flag is now set to 1.
+
+If you want the poster frame from a different part of the clip, then specify which second to take it from using the -ss tag, in conjunction with the line above.
+
+Lastly, if you wanted to create a thumbnail story board, showing action throughout the entire length of the video clip, you'll need to specify the output image dimensions. Use the following line::
+
+    ffmpeg -i input.dv -r 1 -f image2 -s 120x96 images%05d.png
+
+My original file was 720x576, so the image dimensions are a whole division of this.
+
+RST
+===
+reStructured text to HTML::
+
+    rst2html -stg tips.txt tips.html
+    rst2s5 --theme medium-black tips.txt tips.html
+    rst2html -stg --stylesheet="lsr.css" --traceback tips.txt tips.html
+
+http://rst2a.com/gallery/html/

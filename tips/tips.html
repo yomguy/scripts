@@ -1,0 +1,1298 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<title>YomGuy's Linux Ultra Fast Tips</title>
+<style type="text/css">
+
+/*
+Author: Peter Parente
+Date: 2008/01/22
+Version: 1.0
+Copyright: This stylesheet has been placed in the public domain - free to edit and use for all uses.
+*/
+
+body {
+  font: 100% sans-serif;
+  background: #ffffff;
+  color: black;
+  margin: 2em;
+  padding: 0em 2em;
+}
+
+p.topic-title {
+  font-weight: bold;
+}
+
+table.docinfo {
+  text-align: left;
+  margin: 2em 0em;
+}
+
+a[href] {
+  color: #436976;
+  background-color: transparent;
+}
+
+a.toc-backref {
+  text-decoration: none;
+}
+
+h1 a[href] {
+  color: #003a6b;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a.strong {
+  font-weight: bold;
+}
+
+img {
+  margin: 0;
+  border: 0;
+}
+
+p {
+  margin: 0.5em 0 1em 0;
+  line-height: 1.5em;
+}
+
+p a:visited {
+  color: purple;
+  background-color: transparent;
+}
+
+p a:active {
+  color: red;
+  background-color: transparent;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p img {
+  border: 0;
+  margin: 0;
+}
+
+p.rubric {
+  font-weight: bold;
+  font-style: italic;
+}
+
+h1.title {
+  color: #003a6b;
+  font-size: 250%;
+  margin-bottom: 0em;
+}
+
+h2.subtitle {
+  color: #003a6b;
+  border-bottom: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #555;
+  background-color: transparent;
+  margin: 0em;
+  padding-top: 0.5em;
+}
+
+h1 {
+  font-size: 160%;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #aaa;
+}
+
+h2 {
+  font-size: 140%;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #aaa;
+}
+
+h3 {
+  font-size: 130%;
+  margin-bottom: 0.5em;
+}
+
+h4 {
+  font-size: 110%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  font-size: 105%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h6 {
+  font-size: 100%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+dt {
+  font-style: italic;
+}
+
+dd {
+  margin-bottom: 1.5em;
+}
+
+div.admonition, div.note, div.tip, div.caution, div.important {
+  margin: 2em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+div.important {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+div.caution {
+  background: transparent url('../images/caution.png') 10px 2px no-repeat;
+}
+
+div.note {
+  background: transparent url('../images/note.png') 10px 2px no-repeat;
+}
+
+div.tip {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-example {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-critical-example {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+p.admonition-title {
+  font-weight: bold;
+  border-bottom: 1px solid #aaa;
+  padding-left: 30px;
+}
+
+table.docutils {
+  text-align: left;
+  border: 1px solid gray;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0em;
+}
+
+table.docutils caption {
+  font-style: italic;
+}
+
+table.docutils td, table.docutils th {
+  padding: 0.25em 0.5em;
+}
+
+table.docutils th {
+  background-color: #dddddd;
+}
+
+div.sidebar {
+  width: 33%;
+  float: right;
+  margin: 0em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+p.sidebar-title {
+  margin-bottom: 0em;
+  color: #003a6b;
+  border-bottom: 1px solid #aaa;
+  font-weight: bold;
+}
+
+p.sidebar-subtitle {
+  margin-top: 0em;
+  font-style: italic;
+  color: #003a6b;
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="yomguy-s-linux-ultra-fast-tips">
+<h1 class="title">YomGuy's Linux Ultra Fast Tips</h1>
+
+<div class="section" id="rename">
+<h1>RENAME</h1>
+<p>rename more than  1 file</p>
+<pre class="literal-block">
+rename 's/\_wav_/\_/g' *.pdf
+rename 's/\./\_/g' *.pdf; rename 's/\_pdf/\.pdf/' *
+</pre>
+</div>
+<div class="section" id="replace">
+<h1>REPLACE</h1>
+<p>replace a string in a file:</p>
+<pre class="literal-block">
+sed -ie 's/old/new/' *.txt
+sed -i -e 's/cellar/deefuzz/g' deefuzz_cellar_mp3_234.xml
+</pre>
+</div>
+<div class="section" id="find-rm">
+<h1>FIND &amp; RM</h1>
+<p>find and remove:</p>
+<pre class="literal-block">
+find ./ -iname &quot;*.pyc&quot; -exec rm {} \;
+find . -name &quot;.svn&quot; -type d -exec rm -rf {} \;
+find . -name 'test*' -mtime +30 -type f -print0 |xargs -0 rm -f
+</pre>
+</div>
+<div class="section" id="find-cp">
+<h1>FIND &amp; CP</h1>
+<p>find and copy some files:</p>
+<pre class="literal-block">
+find -iname *.pdf -exec cp \{\} /data/pellerin/castem/pdf/ \;
+</pre>
+</div>
+<div class="section" id="find-ln">
+<h1>FIND &amp; LN</h1>
+<p>find and link some files:</p>
+<pre class="literal-block">
+find /data/these/simuls/ -iname *.pdf &gt; pdf.log -exec ln -s {} \;
+find /home/momo/data/these/simuls/castax_isov_pdf/t02/* -iname *.pdf -exec ln -s {} \;
+</pre>
+</div>
+<div class="section" id="find-rename">
+<h1>FIND &amp; RENAME</h1>
+<p>_:</p>
+<pre class="literal-block">
+for i in ./*; do cd $i; rename 's/\./\_/g' *; cd ..; done
+for i in ./*; do cd $i; rename 's/\_pdf/\.pdf/' *; cd ..; done
+</pre>
+</div>
+<div class="section" id="find-mv">
+<h1>FIND &amp; MV</h1>
+<p>_:</p>
+<pre class="literal-block">
+#isof=( 46_1 25_1 )
+#isof=( 35 55 107 191 )
+isof=( p_ c_ r_ vy_ vx_ tr_ hv_ hx_ hy_ )
+#isof=( paxe vaxe iaxe v_sor p_sor p_ent v_ent t_par pp00 pp05 pp10 pp12 vp00
+vp10 residus v_col p_col tpar ppar q- )
+nf=${#isof[*]}
+for (( j = 0; j &lt;= ($nf - 1); j++ )); do
+if [ ! -d ${isof[$j]} ]; then
+mkdir ${isof[$j]}
+fi
+mv *${isof[$j]}* ${isof[$j]}
+done
+</pre>
+</div>
+<div class="section" id="six-chs">
+<h1>SIX CHs:</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo chmod -R 664 *; sudo chmod -R +rX *
+</pre>
+</div>
+<div class="section" id="lgrind">
+<h1>LGRIND</h1>
+<p>_:</p>
+<pre class="literal-block">
+lgrind -i -lmatlab ttt.m &gt; ttt.tex
+lgrind -i -lf ttt.dgibi &gt; ttt.tex
+</pre>
+</div>
+<div class="section" id="iconv">
+<h1>ICONV</h1>
+<p>_:</p>
+<pre class="literal-block">
+convmv -r --notest -f iso-8859-1 -t UTF-8 *
+</pre>
+</div>
+<div class="section" id="expand">
+<h1>EXPAND</h1>
+<p>_:</p>
+<pre class="literal-block">
+expand -t4 acpi.py &gt; acpi2.py
+</pre>
+</div>
+<div class="section" id="ocr">
+<h1>OCR</h1>
+<p>_:</p>
+<pre class="literal-block">
+mogrify -format pbm *.png
+for i in *.pbm; do ocrad --charset=iso-8859-15 -o $i.txt $i; done
+</pre>
+</div>
+<div class="section" id="sox">
+<h1>SOX</h1>
+<p>_:</p>
+<pre class="literal-block">
+for i in *.wav; do sox $i -s -w $i.wav; mv $i.wav converted/$i; done
+</pre>
+</div>
+<div class="section" id="convert">
+<h1>CONVERT</h1>
+<p>_:</p>
+<pre class="literal-block">
+convert -density 150x150 telecaster_video01.eps telecaster_video01.png
+for i in `ls *.eps`; do convert -density 200x200 $i $i.png; done
+</pre>
+</div>
+<div class="section" id="gcc">
+<h1>GCC</h1>
+<p>_:</p>
+<pre class="literal-block">
+gcc -Wall -o random rand2.c
+gcc -Wall recapture.c -o recapture -ljack -lpthread -lrt -lsndfile
+</pre>
+</div>
+<div class="section" id="hdparm">
+<h1>HDPARM</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo hdparm -c1 -d1 -a256 -u1 /dev/hdc
+</pre>
+</div>
+<div class="section" id="dvdbackup">
+<h1>DVDBACKUP:</h1>
+<p>_:</p>
+<pre class="literal-block">
+dvdbackup -F -n DVD_TITLE -i/dev/dvd -o/home/karine/video/dvd/
+</pre>
+</div>
+<div class="section" id="beagle">
+<h1>BEAGLE:</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo apt-get install beagle; beagled --fg --debug
+best
+</pre>
+</div>
+<div class="section" id="umount-force">
+<h1>UMOUNT (FORCE)</h1>
+<p>_:</p>
+<pre class="literal-block">
+umount -l /dev/cdrom
+</pre>
+</div>
+<div class="section" id="rar">
+<h1>RAR</h1>
+<p>_:</p>
+<pre class="literal-block">
+rar a -m0 -v100000 CellarMixLive_050615_mp3.rar  CellarMixLive_050615_mp3.wav
+rar a -m3 -v15000 Ce        llarMixLive_050615_mp3.rar  CellarMixLive_050615_mp3.wav
+</pre>
+</div>
+<div class="section" id="ssh">
+<h1>SSH</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa</dd>
+</dl>
+<p>Remote:</p>
+<pre class="literal-block">
+ssh -R 2222:localhost:22 parisson.com
+</pre>
+</div>
+<div class="section" id="ecasound">
+<h1>ECASOUND</h1>
+<p>ecasound -a:1 -i foo1.wav -a:2 -i foo2.wav -o jack_alsa
+cat f*.wav | ecasound -i stdin -o concat.wav</p>
+</div>
+<div class="section" id="apt">
+<h1>APT</h1>
+<p>Le dï¿œpï¿œt maï¿œtre de chez debian</p>
+<p>wget <a class="reference external" href="http://ftp-master.debian.org/ziyi_key_2006.asc">http://ftp-master.debian.org/ziyi_key_2006.asc</a> -O - | sudo apt-key add -</p>
+<ul class="simple">
+<li>Le dï¿œpï¿œt debian-marillat</li>
+</ul>
+<p>gpg --keyserver hkp://wwwkeys.eu.pgp.net --recv-keys 1F41B907
+gpg --armor --export 1F41B907 | sudo apt-key add -</p>
+<ul class="simple">
+<li>Le dï¿œpï¿œt volatile</li>
+</ul>
+<p>wget <a class="reference external" href="http://volatile.debian.net/ziyi-2005.asc">http://volatile.debian.net/ziyi-2005.asc</a> -O - | sudo apt-key add -</p>
+<p>echo &quot;deb <a class="reference external" href="http://debian.parisson.org">http://debian.parisson.org</a> binary/&quot; | sudo tee -a /etc/apt/sources.list</p>
+</div>
+<div class="section" id="waiting-for-process">
+<h1>WAITING FOR PROCESS:</h1>
+<p>_:</p>
+<pre class="literal-block">
+dt=10
+prog1=&quot;psextract.sh&quot;
+prog2=&quot;/home/pellerin/castax/bin/psextract.sh /data/pellerin/castem/t02 8 /home/pellerin/castax_res/castax_isov_pdf/t02&quot;
+
+while [ ! -z `pgrep $prog1` ]; do
+sleep $dt
+date
+echo &quot;waiting for $prog1 to finish...&quot;
+done &amp;&amp;
+
+echo &quot;$prog1 finished, launching $prog2&quot;
+$prog2
+</pre>
+</div>
+<div class="section" id="mysql">
+<h1>MYSQL:</h1>
+<p>root pass:
+sudo /usr/bin/mysqladmin -u root password 'washnc.....'</p>
+<p>mysql&gt; create database forum;
+mysql&gt; GRANT ALL PRIVILEGES ON forum.* TO <a class="reference external" href="mailto:'moderateur'&#64;localhost">'moderateur'&#64;localhost</a>
+mysql&gt; identified by 'mot_de_passe_du_moderateur';</p>
+<p>The following will create a database named &quot;intranet&quot;.</p>
+<p>mysqladmin -p create intranet</p>
+<p>Next, create the database user account that will be used to access the database.</p>
+<p>mysql -p --user=root intranet</p>
+<p>mysql&gt; GRANT ALL PRIVILEGES ON <em>.</em> TO <a class="reference external" href="mailto:intranet&#64;localhost">intranet&#64;localhost</a>
+IDENTIFIED BY 'webcal01' WITH GRANT OPTION;
+mysql&gt; FLUSH PRIVILEGES;
+mysql&gt; QUIT</p>
+<p>If you will be accessing MySQL from a different machine than the one running the web server, repeat the command above and replace 'localhost' with the hostname of the other machine.</p>
+<p>Create the calendar tables using the supplied tables-mysql.sql file:</p>
+<p>mysql -p intranet &lt; tables-mysql.sql</p>
+<p>In the above example, &quot;intranet&quot; is the name of your database.</p>
+<dl class="docutils">
+<dt>CHANGE ROOT PASS</dt>
+<dd><p class="first">Alternativement, sur toutes les plate-formes, vous pouvez aussi choisir le nouveau mot de passe en utilisant le client mysql :</p>
+<blockquote class="last">
+<ol class="arabic">
+<li><p class="first">Stoppez et redï¿œmarrez mysqld avec l'option --skip-grant-tables comme dï¿œcrit plus haut.</p>
+</li>
+<li><p class="first">Connectez vous au serveur mysqld avec :</p>
+<p>shell&gt; mysql -u root mysql</p>
+</li>
+<li><p class="first">Exï¿œcutez la commande suivante dans le client mysql :</p>
+<dl class="docutils">
+<dt>mysql&gt; UPDATE user SET Password=PASSWORD('nouveaumotdepasse')</dt>
+<dd><p class="first last">-&gt;             WHERE User='root';</p>
+</dd>
+</dl>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 259)</p>
+<p>Definition list ends without a blank line; unexpected unindent.</p>
+</div>
+<p>mysql&gt; FLUSH PRIVILEGES;</p>
+</li>
+<li><p class="first">Aprï¿œs cela, vous devriez pouvoir vous connecter avec le nouveau mot de passe.</p>
+</li>
+</ol>
+</blockquote>
+</dd>
+<dt>backup:</dt>
+<dd>mysqldump -u username -p dbname table1 &gt; dump.sql</dd>
+<dt>set value:</dt>
+<dd>use novatix000501;
+update div_royreport SET montant=0.0 ;</dd>
+</dl>
+</div>
+<div class="section" id="transcode">
+<h1>TRANSCODE</h1>
+<p>_:</p>
+<pre class="literal-block">
+ls -1 | grep .png &gt; image_list.txt
+
+transcode -i image_list.txt -x imlist,null -g 720x480 --use_rgb -z -y ffmpeg,null -F mpeg4 -o test1.avi -H 0 -f 29.97
+
+transcode -z -M 2 -x v4l,v4l -i /dev/video0 --import_v4l 0,38 -p /dev/dsp -y xvid -o test.avi -w 1500 -e 32000 -E 44100 -b 96 -s 7 -c 0-250 -g 360x288 -j 0,4
+
+ffmpeg -i video.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 1 bleriot11.wav
+</pre>
+</div>
+<div class="section" id="kernel-custom">
+<h1>KERNEL CUSTOM</h1>
+<p>patch:</p>
+<pre class="literal-block">
+diff -uprN linux-2.6.15 linux-2.6.15-rt1 &gt; patch-2.6.15-rt1-1
+patch -p0 linux-2.6.15 &gt; patch-2.6.15-rt1-1
+
+api linux-source-2....
+cd /usr/src/linux/
+</pre>
+<p>Then run the following commands (please note that make dep is not needed any more for kernel 2.6):</p>
+<pre class="literal-block">
+make-kpkg clean
+fakeroot make-kpkg --revision=custom.1.0 --append-to-version=rt9.yomguy --initrd kernel_image kernel_headers modules_image
+</pre>
+<p>ou:</p>
+<pre class="literal-block">
+fakeroot make-kpkg --append-to-version=.rt8-yomguy --initrd kernel_image kernel_headers modules_image
+</pre>
+<p>If the compilation stops with an error, run:</p>
+<pre class="literal-block">
+make clean
+</pre>
+<p>and then re-run the previous commands starting with:</p>
+<pre class="literal-block">
+make menuconfig
+</pre>
+<p>Change the kernel configuration where the error occurs. If no error occurs you will find the new kernel as a Debian package called kernel-image-2.6.8.1_custom.1.0_i386.deb under /usr/src:</p>
+<pre class="literal-block">
+cd ../
+</pre>
+<p>Now you have to install some packages that are needed by kernel 2.6. Add the following line to /etc/apt/sources.list:</p>
+<pre class="literal-block">
+deb http://www.backports.org/debian/ woody module-init-tools initrd-tools procps
+</pre>
+<p>Then run:</p>
+<pre class="literal-block">
+apt-get update
+apt-get install module-init-tools initrd-tools procps
+</pre>
+<p>If you are asked the following question:
+&quot;If you really want to remove modutils type 'yes':&quot;
+type yes.</p>
+<p>It might also be necessary to update packages like bind9, quota, etc. - depending on your configuration. If you have problems with your existing packages try to get the appropriate package from www.backports.org.
+Install your new kernel:</p>
+<pre class="literal-block">
+dpkg -i kernel-image-2.6.8.1_custom.1.0_i386.deb
+</pre>
+<p>Create a ramdisk of your new kernel (otherwise your system will most likely not boot):</p>
+<pre class="literal-block">
+cd /boot/
+mkinitrd -o /boot/initrd.img-2.6.8.1 2.6.8.1
+</pre>
+<p>We are almost finished now. Edit the image=/vmlinuz stanza of your /etc/lilo.conf and add the line  initrd=/boot/initrd.img-2.6.8.1:</p>
+<pre class="literal-block">
+###
+# Boot up Linux by default.
+#
+default=Linux
+#
+image=/vmlinuz
+        label=Linux
+        read-only
+        initrd=/boot/initrd.img-2.6.8.1
+#        restricted
+#        alias=1
+###
+</pre>
+<p>Run:</p>
+<pre class="literal-block">
+lilo
+</pre>
+<p>to update your boot loader and reboot your machine:</p>
+<pre class="literal-block">
+shutdown -r now
+</pre>
+<p>and if everything is ok your machine should come up with the new kernel. You can run:</p>
+<pre class="literal-block">
+uname -a
+</pre>
+</div>
+<div class="section" id="ssh-keys">
+<h1>SSH KEYS</h1>
+<p>www.linuxjournal.com/article/8400</p>
+<p>!! home user dir MUST be 770 !!</p>
+</div>
+<div class="section" id="gpg-apt-keys">
+<h1>GPG APT KEYS</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo su
+gpg --keyserver hkp://keyring.debian.org --recv-keys F1D53D8C4F368D5D
+gpg --armor --export 010908312D230C5F | apt-key add -
+</pre>
+</div>
+<div class="section" id="debmirror">
+<h1>DEBMIRROR</h1>
+<p>_:</p>
+<pre class="literal-block">
+wget http://ftp-master.debian.org/ziyi_key_2006.asc
+</pre>
+<p>Avoir une partition avec de la place, par exemple /mnt/mirror (~20 Go):</p>
+<pre class="literal-block">
+# apt-get install debmirror
+</pre>
+<p>Pour crï¿œer / mettre ï¿œ jour le miroir (pour les 3 distribs, par exemple) :
+$ debmirror /mnt/mirror --arch=i386 --dist=woody,sarge,sid -h ftp.fr.debian.org --nosource --verbose --progress
+Ensuite, dans /etc/apt/sources.list :
+deb <a class="reference external" href="file:/mnt/mirror">file:/mnt/mirror</a> sid main non-free contrib
+Et ï¿œvidemment faire un apt-get update pour mettre ï¿œ jour.</p>
+</div>
+<div class="section" id="wifi">
+<h1>WIFI</h1>
+<p>kismet airsnort aircrack wmwave wpasupplicant kwirelessmonitor macchanger swscanner wavemon wireless-tools wifi-radar iwconfig iwlist</p>
+</div>
+<div class="section" id="zope">
+<h1>ZOPE</h1>
+<p>api python2.3-zodb</p>
+<p>Backup:
+python2.3 repozo.py -Bzv -r /nfs/place/where/backup/files/go  -f /path/to/Data.fs</p>
+<p>Recover
+python2.3 repozo.py -Rv -r /nfs/place/where/backup/files/go  -o /path/to/Data.fs</p>
+<p>ou</p>
+<p>Backup:/home/momo/data/tmp/test
+sudo python2.3 /usr/lib/zope2.8/bin/repozo.py -Bzv -r /home/momo/backups/parisson_zope -f  /var/lib/zope2.8/instance/parisson.com/var/Data.fs
+sudo python2.3 /usr/lib/zope2.7/bin/repozo.py -Bzv -r /home/momo/backups/ev/plone/ -f /var/lib/zope2.7/instance/plone_EV/var/Data.fs</p>
+<p>Recover:
+sudo python2.3 /usr/lib/zope2.8/bin/repozo.py -Rvz -r /home/momo/backups/parisson_zope -o /var/lib/zope2.8/instance/parisson.com/var/Data.fs
+sudo python2.3 /usr/lib/zope2.7/bin/repozo.py -Rvz -r /home/momo/backups/ev/plone -o  /var/lib/zope2.7/instance/plone_EV/var/Data.fs</p>
+<p>SHELL</p>
+<p>svn co <a class="reference external" href="http://svn.plone.org/svn/collective/dotipython/trunk/ipy_profile_zope.py">http://svn.plone.org/svn/collective/dotipython/trunk/ipy_profile_zope.py</a> .
+sudo su zope
+./bin/zopectl shell
+ipython2.4 -p zope</p>
+<p>&gt;&gt; for id,val in obj.objectItems():
+...     try: val.getId()
+...     except POSKeyError: break</p>
+<p># &quot;id&quot; should now contain the id with the broken object.</p>
+<ol class="arabic simple" start="9">
+<li>You can now delete the &quot;bad&quot; object:</li>
+</ol>
+<p>&gt;&gt; obj.manage_delObjects(id)
+&gt;&gt; get_transaction().commit()</p>
+<p># The second line is necessary to save your change.</p>
+<ol class="arabic simple" start="10">
+<li>In my case, I needed to re-create the bad user folder object:</li>
+</ol>
+<p>&gt;&gt; obj.manage_addUserFolder('acl_users')
+&gt;&gt; get_transaction().commit()</p>
+<p>If you needed to re-create a bad DTMLMethod, it would be something like:</p>
+<p>&gt;&gt; obj.manage_addDTMLMethod('method_id')
+&gt;&gt; get_transaction().commit()</p>
+</div>
+<div class="section" id="plone-3-buildout">
+<h1>PLONE 3 / BUILDOUT</h1>
+<p>_:</p>
+<pre class="literal-block">
+easy_install -U ZopeSkel
+paster create --list-templates
+paster create -t plone3_buildout myproject
+cd myproject
+python bootstrap.py
+./bin/buildout
+vi buildout.cfg
+./bin/instance fg
+</pre>
+</div>
+<div class="section" id="ov511">
+<h1>OV511</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo modprobe ov511
+sudo modprobe ovcamchip
+</pre>
+</div>
+<div class="section" id="fusermount">
+<h1>FUSERMOUNT</h1>
+<p>_:</p>
+<pre class="literal-block">
+encfs /path/.test /path/test
+(chmod 4755 /usr/bin/fusermount)
+sudo mount -a
+fusermount -u /path/test
+</pre>
+</div>
+<div class="section" id="kernel-realtime">
+<h1>KERNEL REALTIME</h1>
+<p>_:</p>
+<pre class="literal-block">
+api realtime-lsm-source
+sudo module-assistant
+sudo modprobe realtime gid=29
+</pre>
+</div>
+<div class="section" id="awstats">
+<h1>AWSTATS</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo /usr/share/doc/awstats/examples/awstats_buildstaticpages.pl -update \
+-config=/etc/awstats/awstats.conf \
+-dir=/var/www/pypix.com/stats/ \
+-awstatsprog=/usr/lib/cgi-bin/awstats.pl
+</pre>
+</div>
+<div class="section" id="css">
+<h1>CSS</h1>
+<p>_:</p>
+<pre class="literal-block">
+#header { background: url(/images/main_header_bg.gif) repeat-x 0 0; line-height: 0.8;}
+</pre>
+</div>
+<div class="section" id="gnump3d">
+<h1>GNUMP3D</h1>
+<p>song_format = $TRACK - $ARTIST - $ALBUM - $SONGNAME [ $GENRE - $LENGTH / $SIZE ] $NEW</p>
+</div>
+<div class="section" id="nvidia-debian">
+<h1>NVIDIA Debian</h1>
+<p>_:</p>
+<pre class="literal-block">
+nvidia-installer --uninstall
+apt-get install xserver-xorg-dev
+</pre>
+<p>ou:</p>
+<pre class="literal-block">
+./nvidia***.run --x-module-path=/usr/lib/xorg/modules/
+</pre>
+<p><a class="reference external" href="http://wiki.debian.org/NvidiaHowTo">http://wiki.debian.org/NvidiaHowTo</a>
+<a class="reference external" href="http://www.nvnews.net/vbulletin/showthread.php?t=75175">http://www.nvnews.net/vbulletin/showthread.php?t=75175</a>
+<a class="reference external" href="ftp://download.nvidia.com/">ftp://download.nvidia.com/</a></p>
+</div>
+<div class="section" id="wav-2-modem">
+<h1>WAV 2 MODEM</h1>
+<blockquote>
+_::
+sox file00.wav -r 7200 file.wav
+wavtopvf file.wav | pvftormd Rockwell 4 &gt; standard.rmd</blockquote>
+</div>
+<div class="section" id="proxy">
+<h1>PROXY</h1>
+<dl class="docutils">
+<dt>apt::</dt>
+<dd>export http-proxy=http://adresse_proxy:port_proxy
+export &quot;http_proxy=http://login:motdepasse&#64;adresse_proxy:port_proxy&quot;</dd>
+<dt>firefox::</dt>
+<dd>foxyproxy</dd>
+</dl>
+</div>
+<div class="section" id="count">
+<h1>COUNT</h1>
+<p>_:</p>
+<pre class="literal-block">
+ls -1 | wc -l
+</pre>
+</div>
+<div class="section" id="pdf">
+<h1>PDF</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>pdf2pdf
+pdfrop --margins '5 10 5 20' --clip Annexe_equation.pdf Annexe_equation2.pdf</dd>
+</dl>
+</div>
+<div class="section" id="flumotion">
+<h1>FLUMOTION</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo /usr/bin/flumotion-worker -D --daemonize-to /var/cache/flumotion -n default /etc/flumotion/workers/default.xml
+</pre>
+</div>
+<div class="section" id="docbok-sgml2html">
+<h1>DOCBOK SGML2HTML</h1>
+<p>_:</p>
+<pre class="literal-block">
+db2html -o html telemeta.sgml
+</pre>
+</div>
+<div class="section" id="epstopdf">
+<h1>EPSTOPDF</h1>
+<p>_:</p>
+<pre class="literal-block">
+epstopdf sch_thev_1.ps
+pdfcrop --margins '5 10 5 20' --clip sch_thev_1.pdf sch_thev_1.pdf
+</pre>
+</div>
+<div class="section" id="diff">
+<h1>DIFF</h1>
+<p>_:</p>
+<pre class="literal-block">
+diff -urNp ./  /home/momo/zope2.9/pre-barreau/Products/PloneTranslations/i18n/ &gt; /home/momo/backups/pre-barreau/i18n.patch
+</pre>
+</div>
+<div class="section" id="python">
+<h1>PYTHON</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>import time
+time.strftime(&quot;%Y_%m_%d-%H_%M_%S&quot;)</dd>
+</dl>
+<p>Exemple 10.6. openAnything</p>
+<pre class="literal-block">
+def openAnything(source):                  1
+    # try to open with urllib (if source is http, ftp, or file URL)
+    import urllib
+    try:
+        return urllib.urlopen(source)      2
+    except (IOError, OSError):
+        pass
+
+    # try to open with native open function (if source is pathname)
+    try:
+        return open(source)                3
+    except (IOError, OSError):
+        pass
+
+    # treat source as string
+    import StringIO
+    return StringIO.StringIO(str(source))  4
+</pre>
+</div>
+<div class="section" id="java">
+<h1>JAVA</h1>
+<p>_:</p>
+<pre class="literal-block">
+fakeroot make-jpkg jre-1_5_0_11-linux-i586.bin
+update-alternatives --config java
+</pre>
+</div>
+<div class="section" id="django-telemeta">
+<h1>DJANGO / TELEMETA</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd><p class="first">python manage.py syncdb
+python manage.py sql telemeta
+sqlite3 test.db
+.list
+.schema</p>
+<p class="last">ALTER TABLE &quot;table_name&quot;
+[alter specification]</p>
+</dd>
+</dl>
+<p>[alter specification] is dependent on the type of alteration we wish to perform.
+For the uses cited above, the [alter specification] statements are:</p>
+<blockquote>
+<ul class="simple">
+<li>Add a column: ADD &quot;column 1&quot; &quot;data type for column 1&quot;</li>
+<li>Drop a column: DROP &quot;column 1&quot;</li>
+<li>Change a column name: CHANGE &quot;old column name&quot; &quot;new column name&quot; &quot;data type for new column name&quot;</li>
+<li>Change the data type for a column: MODIFY &quot;column 1&quot; &quot;new data type&quot;</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="qucs">
+<h1>QUCS</h1>
+<p>_:</p>
+<pre class="literal-block">
+ps2epsi sch_exam_ex1.ps
+</pre>
+</div>
+<div class="section" id="ogg2mp3">
+<h1>OGG2MP3</h1>
+<p>_:</p>
+<pre class="literal-block">
+oggdec -o - test.ogg | lame -V 6 - test.mp3
+</pre>
+</div>
+<div class="section" id="install-debian-server">
+<h1>INSTALL DEBIAN SERVER</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo apt-get install apache2 php5 mysql-server postfix icecast2 zope2.9 libapache2-mod-php5 arno-iptables-firewall python htop munin munin-node fail2ban python-imaging python-zodb
+</pre>
+</div>
+<div class="section" id="poutrer-un-site">
+<h1>POUTRER UN SITE (!)</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo /usr/sbin/ab -n 1000000 -c 100 http://www.redevanceculturelle.net/
+</pre>
+</div>
+<div class="section" id="ftp-recursive">
+<h1>FTP RECURSIVE</h1>
+<p>_:</p>
+<pre class="literal-block">
+yafc domain.com:/home
+get -rp *
+</pre>
+</div>
+<div class="section" id="wep">
+<h1>WEP</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo airodump-ng --write yomix.cap --channel 9 eth1
+sudo airodump-ng --write yomix.cap --bssid 00:14:A5:8B:AF:0A --channel 9 eth1
+sudo aireplay-ng -3 -e yomix -a 00:0C:F1:3B:3D:B5 -b 00:0C:F1:3B:3D:B5 -h 00:0C:F1:3B:3D:B5 eth1
+sudo aircrack-ng -z yomix.cap
+</pre>
+</div>
+<div class="section" id="chroot">
+<h1>CHROOT</h1>
+<p>_:</p>
+<pre class="literal-block">
+chroot ./
+mount -t proc none /proc
+</pre>
+</div>
+<div class="section" id="ssl-apache">
+<h1>SSL (apache)</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo openssl genrsa -out privkey.pem 2048
+sudo openssl req -new -key privkey.pem -config /etc/ssl/openssl.cnf -days 3650 -out cert.csr
+cp server.key server.key.org
+openssl rsa -in server.key.org -out server.key
+</pre>
+</div>
+<div class="section" id="mencoder">
+<h1>MENCODER</h1>
+<p>Mov to Flv</p>
+<p>Pour passer du format .mov ï¿œ .flv il suffit d'utiliser cette commande:</p>
+<pre class="literal-block">
+mencoder nom_de_la_video_encoder.mov -ofps 15 -ovc lavc -lavcopts vcodec=flv:acodec=mp3 -vop scale=largeur:hauteur -ffourcc FLV1 -oac mp3lame -o nom_de_sortie_de_la_video.flv
+</pre>
+<p>(Note : Expliquer l'utilitï¿œ de -ofps xx)
+N'oublier pas de modifier la commande avec vos valeur de hauteur et de largeur .</p>
+<p>Mkv to Avi
+Pour passer du format .mkv ï¿œ .avi , il existe deux commande possible via mencoder:</p>
+<pre class="literal-block">
+mencoder nom_du_fichier.mkv -ovc copy -oac copy -o nom_du_fichier.avi
+
+for fichier in `ls *.mkv`; do mencoder $fichier -ovc copy -oac copy -o $fichier.avi; done
+
+mencoder -oac mp3lame -lameopts cbr=128 -ovc xvid -xvidencopts bitrate=900 nom_du_fichier.mkv -o nom_du_fichier_final.avi
+</pre>
+</div>
+<div class="section" id="wired">
+<h1>WIRED</h1>
+<p>_:</p>
+<pre class="literal-block">
+sudo apt-get install gettext cvs autotools-dev libxml2-dev libwxgtk2.6-dev wx-common libsoundtouch1-dev libsndfile1-dev libsamplerate0-dev dssi-dev libflac++-dev libvorbis-dev libasound2-dev
+
+export LD_LIBRARY_PATH=/usr/local/lib
+</pre>
+</div>
+<div class="section" id="django">
+<h1>DJANGO</h1>
+<p>RESET PASS
+Deep:/opt/webapps/invisible bruce$ ./manage.py shell
+Python 2.5 (r25:51918, Sep 19 2006, 08:49:13)
+Type &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</p>
+<p>IPython 0.7.2 -- An enhanced Interactive Python.
+?       -&gt; Introduction to IPython's features.
+%magic  -&gt; Information about IPython's 'magic' % functions.
+help    -&gt; Python's own help system.
+object? -&gt; Details about 'object'. ?object also works, ?? prints more.</p>
+<p>In [1]: from django.contrib.auth.models import User</p>
+<p>In [2]: users = User.objects.all()</p>
+<p>In [3]: users
+Out[3]: [&lt;User: admin&gt;]</p>
+<p>In [4]: users[0].set_password('whatever');</p>
+<p>In [5]: users[0].save()</p>
+</div>
+<div class="section" id="telemeta-import-wav">
+<h1>TELEMETA IMPORT WAV</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>./manage.py shell
+from telemeta.models import MediaItem
+MediaItem.objects.filter(id='BM.2006.002.001--25__01-01')
+i = MediaItem.objects.get(id='BM.2006.002.001--25__01-01')
+i.file=('items/2008/09/01/CNRSMH_2006_002_001_01.wav')
+i.save()</dd>
+</dl>
+</div>
+<div class="section" id="svn">
+<h1>SVN</h1>
+<p>_:</p>
+<pre class="literal-block">
+svn propdel svn:executable mp3player.swf
+svn merge -r 119:head http://svn.parisson.org/svn/deefuzz/trunk/
+</pre>
+</div>
+<div class="section" id="id1">
+<h1>DIFF</h1>
+<p>_:</p>
+<pre class="literal-block">
+diff -Naur olddir newdir &gt; new-patch
+</pre>
+</div>
+<div class="section" id="patch">
+<h1>PATCH</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>patch -p0 &lt;new-patch
+patch -p1 &lt;new-patch</dd>
+</dl>
+</div>
+<div class="section" id="id2">
+<h1>SVN</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>svn-buildpackage --svn-builder=&quot;pdebuild --debsign-k <a class="reference external" href="mailto:yomguy&#64;altern.org">yomguy&#64;altern.org</a>&quot;</dd>
+</dl>
+</div>
+<div class="section" id="alioth">
+<h1>ALIOTH</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>svn co svn+ssh://yomguy-guest&#64;alioth.debian.org/svn/pkg-icecast/
+http://alioth.debian.org/account/</dd>
+</dl>
+</div>
+<div class="section" id="debuild">
+<h1>DEBUILD</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>svn-buildpackage --svn-builder=&quot;pdebuild --debsign-k <a class="reference external" href="mailto:yomguy&#64;altern.org">yomguy&#64;altern.org</a>&quot;</dd>
+</dl>
+</div>
+<div class="section" id="mge">
+<h1>MGE</h1>
+<blockquote>
+MGE UPS SYSTEMS distributes the PSP package for Debian GNU/Linux through the APT method.</blockquote>
+<p>To install Personal Solution Pac on Debian or Ubuntu, add the following line in the &quot;/etc/apt/sources.list&quot;</p>
+<blockquote>
+<ul class="simple">
+<li>deb <a class="reference external" href="http://opensource.mgeups.com/stable/debian">http://opensource.mgeups.com/stable/debian</a> binary/</li>
+</ul>
+</blockquote>
+<p>Then, type the following commands, in a console as root:</p>
+<blockquote>
+<ul class="simple">
+<li>apt-get update</li>
+<li>apt-get install mgeups-psp</li>
+</ul>
+</blockquote>
+<p>Note that you can also use the graphical method through Synaptic, Adept, Kynaptic and Kpackage.</p>
+<p>Launch Personal Solution Pac from the menu &quot;System&quot; and enter the root password when prompted.</p>
+</div>
+<div class="section" id="ffmpeg-dvdgrab">
+<h1>FFMPEG DVDGRAB</h1>
+<p>_:</p>
+<pre class="literal-block">
+ffmpeg2theora -f avi -x 320 -y 240 --deinterlace -v 4 -a -1 -o test.ogg video.avi
+
+dvgrab --format raw - | ffmpeg2theora -f dv -x 320 -y 240 --deinterlace -v 4 -a -1 -o /dev/stdout | oggfwd yourserver yourport yourpass /yourmountpoint.ogg
+
+sudo dvgrab - | vlc --no-sub-autodetect-file - :demux=rawdv &quot;:sout=#transcode{vcodec=mp4v,vb=256,scale=1,deinterlace}:duplicate{dst=display,dst=std{access=http,mux=ts,dst=:1234}}&quot;
+
+dvgrab -buffers 1 - | ffmpeg -f dv -i - -f jack -i ffmpeg -vcodec libtheora -b 400k -s 768x480 -aspect 16:9 -acodec libvorbis -ab 64000 -f ogg - -map 0.0 -map 1.0 | oggfwd -d &quot;pb_video_live&quot; -g &quot;Teaching&quot;  -n &quot;pb_video_live&quot; localhost 8000 source2parisson /pb_video_live.ogg &amp;
+sleep 3
+jack_connect jack_rack:out_1 ffmpeg:input_1
+jack_connect jack_rack:out_2 ffmpeg:input_2
+</pre>
+</div>
+<div class="section" id="tinyerp">
+<h1>TINYERP</h1>
+<dl class="docutils">
+<dt>_::</dt>
+<dd>sudo su - postgres -c &quot;createdb -q --encoding=UNICODE parisson&quot;
+sudo su - postgres -c &quot;createuser -q --createdb --adduser parisson&quot;</dd>
+</dl>
+</div>
+<div class="section" id="debian-mutimedia">
+<h1>DEBIAN MUTIMEDIA</h1>
+<p>cinelerra dvd-slideshow dvdrip libmjpegtools0 libquicktimehv mandvd mjpegtools ogmrip-mpeg pytube subtitleripper transcode</p>
+</div>
+<div class="section" id="re">
+<h1>RE</h1>
+<p><a class="reference external" href="file:///home/momo/doc/python/diveintopython-5.4/html/regular_expressions/summary.html">file:///home/momo/doc/python/diveintopython-5.4/html/regular_expressions/summary.html</a></p>
+<blockquote>
+<ul class="simple">
+<li>^ reconnaï¿œt le dï¿œbut d'une chaï¿œne.</li>
+<li>$ reconnaï¿œt la fin d'une chaï¿œne.</li>
+<li>b reconnaï¿œt la limite d'un mot.</li>
+<li>d reconnaï¿œt un chiffre.</li>
+<li>D reconnaï¿œt un caractï¿œre non-numï¿œrique.</li>
+<li>x? reconnaï¿œt un caractï¿œre x optionnel (autrement dit, il reconnaï¿œt un x zï¿œro ou une fois).</li>
+<li>x* reconnaï¿œt zï¿œro ou plus x.</li>
+<li>x+ reconnaï¿œt un ou plusieurs x.</li>
+<li>x{n,m} reconnaï¿œt un caractï¿œre x au moins n fois, mais pas plus de m fois.</li>
+<li>(a|b|c) reconnaï¿œt soit a soit b soit c.</li>
+<li><ol class="first loweralpha" start="24">
+<li>en gï¿œnï¿œral est un groupe identifiï¿œ. Vous pouvez obtenir la valeur de ce qui a ï¿œtï¿œ reconnu ï¿œ l'aide de la mï¿œthode groups() de l'objet retournï¿œ par re.search.</li>
+</ol>
+</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="patitions-deefuzzer">
+<h1>Patitions deefuzzer</h1>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">/boot</span></kbd></td>
+<td>300 MB</td></tr>
+</tbody>
+</table>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 884)</p>
+Option list ends without a blank line; unexpected unindent.</div>
+<p>/       20 GB
+/home   136.7 GB
+swap    3 GB</p>
+</div>
+<div class="section" id="cloning">
+<h1>CLONING</h1>
+<p># On the MASTER machine</p>
+<p># boot 300 Mo
+mkdir /mnt/sdb1
+# root 20 Go
+mkdir /mnt/sdb2
+# home 130 Go
+mkdir /mnt/sdb3</p>
+<dl class="docutils">
+<dt>_::</dt>
+<dd><p class="first">mount /dev/sdb1 /mnt/sdb1
+mount /dev/sdb2 /mnt/sdb2
+mount /dev/sdb3 /mnt/sdb3</p>
+<p class="last">rsync -a /boot/ /mnt/sdb1/
+rsync -a /home/ /mnt/sdb3/
+rsync -a --hard-links --one-file-system / /mnt/sdb2/</p>
+</dd>
+</dl>
+<p>#On the CLONED machine : boot with Debian Install CD:</p>
+<pre class="literal-block">
+mount /dev/sda2 /mnt
+mount /dev/sda1 /mnt/boot
+mount -o bind /dev /mnt/dev
+mount -t proc none /mnt/proc
+chroot /mnt
+grub install /dev/sdb
+exit
+</pre>
+<dl class="docutils">
+<dt># or ?::</dt>
+<dd><dl class="first docutils">
+<dt>grub-install /dev/sda</dt>
+<dd>grub
+root (hd0,1)
+setup (hd0)</dd>
+</dl>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 925)</p>
+Definition list ends without a blank line; unexpected unindent.</div>
+<p class="last">quit</p>
+</dd>
+</dl>
+<p><a class="reference external" href="http://linux.derkeiler.com/Mailing-Lists/Debian/2008-05/msg01890.html">http://linux.derkeiler.com/Mailing-Lists/Debian/2008-05/msg01890.html</a></p>
+<dl class="docutils">
+<dt># keep your packages::</dt>
+<dd>sudo dpkg --get-selections &gt; packages.txt
+sudo dpkg --set-selections &lt; packages.txt
+sudo apt-get dselect-upgrade</dd>
+</dl>
+</div>
+<div class="section" id="amarok">
+<h1>AMAROK</h1>
+<p>libxine1-ffmpeg</p>
+</div>
+<div class="section" id="plone-3">
+<h1>PLONE 3</h1>
+<p>python2.4
+pil
+zodb
+elementree
+iw.fss ?</p>
+</div>
+<div class="section" id="rsync">
+<h1>RSYNC</h1>
+<p>_:</p>
+<pre class="literal-block">
+rsync -ra --update
+sudo rsync -a --include=&quot;*/&quot; --include=&quot;*/Maildir/*&quot;  --exclude=&quot;*&quot; /home/ root&#64;jimi.parisson.com:/home/tmp/
+</pre>
+</div>
+<div class="section" id="sdparm">
+<h1>SDPARM</h1>
+<p>_:</p>
+<pre class="literal-block">
+sdparm --command=ready /dev/sdc # check ready state
+sdparm --command=start /dev/sdc # start a sleeping disk
+sdparm --command=stop /dev/sdc # put a disk in standby
+sdparm -al -f /dev/sdc # list all known mode flags
+sdparm -6 -p po --clear=STANDBY /dev/sdc # turn off standby feature
+sdparm -6 -p po --defaults /dev/sdc # establish it again
+</pre>
+</div>
+<div class="section" id="android">
+<h1>ANDROID</h1>
+<p>Tetherbot tunnel:</p>
+<pre class="literal-block">
+./adb forward tcp:4444 localabstract:Tunnel
+
+android create avd -n my_android1.5 -t 2
+emulator -avd my_android1.5
+</pre>
+<p>Running Scripts Externally</p>
+<p>Start python terminal:</p>
+<pre class="literal-block">
+$ adb forward tcp:4321 tcp:&lt;AP_PORT&gt;
+$ export AP_PORT=4321
+
+$ python2.6
+    Python 2.6
+    Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+    &gt;&gt;&gt; import android  # The ASE android.py module should be on your sys.path.
+    &gt;&gt;&gt; droid = android.Android()
+    &gt;&gt;&gt; droid.makeToast(&quot;Hello from my computer!&quot;)
+    &gt;&gt;&gt; droid.speak('Hello')
+</pre>
+</div>
+<div class="section" id="conextant">
+<h1>CONEXTANT</h1>
+<p>_:</p>
+<pre class="literal-block">
+sh cnxtinstall.run -- --tty
+pppd call free
+</pre>
+<p><a class="reference external" href="http://www.linuxant.com/drivers/hsf/full/archive/hsfmodem-7.80.02.04full/hsfmodem_7.80.02.04full_k2.6.28_13_server_ubuntu_i386.deb.zip">http://www.linuxant.com/drivers/hsf/full/archive/hsfmodem-7.80.02.04full/hsfmodem_7.80.02.04full_k2.6.28_13_server_ubuntu_i386.deb.zip</a></p>
+</div>
+<div class="section" id="ffmpeg-h264-android">
+<h1>FFMPEG H264 Android</h1>
+<p>Convert a video to MP4 compatible with Android / Iphone:</p>
+<pre class="literal-block">
+ffmpeg -i inputfilename.ext -aspect 3:2 -s 480x320 -vcodec h264 -b 480k -r 23.976 -acodec aac -ab 96k -sameq -pass 1 outputfilename.mp4
+Here is the command for a 4:3 aspect ratio video.
+ffmpeg -i inputfilename.ext -aspect 3:2 -s 400x300 -vcodec h264 -b 480k -r 23.976 -acodec aac -ab 96k -padtop 10 -padbottom 10 -padleft 40 -padright 40 -sameq -pass 1 outputfilename.mp4
+And here is the command for a 16:9 aspect ratio video.
+ffmpeg -i inputfilename.ext -aspect 3:2 -s 480x270 -vcodec h264 -b 480k -r 23.976 -acodec aac -ab 96k -padtop 24 -padbottom 26 -sameq -pass 1 outputfilename.mp4
+</pre>
+<p>Extracting all frames from a video file is easily achieved with FFmpeg.</p>
+<p>Here's a simple command line that will create 25 PNG images from every second of footage in the input DV file. The images will be saved in the current directory.:</p>
+<pre class="literal-block">
+ffmpeg -i input.dv -r 25 -f image2 images%05d.png
+</pre>
+<p>The newly created files will all start with the word &quot;images&quot; and be numbered consecutively, including five pre-appended zeros. e.g. images000001.png.</p>
+<p>From a video that was 104 seconds long, for a random example, this command would create 2600 PNG files! Quite messy in the current directory, so instead use this command to save the files in a sub-directory called extracted_images:</p>
+<pre class="literal-block">
+ffmpeg -i input.dv -r 25 -f image2 extracted_images/images%05d.png
+</pre>
+<p>Moving on, let's say you just wanted 25 frames from the first 1 second, then this line will work:</p>
+<pre class="literal-block">
+ffmpeg -i input.dv -r 25 -t 00:00:01 -f image2 images%05d.png
+</pre>
+<p>The -t flag in FFmpeg specifies the length of time to transcode. This can either be in whole seconds or hh:mm:ss format.</p>
+<p>Making things a little more complex we can create images from all frames, beginning at the tenth second, and continuing for 5 seconds, with this line:</p>
+<pre class="literal-block">
+ffmpeg -i input.dv -r 25 -ss 00:00:10 -t 00:00:05 -f image2 images%05d.png
+</pre>
+<p>The -ss flag is used to denote start position, again in whole seconds or hh:mm:ss format.</p>
+<p>Maybe extracting an image from every single frame in a video, resulting in a large number of output files, is not what you need. Here's how to create a single indicative poster frame, of the video clip, from the first second of footage:</p>
+<pre class="literal-block">
+ffmpeg -i input.dv -r 1  -t 00:00:01 -f image2 images%05d.png
+</pre>
+<p>Notice that the -r flag is now set to 1.</p>
+<p>If you want the poster frame from a different part of the clip, then specify which second to take it from using the -ss tag, in conjunction with the line above.</p>
+<p>Lastly, if you wanted to create a thumbnail story board, showing action throughout the entire length of the video clip, you'll need to specify the output image dimensions. Use the following line:</p>
+<pre class="literal-block">
+ffmpeg -i input.dv -r 1 -f image2 -s 120x96 images%05d.png
+</pre>
+<p>My original file was 720x576, so the image dimensions are a whole division of this.</p>
+</div>
+<div class="section" id="rst">
+<h1>RST</h1>
+<p>reStructured text to HTML:</p>
+<pre class="literal-block">
+rst2html -stg tips.txt tips.html
+rst2s5 --theme medium-black tips.txt tips.html
+rst2html -stg --stylesheet=&quot;lsr.css&quot; --traceback tips.txt tips.html
+</pre>
+<p><a class="reference external" href="http://rst2a.com/gallery/html/">http://rst2a.com/gallery/html/</a></p>
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+<a class="reference external" href="tips.txt">View document source</a>.
+Generated on: 2010-02-12 09:25 UTC.
+Generated by <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
+
+</div>
+</body>
+</html>
