@@ -1,6 +1,9 @@
-==============================
-YomGuy's Linux Ultra Fast Tips
-==============================
+################################
+# YomGuy's Linux Ultra Fast Tips
+################################
+======================================
+YomGuy's Linux Ultra Fast Tips (1/1)
+======================================
 
 
 RENAME
@@ -107,6 +110,8 @@ SOX
 _::
 
     for i in *.wav; do sox $i -s -w $i.wav; mv $i.wav converted/$i; done
+    sox Jano_B-Homosapiens.mp3 -r 44100 -b 16 -s -t wav - | flac - -o Jano_B-Homosapiens.flac
+
 
 CONVERT
 =======
@@ -114,6 +119,10 @@ _::
 
     convert -density 150x150 telecaster_video01.eps telecaster_video01.png
     for i in `ls *.eps`; do convert -density 200x200 $i $i.png; done
+
+crop::
+    convert waveform_homosapiens.png -crop 100x50% waveform_homosapiens2.png
+    http://www.imagemagick.org/Usage/crop/#crop_percent
 
 GCC
 ===
@@ -279,6 +288,8 @@ _::
     transcode -z -M 2 -x v4l,v4l -i /dev/video0 --import_v4l 0,38 -p /dev/dsp -y xvid -o test.avi -w 1500 -e 32000 -E 44100 -b 96 -s 7 -c 0-250 -g 360x288 -j 0,4
 
     ffmpeg -i video.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 1 bleriot11.wav
+
+    ffmpeg -ss 80 -t 10 -i test_xvid.avi -f flv -vcodec flv -vb 500k -ab 96k -ar 44100 -y test.flv
 
 
 KERNEL CUSTOM
@@ -790,6 +801,12 @@ _::
     svn propdel svn:executable mp3player.swf
     svn merge -r 119:head http://svn.parisson.org/svn/deefuzz/trunk/
 
+    svn propedit svn:externals .
+
+        deefuzzer http://svn.parisson.org/svn/deefuzzer/trunk
+
+
+
 DIFF
 ====
 _::
@@ -1056,3 +1073,22 @@ reStructured text to HTML::
     rst2html -stg --stylesheet="lsr.css" --traceback tips.txt tips.html
 
 http://rst2a.com/gallery/html/
+
+
+TELEMETA
+========
+
+apply the same wav file for all items (mysql)::
+
+    update media_items set filename = 'items/test.wav';
+
+
+FUNIONFS
+========
+merge multiple dirs ::
+
+    funionfs -o dirs=1001:mama -o allow_other NONE media
+
+
+
+

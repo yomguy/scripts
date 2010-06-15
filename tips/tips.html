@@ -4,235 +4,289 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
-<title>YomGuy's Linux Ultra Fast Tips</title>
+<title># YomGuy's Linux Ultra Fast Tips</title>
 <style type="text/css">
 
 /*
-Author: Peter Parente
-Date: 2008/01/22
-Version: 1.0
-Copyright: This stylesheet has been placed in the public domain - free to edit and use for all uses.
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5196 2007-06-03 20:25:28Z wiemann $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
 */
 
-body {
-  font: 100% sans-serif;
-  background: #ffffff;
-  color: black;
-  margin: 2em;
-  padding: 0em 2em;
-}
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
 
-p.topic-title {
-  font-weight: bold;
-}
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
 
-table.docinfo {
-  text-align: left;
-  margin: 2em 0em;
-}
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
 
-a[href] {
-  color: #436976;
-  background-color: transparent;
-}
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
 
 a.toc-backref {
-  text-decoration: none;
-}
+  text-decoration: none ;
+  color: black }
 
-h1 a[href] {
-  color: #003a6b;
-  text-decoration: none;
-  background-color: transparent;
-}
+blockquote.epigraph {
+  margin: 2em 5em ; }
 
-a.strong {
-  font-weight: bold;
-}
+dl.docutils dd {
+  margin-bottom: 0.5em }
 
-img {
-  margin: 0;
-  border: 0;
-}
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
 
-p {
-  margin: 0.5em 0 1em 0;
-  line-height: 1.5em;
-}
+div.abstract {
+  margin: 2em 5em }
 
-p a:visited {
-  color: purple;
-  background-color: transparent;
-}
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
 
-p a:active {
-  color: red;
-  background-color: transparent;
-}
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
 
-a:hover {
-  text-decoration: none;
-}
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
 
-p img {
-  border: 0;
-  margin: 0;
-}
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
 
-p.rubric {
-  font-weight: bold;
-  font-style: italic;
-}
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
 
-h1.title {
-  color: #003a6b;
-  font-size: 250%;
-  margin-bottom: 0em;
-}
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
 
-h2.subtitle {
-  color: #003a6b;
-  border-bottom: 0px;
-}
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
 
-h1, h2, h3, h4, h5, h6 {
-  color: #555;
-  background-color: transparent;
-  margin: 0em;
-  padding-top: 0.5em;
-}
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
 
-h1 {
-  font-size: 160%;
-  margin-bottom: 0.5em;
-  border-bottom: 2px solid #aaa;
-}
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
 
-h2 {
-  font-size: 140%;
-  margin-bottom: 0.5em;
-  border-bottom: 1px solid #aaa;
-}
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
 
-h3 {
-  font-size: 130%;
-  margin-bottom: 0.5em;
-}
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
 
-h4 {
-  font-size: 110%;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-h5 {
-  font-size: 105%;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-h6 {
-  font-size: 100%;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-}
-
-dt {
-  font-style: italic;
-}
-
-dd {
-  margin-bottom: 1.5em;
-}
-
-div.admonition, div.note, div.tip, div.caution, div.important {
-  margin: 2em 2em;
-  padding: 0em 1em;
-  border-top: 1px solid #aaa;
-  border-left: 1px solid #aaa;
-  border-bottom: 2px solid #555;
-  border-right: 2px solid #555;
-}
-
-div.important {
-  background: transparent url('../images/important.png') 10px 2px no-repeat;
-}
-
-div.caution {
-  background: transparent url('../images/caution.png') 10px 2px no-repeat;
-}
-
-div.note {
-  background: transparent url('../images/note.png') 10px 2px no-repeat;
-}
-
-div.tip {
-  background: transparent url('../images/tip.png') 10px 2px no-repeat;
-}
-
-div.admonition-example {
-  background: transparent url('../images/tip.png') 10px 2px no-repeat;
-}
-
-div.admonition-critical-example {
-  background: transparent url('../images/important.png') 10px 2px no-repeat;
-}
-
-p.admonition-title {
-  font-weight: bold;
-  border-bottom: 1px solid #aaa;
-  padding-left: 30px;
-}
-
-table.docutils {
-  text-align: left;
-  border: 1px solid gray;
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1.5em 0em;
-}
-
-table.docutils caption {
-  font-style: italic;
-}
-
-table.docutils td, table.docutils th {
-  padding: 0.25em 0.5em;
-}
-
-table.docutils th {
-  background-color: #dddddd;
-}
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
 
 div.sidebar {
-  width: 33%;
-  float: right;
-  margin: 0em 2em;
-  padding: 0em 1em;
-  border-top: 1px solid #aaa;
-  border-left: 1px solid #aaa;
-  border-bottom: 2px solid #555;
-  border-right: 2px solid #555;
-}
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
 
 p.sidebar-title {
-  margin-bottom: 0em;
-  color: #003a6b;
-  border-bottom: 1px solid #aaa;
-  font-weight: bold;
-}
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
 
 p.sidebar-subtitle {
-  margin-top: 0em;
-  font-style: italic;
-  color: #003a6b;
-}
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
 
 </style>
 </head>
 <body>
 <div class="document" id="yomguy-s-linux-ultra-fast-tips">
-<h1 class="title">YomGuy's Linux Ultra Fast Tips</h1>
+<h1 class="title"># YomGuy's Linux Ultra Fast Tips</h1>
+<h2 class="subtitle" id="yomguy-s-linux-ultra-fast-tips-1-1">YomGuy's Linux Ultra Fast Tips (1/1)</h2>
 
 <div class="section" id="rename">
 <h1>RENAME</h1>
@@ -482,7 +536,7 @@ mysql&gt; QUIT</p>
 </dd>
 </dl>
 <div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 259)</p>
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 262)</p>
 <p>Definition list ends without a blank line; unexpected unindent.</p>
 </div>
 <p>mysql&gt; FLUSH PRIVILEGES;</p>
@@ -510,6 +564,8 @@ transcode -i image_list.txt -x imlist,null -g 720x480 --use_rgb -z -y ffmpeg,nul
 transcode -z -M 2 -x v4l,v4l -i /dev/video0 --import_v4l 0,38 -p /dev/dsp -y xvid -o test.avi -w 1500 -e 32000 -E 44100 -b 96 -s 7 -c 0-250 -g 360x288 -j 0,4
 
 ffmpeg -i video.mp4 -vn -acodec pcm_s16le -ar 44100 -ac 1 bleriot11.wav
+
+ffmpeg -ss 80 -t 10 -i test_xvid.avi -f flv -vcodec flv -vb 500k -ab 96k -ar 44100 -y test.flv
 </pre>
 </div>
 <div class="section" id="kernel-custom">
@@ -1112,7 +1168,7 @@ sudo su - postgres -c &quot;createuser -q --createdb --adduser parisson&quot;</d
 </tbody>
 </table>
 <div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 884)</p>
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 889)</p>
 Option list ends without a blank line; unexpected unindent.</div>
 <p>/       20 GB
 /home   136.7 GB
@@ -1156,7 +1212,7 @@ root (hd0,1)
 setup (hd0)</dd>
 </dl>
 <div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 925)</p>
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 930)</p>
 Definition list ends without a blank line; unexpected unindent.</div>
 <p class="last">quit</p>
 </dd>
@@ -1286,13 +1342,13 @@ rst2html -stg --stylesheet=&quot;lsr.css&quot; --traceback tips.txt tips.html
 </pre>
 <p><a class="reference external" href="http://rst2a.com/gallery/html/">http://rst2a.com/gallery/html/</a></p>
 </div>
+<div class="section" id="telemeta">
+<h1>TELEMETA</h1>
+<p>apply the same wav file for all items (mysql):</p>
+<pre class="literal-block">
+update media_items set filename = 'items/test.wav';
+</pre>
 </div>
-<div class="footer">
-<hr class="footer" />
-<a class="reference external" href="tips.txt">View document source</a>.
-Generated on: 2010-02-12 09:25 UTC.
-Generated by <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
-
 </div>
 </body>
 </html>

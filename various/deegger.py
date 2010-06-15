@@ -50,7 +50,7 @@ def prog_info():
 
  Depends on:
     python, python-simplejson
- 
+
  Usage :
     $ ./deegger.py FORMAT TEXT M3U_DIR
 
@@ -81,8 +81,8 @@ class DeeGGer(Thread):
             os.makedirs(self.m3u_dir)
         self.m3u_file = self.m3u_dir + os.sep + 'deegger_' + self.text.replace('/', '_') + '.' + self.format + '.m3u'
         self.m3u = M3UPlaylist(self.m3u_file)
-             
-        self.n = range(0,128)
+
+        self.n = 4
         self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
         #self.media_q = 'intitle:"index.of" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery' % (self.format, self.format, self.format)
         self.q = '%s %s' % (self.text, self.media_q)
@@ -90,7 +90,7 @@ class DeeGGer(Thread):
 
     def google_search(self):
         results = []
-        for j in self.n:
+        for j in range(0,self.n):
             page = str(j*4)
             query = urllib.urlencode({'q' : self.q, 'start': page})
             url = 'http://ajax.googleapis.com/ajax/services/search/web?v=1.0&%s' % (query)
@@ -105,9 +105,22 @@ class DeeGGer(Thread):
         return results
 
     def run(self):
+        print self.results
+        print len(self.results)
+        i = 0
+        parsers = []
+        media_list = []
         for result in self.results:
-            m = UrlMediaParser(self.format, self.text, result, self.m3u)
-            m.start()
+            if result:
+                parsers.append(UrlMediaParser(self.format, self.text, result))
+                try:
+                    list = parsers[i].start()
+                    if list:
+                        i += 1
+                    self.m3u.put(list)
+                except:
+                    continue
+        self.m3u.close()
 
 
 class M3UPlaylist:
@@ -116,12 +129,13 @@ class M3UPlaylist:
         self.m3u_file = m3u_file
         self.m3u = open(self.m3u_file, 'w')
         self.init_m3u()
-        
+
     def init_m3u(self):
         self.m3u.write('#EXTM3U\n')
         self.m3u.flush()
 
     def put(self, url_list):
+        #print url_list
         for url in url_list:
             info = '#EXTINF:'',%s' % (url +'\n')
             self.m3u.write(info)
@@ -133,12 +147,11 @@ class M3UPlaylist:
 
 class UrlMediaParser(Thread):
 
-    def __init__(self, format, text, results, m3u):
+    def __init__(self, format, text, results):
         Thread.__init__(self)
         self.format = format
         self.text = text
         self.results = results
-        self.m3u = m3u
         self.url = self.results['unescapedUrl']
 
     def is_in_multiple_case(self, _string, text):
@@ -167,12 +180,9 @@ class UrlMediaParser(Thread):
                                 media_list.append(self.url + file_name)
             except:
                 pass
-                                          
-            if media_list:
-                #print media_list
-                self.m3u.put(media_list)
-                self.m3u.close()
 
+            if media_list:
+                return media_list
 
 def main():
     if len(sys.argv) == 4:
