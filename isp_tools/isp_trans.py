@@ -143,7 +143,7 @@ class ISPTrans(object):
         self.collection = ISPCollection(self.source_dir)
         self.sources = self.collection.media_list()
         self.xls_file = self.collection.xls_list()
-        self.xls = ISPXLS(self.xls_file)
+        self.xls = ISPXLS(self.xls_file[0])
         self.trans_dict = self.xls.trans_dict()
         print self.trans_dict
 
