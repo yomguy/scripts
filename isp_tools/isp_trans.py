@@ -75,60 +75,39 @@ class ISPCollection:
 class ISPXLS:
 
     def __init__(self, file):
-        self.first_row = 2
+        self.first_row = 1
         self.book = xlrd.open_workbook(file)
         self.sheet = self.book.sheet_by_index(0)
-        self.sources = self.get_col(1)
-        self.starts_mn = self.get_col(2)
-        self.starts_s = self.get_col(3)
-        self.ends_mn = self.get_col(4)
-        self.ends_s = self.get_col(5)
-        self.forces = self.get_col(6)
+        self.sources = self.get_col(0)
+        print self.sources
+        self.starts_mn = self.get_col(1)
+        #print self.starts_mn
+        self.starts_s = self.get_col(2)
+        self.ends_mn = self.get_col(3)
+        self.ends_s = self.get_col(4)
+        self.forces = self.get_col(5)
         self.size = len(self.sources)
 
     def get_col(self, col):
         col = self.sheet.col(col)
         list = []
         for cell in col[self.first_row:]:
-            if cell.ctype == 1:
-                list.append(cell.value)
+            #if cell.ctype == 1:
+            list.append(str(cell.value))
         return list
 
     def trans_dict(self):
         data = {}
         i = 0
         for source in self.sources:
+            data[source] = {}
             data[source]['start_mn'] = self.starts_mn[i]
             data[source]['start_s'] = self.starts_s[i]
             data[source]['end_mn'] = self.ends_mn[i]
-            data[source]['end_s'] = self.end_s[i]
+            data[source]['end_s'] = self.ends_s[i]
             data[source]['force'] = self.forces[i]
             i += 1
         return data
-
-
-#class ISPItemFile:
-
-    #def __init__(self):
-        #self.media = ''
-
-    #def set_media(self, media):
-        #self.media = media
-
-    #def is_wav(self):
-        #try:
-            #audio_file = audiolab.Sndfile(self.media, 'r')
-            #if audio_file.nframes and audio_file.nframes != 0:
-                #return True
-        #except IOError:
-            #return False
-
-    #def properties(self):
-        #self.frames = self.audio_file.get_nframes()
-        #self.samplerate = self.audio_file.get_samplerate()
-        #self.channels = self.audio_file.get_channels()
-        #self.format = self.audio_file.get_file_format()
-        #self.encoding = self.audio_file.get_encoding()
 
 
 class ISPTrans(object):
@@ -143,7 +122,7 @@ class ISPTrans(object):
         self.collection = ISPCollection(self.source_dir)
         self.sources = self.collection.media_list()
         self.xls_file = self.collection.xls_list()
-        self.xls = ISPXLS(self.xls_file[0])
+        self.xls = ISPXLS(self.source_dir + os.sep + self.xls_file[0])
         self.trans_dict = self.xls.trans_dict()
         print self.trans_dict
 
@@ -161,28 +140,31 @@ class ISPTrans(object):
 
     def process(self):
         for source in self.trans_dict.iteritems():
-            media = self.source_dir + os.sep + source
-            name = os.path.splitext(source)[0]
-            dest = self.dest_dir + os.sep + name + self.format
+            media = self.source_dir + os.sep + source[0]
+            name = os.path.splitext(source[0])[0]
+            dest = self.dest_dir + os.sep + name + '.' + self.format
 
-            start_mn = int(source['start_mn'])
-            start_s = int(source['start_s'])
-            end_mn = int(source['end_mn'])
-            end_s = int(source['end_s'])
-            start = 60 * start_mn + start_s
-            end = 60 * end_mn + end_s
-            duration = end - start
-            force_mode = source['force']
+            source_dict = source[1]
+            print source_dict
+            start_mn = source_dict['start_mn']
+            start_s = source_dict['start_s']
+            end_mn = source_dict['end_mn']
+            end_s = source_dict['end_s']
+            start = int(60 * float(start_mn) + float(start_s))
+            end = 60 * float(end_mn) + float(end_s)
+            duration = int(end - start)
+            force_mode = source_dict['force']
 
-            if not media in self.sources:
+            if not source[0] in self.sources:
                 self.logger.write_error(media, 'La source n\'existe pas !')
                 continue
             else:
                 if not os.path.exists(dest) or force_mode != '':
                     mess = 'Transcoding from %s:%s to %s:%s -> %s ...' % (start_mn, start_s, end_mn, end_s, dest)
                     self.logger.write_info(media, mess)
-                    #media = os.path.join(os.path.dirname(__file__), source)
                     command = self.transcode_command(media, str(start), str(duration), dest)
+                    print command
+                    os.system(command)
 
 
 if __name__ == '__main__':
