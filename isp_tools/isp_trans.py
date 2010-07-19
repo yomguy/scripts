@@ -59,15 +59,15 @@ class ISPCollection:
         file_list = []
         for file in self.file_list:
             ext = os.path.splitext(file)[1]
-            if ext == '.xls' or ext == '.XLS':
+            if (ext == '.xls' or ext == '.XLS') and not file == '.' and not file == '..':
                 file_list.append(file)
         return file_list
 
-    def wav_list(self):
+    def media_list(self):
         list = []
         for file in self.file_list:
             ext = os.path.splitext(file)[1]
-            if ext == '.wav' or ext == '.WAV':
+            if (ext == '.mpg' or ext == '.MPG') and not file == '.' and not file == '..':
                 list.append(file)
         return list
 
@@ -76,125 +76,127 @@ class ISPXLS:
 
     def __init__(self, file):
         self.first_row = 2
-        self.original_col = 0
-        self.new_col = 1
         self.book = xlrd.open_workbook(file)
         self.sheet = self.book.sheet_by_index(0)
-        self.original_refs = self.original_refs()
-        self.new_refs = self.new_refs()
+        self.sources = self.get_col(1)
+        self.starts_mn = self.get_col(2)
+        self.starts_s = self.get_col(3)
+        self.ends_mn = self.get_col(4)
+        self.ends_s = self.get_col(5)
+        self.forces = self.get_col(6)
+        self.size = len(self.sources)
 
-        while True:
-            if len(self.original_refs) == 0 or len(self.new_refs) == 0:
-                break
-            else:
-                if not 'CNRS' in self.new_refs[0].encode('utf8') \
-                 and not  self.original_refs[0].encode('utf8') == '':
-                    self.original_refs = self.original_refs[1:]
-                    self.new_refs = self.new_refs[1:]
-                else:
-                    break
-
-        self.size = max(len(self.new_refs), len(self.original_refs))
-
-    def original_refs(self):
-        col = self.sheet.col(self.original_col)
+    def get_col(self, col):
+        col = self.sheet.col(col)
         list = []
         for cell in col[self.first_row:]:
             if cell.ctype == 1:
                 list.append(cell.value)
         return list
 
-    def new_refs(self):
-        col = self.sheet.col(self.new_col)
-        list = []
-        for cell in col[self.first_row:]:
-            if cell.ctype == 1:
-                list.append(cell.value)
-        return list
+    def trans_dict(self):
+        data = {}
+        i = 0
+        for source in self.sources:
+            data[source]['start_mn'] = self.starts_mn[i]
+            data[source]['start_s'] = self.starts_s[i]
+            data[source]['end_mn'] = self.ends_mn[i]
+            data[source]['end_s'] = self.end_s[i]
+            data[source]['force'] = self.forces[i]
+            i += 1
+        return data
 
 
-class ISPItemFile:
+#class ISPItemFile:
 
-    def __init__(self):
-        self.media = ''
+    #def __init__(self):
+        #self.media = ''
 
-    def set_media(self, media):
-        self.media = media
+    #def set_media(self, media):
+        #self.media = media
 
-    def is_wav(self):
-        try:
-            audio_file = audiolab.Sndfile(self.media, 'r')
-            if audio_file.nframes and audio_file.nframes != 0:
-                return True
-        except IOError:
-            return False
+    #def is_wav(self):
+        #try:
+            #audio_file = audiolab.Sndfile(self.media, 'r')
+            #if audio_file.nframes and audio_file.nframes != 0:
+                #return True
+        #except IOError:
+            #return False
 
-    def properties(self):
-        self.frames = self.audio_file.get_nframes()
-        self.samplerate = self.audio_file.get_samplerate()
-        self.channels = self.audio_file.get_channels()
-        self.format = self.audio_file.get_file_format()
-        self.encoding = self.audio_file.get_encoding()
+    #def properties(self):
+        #self.frames = self.audio_file.get_nframes()
+        #self.samplerate = self.audio_file.get_samplerate()
+        #self.channels = self.audio_file.get_channels()
+        #self.format = self.audio_file.get_file_format()
+        #self.encoding = self.audio_file.get_encoding()
 
 
 class ISPTrans(object):
 
-    def __init__(self, media_dir, img_dir):
-        self.root_dir = media_dir
+    def __init__(self, source_dir, dest_dir, log_file):
+        self.source_dir = source_dir
         self.dest_dir = dest_dir
-        self.force = self.scheme.force
+        if not os.path.exists(self.dest_dir):
+            os.makedirs(self.dest_dir)
+        self.logger = Logger(log_file)
 
+        self.collection = ISPCollection(self.source_dir)
+        self.sources = self.collection.media_list()
+        self.xls_file = self.collection.xls_list()
+        self.xls = ISPXLS(self.xls_file)
+        self.trans_dict = self.xls.trans_dict()
+        print self.trans_dict
+
+        self.format = 'flv'
         self.size = '480x270'
         self.vb = '500k'
         self.ab = '96k'
         self.ar = '44100'
         self.async = '500'
 
-        self.media_list = self.get_media_list()
-        if not os.path.exists(self.img_dir):
-            os.mkdir(self.img_dir)
-        self.path_dict = self.get_path_dict()
-
-        self.transcode_command = 'ffmpeg -ss %s -t %s -i %s -f flv -s %s -vb %s -ab %s -ar %s -async %s -y %s'  \
-                                % (start_time, duration, source_file, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
-
-    def get_media_list(self):
-        media_list = []
-        for root, dirs, files in os.walk(self.root_dir):
-            if root:
-                for file in files:
-                    ext = file.split('.')[-1]
-                    if ext == 'mp3' or ext == 'MP3':
-                        media_list.append(root+os.sep+file)
-        return media_list
-
-    def get_path_dict(self):
-        path_dict = {}
-        for media in self.media_list:
-            name = os.path.splitext(media)
-            name = name[0].split(os.sep)[-1]
-            path_dict[media] = self.img_dir + os.sep + name + '.png'
-        return path_dict
+    def transcode_command(self, source_file, start_time, duration, dest_file):
+        command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -ab %s -ar %s -async %s -y %s'  \
+                  % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        return command
 
     def process(self):
-        for source, dest in self.path_dict.iteritems():
-            if not os.path.exists(dest) or self.force:
-                print 'Rendering ', source, ' to ', dest, '...'
-                media = os.path.join(os.path.dirname(__file__), source)
+        for source in self.trans_dict.iteritems():
+            media = self.source_dir + os.sep + source
+            name = os.path.splitext(source)[0]
+            dest = self.dest_dir + os.sep + name + self.format
+
+            start_mn = int(source['start_mn'])
+            start_s = int(source['start_s'])
+            end_mn = int(source['end_mn'])
+            end_s = int(source['end_s'])
+            start = 60 * start_mn + start_s
+            end = 60 * end_mn + end_s
+            duration = end - start
+            force_mode = source['force']
+
+            if not media in self.sources:
+                self.logger.write_error(media, 'La source n\'existe pas !')
+                continue
+            else:
+                if not os.path.exists(dest) or force_mode != '':
+                    mess = 'Transcoding from %s:%s to %s:%s -> %s ...' % (start_mn, start_s, end_mn, end_s, dest)
+                    self.logger.write_info(media, mess)
+                    #media = os.path.join(os.path.dirname(__file__), source)
+                    command = self.transcode_command(media, str(start), str(duration), dest)
 
 
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
         print """
-        Usage : python isp_trans.py /path/to/media_dir /path/to/transcoded_media_dir
+        Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir
 
         Dependencies : python, python-xlrd, ffmpeg
 
         """
     else:
-        media_dir = sys.argv[-2]
-        trans_dir = sys.argv[-1]
-        i = ISPTrans(media_dir, trans_dir)
+        source_dir = sys.argv[-2]
+        dest_dir = sys.argv[-1]
+        i = ISPTrans(source_dir, dest_dir)
         i.process()
 
 
