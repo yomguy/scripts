@@ -21,7 +21,7 @@
 # Author: Guillaume Pellerin <yomguy@parisson.com>
 
 version = '0.1'
-
+author = 'Guillaume Pellerin'
 
 import os
 import re
@@ -166,12 +166,13 @@ class ISPTrans(object):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
-        print """
-        Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file
+        print """isp_tools.py
+version : %s
+author : %s
+Dependencies : python, python-xlrd, ffmpeg
 
-        Dependencies : python, python-xlrd, ffmpeg
-
-        """
+Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file
+""" % (version, author)
     else:
         source_dir = sys.argv[-3]
         dest_dir = sys.argv[-2]
