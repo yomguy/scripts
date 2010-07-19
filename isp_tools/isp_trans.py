@@ -153,7 +153,9 @@ class ISPTrans(object):
             force_mode = source_dict['force']
 
             if not source[0] in self.sources:
-                self.logger.write_error(media, 'La source n\'existe pas !')
+                mess = 'The source media does not exists !'
+                self.logger.write_error(media, mess)
+                print media, mess
                 continue
             else:
                 if not os.path.exists(dest) or force_mode != '':
