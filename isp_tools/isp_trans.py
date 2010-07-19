@@ -22,6 +22,7 @@
 
 version = '0.1'
 
+
 import os
 import re
 import sys
@@ -74,14 +75,14 @@ class ISPCollection:
 class ISPXLS:
 
     def __init__(self, file):
-        self.first_row = 8
+        self.first_row = 2
         self.original_col = 0
         self.new_col = 1
         self.book = xlrd.open_workbook(file)
         self.sheet = self.book.sheet_by_index(0)
         self.original_refs = self.original_refs()
         self.new_refs = self.new_refs()
-        #print len(self.new_refs)
+
         while True:
             if len(self.original_refs) == 0 or len(self.new_refs) == 0:
                 break
@@ -140,18 +141,22 @@ class ISPTrans(object):
 
     def __init__(self, media_dir, img_dir):
         self.root_dir = media_dir
-        self.img_dir = img_dir
-        self.scheme = GrapherScheme()
-        self.width = self.scheme.width
-        self.height = self.scheme.height
-        self.bg_color = self.scheme.bg_color
-        self.color_scheme = self.scheme.color_scheme
+        self.dest_dir = dest_dir
         self.force = self.scheme.force
+
+        self.size = '480x270'
+        self.vb = '500k'
+        self.ab = '96k'
+        self.ar = '44100'
+        self.async = '500'
 
         self.media_list = self.get_media_list()
         if not os.path.exists(self.img_dir):
             os.mkdir(self.img_dir)
         self.path_dict = self.get_path_dict()
+
+        self.transcode_command = 'ffmpeg -ss %s -t %s -i %s -f flv -s %s -vb %s -ab %s -ar %s -async %s -y %s'  \
+                                % (start_time, duration, source_file, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
 
     def get_media_list(self):
         media_list = []
@@ -172,16 +177,10 @@ class ISPTrans(object):
         return path_dict
 
     def process(self):
-        for source, image in self.path_dict.iteritems():
-            if not os.path.exists(image) or self.force:
-                print 'Rendering ', source, ' to ', image, '...'
-                audio = os.path.join(os.path.dirname(__file__), source)
-                decoder  = timeside.decoder.FileDecoder(audio)
-                waveform = timeside.grapher.Waveform(width=self.width, height=self.height, output=image,
-                                            bg_color=self.bg_color, color_scheme=self.color_scheme)
-                (decoder | waveform).run()
-                print 'frames per pixel = ', waveform.graph.samples_per_pixel
-                waveform.render()
+        for source, dest in self.path_dict.iteritems():
+            if not os.path.exists(dest) or self.force:
+                print 'Rendering ', source, ' to ', dest, '...'
+                media = os.path.join(os.path.dirname(__file__), source)
 
 
 if __name__ == '__main__':
