@@ -188,15 +188,16 @@ class ISPTrans(object):
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
         print """
-        Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir
+        Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file
 
         Dependencies : python, python-xlrd, ffmpeg
 
         """
     else:
-        source_dir = sys.argv[-2]
-        dest_dir = sys.argv[-1]
-        i = ISPTrans(source_dir, dest_dir)
+        source_dir = sys.argv[-3]
+        dest_dir = sys.argv[-2]
+        log_file = sys.argv[-1]
+        i = ISPTrans(source_dir, dest_dir, log_file)
         i.process()
 
 
