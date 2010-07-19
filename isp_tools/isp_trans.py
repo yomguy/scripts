@@ -169,7 +169,7 @@ if __name__ == '__main__':
         print """isp_tools.py
 version : %s
 author : %s
-Dependencies : python, python-xlrd, ffmpeg
+Dependencies : python, python-xlrd, ffmpeg, libmp3lame0
 
 Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file
 """ % (version, author)
