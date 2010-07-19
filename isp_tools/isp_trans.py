@@ -159,7 +159,7 @@ class ISPTrans(object):
                 continue
             else:
                 if not os.path.exists(dest) or force_mode != '':
-                    mess = 'Transcoding from %s:%s to %s:%s -> %s' \
+                    mess = 'transcoding from %s:%s to %s:%s -> %s' \
                             % (str(int(float(start_mn))), str(int(float(start_s))), str(int(float(end_mn))), str(int(float(end_s))), dest)
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
