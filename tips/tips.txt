@@ -1,9 +1,14 @@
-################################
-# YomGuy's Linux Ultra Fast Tips
-################################
+
 ======================================
 YomGuy's Linux Ultra Fast Tips (1/1)
 ======================================
+
+♫♪♫♪ ╔╦╦╦═╦╗╔═╦═╦══╦═╗ ♫♪♫♪♫♪
+♫♪♫♪ ║║║║╩╣╚╣═╣║║║║║╩╣ ♫♪♫♪♫♪
+♫♪♫♪ ╚══╩═╩═╩═╩═╩╩╩╩═╝ ♫♪♫♪♫♪
+
+This is a list of my short command line tips to get some various,
+sometimes advanced, functions on GNU/Linux systems, especially on Debian.
 
 
 RENAME
@@ -29,6 +34,7 @@ find and remove::
     find ./ -iname "*.pyc" -exec rm {} \;
     find . -name ".svn" -type d -exec rm -rf {} \;
     find . -name 'test*' -mtime +30 -type f -print0 |xargs -0 rm -f
+    sudo find . -mtime +480 -exec rm {} \;
 
 FIND & CP
 =========
@@ -1004,6 +1010,12 @@ Start python terminal::
         >>> droid.makeToast("Hello from my computer!")
         >>> droid.speak('Hello')
 
+Proxy::
+    connect phone
+    $ sudo /etc/init.d/udev restart
+    $ adb forward tcp:8081 tcp:8081
+
+
 
 CONEXTANT
 =========
@@ -1088,6 +1100,14 @@ FUNIONFS
 merge multiple dirs ::
 
     funionfs -o dirs=1001:mama -o allow_other NONE media
+
+
+ICEDOVE
+======
+user_pref("network.protocol-handler.app.http", "/usr/bin/google-chrome");
+user_pref("network.protocol-handler.app.https", "/usr/bin/google-chrome");
+
+
 
 
 
