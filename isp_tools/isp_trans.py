@@ -131,6 +131,12 @@ class ISPTrans(object):
         self.ar = '44100'
         self.async = '500'
 
+        mess = 'version %s started with the folowing parameters :' % version
+        self.logger.write_info('isp_trans', mess)
+        mess = 'format : %s , size : %s , vb : %s , ab : %s , ar : %s , async : %s' % \
+                (self.format, self.size, self.vb, self.ab, self.ar, self.async)
+        self.logger.write_info('ffmpeg', mess)
+
     def transcode_command(self, source_file, start_time, duration, dest_file):
         command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -ab %s -ar %s -async %s -y %s'  \
                   % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
