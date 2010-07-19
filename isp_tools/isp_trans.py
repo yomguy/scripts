@@ -79,9 +79,7 @@ class ISPXLS:
         self.book = xlrd.open_workbook(file)
         self.sheet = self.book.sheet_by_index(0)
         self.sources = self.get_col(0)
-        print self.sources
         self.starts_mn = self.get_col(1)
-        #print self.starts_mn
         self.starts_s = self.get_col(2)
         self.ends_mn = self.get_col(3)
         self.ends_s = self.get_col(4)
@@ -124,7 +122,7 @@ class ISPTrans(object):
         self.xls_file = self.collection.xls_list()
         self.xls = ISPXLS(self.source_dir + os.sep + self.xls_file[0])
         self.trans_dict = self.xls.trans_dict()
-        print self.trans_dict
+        #print self.trans_dict
 
         self.format = 'flv'
         self.size = '480x270'
@@ -145,7 +143,6 @@ class ISPTrans(object):
             dest = self.dest_dir + os.sep + name + '.' + self.format
 
             source_dict = source[1]
-            print source_dict
             start_mn = source_dict['start_mn']
             start_s = source_dict['start_s']
             end_mn = source_dict['end_mn']
@@ -163,7 +160,6 @@ class ISPTrans(object):
                     mess = 'Transcoding from %s:%s to %s:%s -> %s ...' % (start_mn, start_s, end_mn, end_s, dest)
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
-                    print command
                     os.system(command)
 
 
