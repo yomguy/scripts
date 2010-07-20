@@ -1,4 +1,4 @@
-#!/usr/bin/python
+	#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
 # Copyright (c) 2009-2010 Guillaume Pellerin <yomguy@parisson.com>
@@ -138,9 +138,13 @@ class ISPTrans(object):
         self.logger.write_info('ffmpeg', mess)
 
     def transcode_command(self, source_file, start_time, duration, dest_file):
-        command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -ab %s -ar %s -async %s -y %s'  \
-                  % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
-        return command
+        # logo inlay
+	#command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/i686/cmov/vhook/imlib2.so -x 517 -y 516 -i /home/isp/img/parisson.png" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        
+	# logo watermark
+	command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/i686/cmov/vhook/watermark.so -f /home/isp/img/parisson_480_g.gif" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        
+	return command
 
     def process(self):
         for source in self.trans_dict.iteritems():
