@@ -131,6 +131,10 @@ class ISPTrans(object):
         self.ar = '44100'
         self.async = '500'
 
+        self.server = 'parisson.com'
+        self.user = 'isp'
+        self.server_dir = '/home/%s/videos/' % self.user
+        
         mess = 'version %s started with the folowing parameters :' % version
         self.logger.write_info('isp_trans', mess)
         mess = 'format : %s , size : %s , vb : %s , ab : %s , ar : %s , async : %s' % \
@@ -138,15 +142,17 @@ class ISPTrans(object):
         self.logger.write_info('ffmpeg', mess)
 
     def transcode_command(self, source_file, start_time, duration, dest_file):
+    
         # logo inlay
-	#command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/imlib2.so -x 517 -y 516 -i /home/isp/img/parisson.png" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
-        
-	# logo watermark
-	command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f /home/isp/img/parisson_480_g.gif" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
-        
-	# normal
-	#command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
-	return command
+	    #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/imlib2.so -x 517 -y 516 -i /home/isp/img/parisson.png" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+            
+    # logo watermark
+        command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f /home/isp/img/parisson_480_g.gif" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+            
+        # normal
+        #command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+    
+        return command
 
     def process(self):
         for source in self.trans_dict.iteritems():
@@ -176,7 +182,11 @@ class ISPTrans(object):
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
                     os.system(command)
+                    self.rsync_out()
 
+    def rsync_out(self):
+        command = 'rsync -av --update %s/ %s@%s:%s/ & ' % (self.dest_dir, self.user, self.server, self.server_dir)
+        os.system(command)
 
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
@@ -193,6 +203,7 @@ Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /
         log_file = sys.argv[-1]
         i = ISPTrans(source_dir, dest_dir, log_file)
         i.process()
+        
 
 
 
