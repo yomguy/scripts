@@ -110,12 +110,13 @@ class ISPXLS:
 
 class ISPTrans(object):
 
-    def __init__(self, source_dir, dest_dir, log_file):
+    def __init__(self, source_dir, dest_dir, log_file, water_img):
         self.source_dir = source_dir
         self.dest_dir = dest_dir
         if not os.path.exists(self.dest_dir):
             os.makedirs(self.dest_dir)
         self.logger = Logger(log_file)
+        self.water_img = water_img
 
         self.collection = ISPCollection(self.source_dir)
         self.sources = self.collection.media_list()
@@ -144,13 +145,13 @@ class ISPTrans(object):
     def transcode_command(self, source_file, start_time, duration, dest_file):
     
         # logo inlay
-	    #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/imlib2.so -x 517 -y 516 -i /home/isp/img/parisson.png" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/imlib2.so -x 517 -y 516 -i %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
             
-    # logo watermark
-        command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f /home/isp/img/parisson_480_g.gif" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        ## logo watermark
+        #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
             
         # normal
-        #command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        #command = 'ffmpeg -threads 2 -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
     
         return command
 
@@ -182,7 +183,7 @@ class ISPTrans(object):
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
                     os.system(command)
-                    self.rsync_out()
+                    #self.rsync_out()
 
     def rsync_out(self):
         command = 'rsync -av --update %s/ %s@%s:%s/ & ' % (self.dest_dir, self.user, self.server, self.server_dir)
@@ -195,13 +196,14 @@ version : %s
 author : %s
 Dependencies : python, python-xlrd, ffmpeg, libmp3lame0
 
-Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file
+Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file /path/to/watermark_image
 """ % (version, author)
     else:
-        source_dir = sys.argv[-3]
-        dest_dir = sys.argv[-2]
-        log_file = sys.argv[-1]
-        i = ISPTrans(source_dir, dest_dir, log_file)
+        source_dir = sys.argv[-4]
+        dest_dir = sys.argv[-3]
+        log_file = sys.argv[-2]
+        water_img = sys.argv[-1]
+        i = ISPTrans(source_dir, dest_dir, log_file, water_img)
         i.process()
         
 
