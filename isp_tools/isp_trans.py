@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 	#!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
@@ -145,13 +146,13 @@ class ISPTrans(object):
     def transcode_command(self, source_file, start_time, duration, dest_file):
     
         # logo inlay
-        command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/imlib2.so -x 517 -y 516 -i %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/imlib2.so -x 517 -y 516 -i %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
             
         ## logo watermark
-        #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s &' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
             
         # normal
-        #command = 'ffmpeg -threads 2 -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s' 	% (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s & ' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
     
         return command
 
