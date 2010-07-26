@@ -184,7 +184,7 @@ class ISPTrans(object):
             source_dict = source[1]
 
             media = self.source_dir + os.sep + source[0]
-            name = source_dict['dest_name']
+            name = str(source_dict['dest_name'])
             dest = self.dest_dir + os.sep + name + '.' + self.format
 
             start_mn = source_dict['start_mn']
