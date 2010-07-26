@@ -21,7 +21,7 @@
 
 # Author: Guillaume Pellerin <yomguy@parisson.com>
 
-version = '0.1'
+version = '0.2'
 author = 'Guillaume Pellerin'
 
 import os
@@ -68,7 +68,7 @@ class ISPCollection:
         list = []
         for file in self.file_list:
             ext = os.path.splitext(file)[1]
-            if (ext == '.mpg' or ext == '.MPG') and not file == '.' and not file == '..':
+            if (ext == '.mpg' or ext == '.MPG' or ext == '.avi' or ext == '.AVI') and not file == '.' and not file == '..':
                 list.append(file)
         return list
 
@@ -80,11 +80,12 @@ class ISPXLS:
         self.book = xlrd.open_workbook(file)
         self.sheet = self.book.sheet_by_index(0)
         self.sources = self.get_col(0)
-        self.starts_mn = self.get_col(1)
-        self.starts_s = self.get_col(2)
-        self.ends_mn = self.get_col(3)
-        self.ends_s = self.get_col(4)
-        self.forces = self.get_col(5)
+        self.dest_names = self.get_col(1)
+        self.starts_mn = self.get_col(2)
+        self.starts_s = self.get_col(3)
+        self.ends_mn = self.get_col(4)
+        self.ends_s = self.get_col(5)
+        self.forces = self.get_col(6)
         self.size = len(self.sources)
 
     def get_col(self, col):
@@ -100,6 +101,7 @@ class ISPXLS:
         i = 0
         for source in self.sources:
             data[source] = {}
+            data[source]['dest_name'] = self.dest_names[i]
             data[source]['start_mn'] = self.starts_mn[i]
             data[source]['start_s'] = self.starts_s[i]
             data[source]['end_mn'] = self.ends_mn[i]
@@ -158,11 +160,12 @@ class ISPTrans(object):
 
     def process(self):
         for source in self.trans_dict.iteritems():
+            source_dict = source[1]
+            
             media = self.source_dir + os.sep + source[0]
-            name = os.path.splitext(source[0])[0]
+            name = source_dict['dest_name']
             dest = self.dest_dir + os.sep + name + '.' + self.format
 
-            source_dict = source[1]
             start_mn = source_dict['start_mn']
             start_s = source_dict['start_s']
             end_mn = source_dict['end_mn']
@@ -190,6 +193,7 @@ class ISPTrans(object):
         command = 'rsync -av --update %s/ %s@%s:%s/ & ' % (self.dest_dir, self.user, self.server, self.server_dir)
         os.system(command)
 
+
 if __name__ == '__main__':
     if len(sys.argv) <= 2:
         print """isp_tools.py
@@ -199,6 +203,7 @@ Dependencies : python, python-xlrd, ffmpeg, libmp3lame0
 
 Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /path/to/log_file /path/to/watermark_image
 """ % (version, author)
+    
     else:
         source_dir = sys.argv[-4]
         dest_dir = sys.argv[-3]
@@ -206,7 +211,4 @@ Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /
         water_img = sys.argv[-1]
         i = ISPTrans(source_dir, dest_dir, log_file, water_img)
         i.process()
-        
-
-
 
