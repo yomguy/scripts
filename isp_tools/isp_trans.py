@@ -44,6 +44,7 @@ def get_pid(proc,uid):
             pids.append(pid)
     return pids
 
+
 class Logger:
 
     def __init__(self, file):
@@ -59,7 +60,6 @@ class Logger:
 
     def write_error(self, prefix, message):
         self.logger.error(prefix + ' : ' + message.decode('utf8'))
-
 
 
 class ISPCollection:
@@ -140,8 +140,6 @@ class ISPTrans(object):
         self.xls_file = self.collection.xls_list()
         self.xls = ISPXLS(self.source_dir + os.sep + self.xls_file[0])
         self.trans_dict = self.xls.trans_dict()
-        # Time period for bi-threading in minutes
-        self.period = 1
 
         self.format = 'flv'
         self.size = '480x270'
@@ -211,7 +209,7 @@ class ISPTrans(object):
                     if not counter % 3:
                         while len(get_pid('ffmpeg', self.uid)) > 1:
                             # Only 2 threads for 2 cores and then sleeping
-                            time.sleep(self.period * 60)
+                            time.sleep(30)
                     os.system(command)
 
 
