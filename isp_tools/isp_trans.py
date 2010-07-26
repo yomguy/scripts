@@ -28,8 +28,21 @@ import os
 import re
 import sys
 import xlrd
+import time
 import logging
 
+
+def get_pid(proc,uid):
+    """Get a process pid filtered by arguments and uid"""
+    (list1, list2) = os.popen4('pgrep -fl -U '+str(uid)+' '+'"'+proc+'"')
+    procs = list2.readlines()
+    pids = []
+    if procs != '':
+        for proc in procs:
+            pid = proc.split(' ')[0]
+            command = ' '.join(proc.split(' ')[1:])[:-1]
+            pids.append(pid)
+    return pids
 
 class Logger:
 
@@ -120,13 +133,15 @@ class ISPTrans(object):
             os.makedirs(self.dest_dir)
         self.logger = Logger(log_file)
         self.water_img = water_img
-
+        self.uid = os.getuid()
+        
         self.collection = ISPCollection(self.source_dir)
         self.sources = self.collection.media_list()
         self.xls_file = self.collection.xls_list()
         self.xls = ISPXLS(self.source_dir + os.sep + self.xls_file[0])
         self.trans_dict = self.xls.trans_dict()
-        #print self.trans_dict
+        # Time period for bi-threading in minutes
+        self.period = 1
 
         self.format = 'flv'
         self.size = '480x270'
@@ -145,6 +160,10 @@ class ISPTrans(object):
                 (self.format, self.size, self.vb, self.ab, self.ar, self.async)
         self.logger.write_info('ffmpeg', mess)
 
+    def rsync_out(self):
+        command = 'rsync -av --update %s/ %s@%s:%s/ & ' % (self.dest_dir, self.user, self.server, self.server_dir)
+        os.system(command)
+
     def transcode_command(self, source_file, start_time, duration, dest_file):
     
         # logo inlay
@@ -159,9 +178,11 @@ class ISPTrans(object):
         return command
 
     def process(self):
+        counter = 0
         for source in self.trans_dict.iteritems():
+
             source_dict = source[1]
-            
+
             media = self.source_dir + os.sep + source[0]
             name = source_dict['dest_name']
             dest = self.dest_dir + os.sep + name + '.' + self.format
@@ -182,16 +203,16 @@ class ISPTrans(object):
                 continue
             else:
                 if not os.path.exists(dest) or force_mode != '':
+                    counter += 1
                     mess = 'transcoding from %s:%s to %s:%s -> %s' \
                             % (str(int(float(start_mn))), str(int(float(start_s))), str(int(float(end_mn))), str(int(float(end_s))), dest)
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
+                    if not counter % 3:
+                        while len(get_pid('ffmpeg', self.uid)) > 1:
+                            # Only 2 threads for 2 cores and then sleeping
+                            time.sleep(self.period * 60)
                     os.system(command)
-                    #self.rsync_out()
-
-    def rsync_out(self):
-        command = 'rsync -av --update %s/ %s@%s:%s/ & ' % (self.dest_dir, self.user, self.server, self.server_dir)
-        os.system(command)
 
 
 if __name__ == '__main__':
