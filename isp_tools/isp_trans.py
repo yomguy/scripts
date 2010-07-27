@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-	#!/usr/bin/python
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
 #
 # Copyright (c) 2009-2010 Guillaume Pellerin <yomguy@parisson.com>
 
@@ -92,13 +91,15 @@ class ISPXLS:
         self.first_row = 1
         self.book = xlrd.open_workbook(file)
         self.sheet = self.book.sheet_by_index(0)
-        self.sources = self.get_col(0)
-        self.dest_names = self.get_col(1)
-        self.starts_mn = self.get_col(2)
-        self.starts_s = self.get_col(3)
-        self.ends_mn = self.get_col(4)
-        self.ends_s = self.get_col(5)
-        self.forces = self.get_col(6)
+        self.cam_dirs = self.get_col(0)
+        self.sources = self.get_col(1)
+        self.courses = self.get_col(2)
+        self.dest_names = self.get_col(3)
+        self.starts_mn = self.get_col(4)
+        self.starts_s = self.get_col(5)
+        self.ends_mn = self.get_col(6)
+        self.ends_s = self.get_col(7)
+        self.forces = self.get_col(8)
         self.size = len(self.sources)
 
     def get_col(self, col):
@@ -113,13 +114,16 @@ class ISPXLS:
         data = {}
         i = 0
         for source in self.sources:
-            data[source] = {}
-            data[source]['dest_name'] = self.dest_names[i]
-            data[source]['start_mn'] = self.starts_mn[i]
-            data[source]['start_s'] = self.starts_s[i]
-            data[source]['end_mn'] = self.ends_mn[i]
-            data[source]['end_s'] = self.ends_s[i]
-            data[source]['force'] = self.forces[i]
+            data[str(i)] = {}
+            data[str(i)]['cam_dir'] = self.cam_dirs[i]
+            data[str(i)]['source_file'] = self.sources[i]
+            data[str(i)]['course'] = self.courses[i]
+            data[str(i)]['dest_name'] = self.dest_names[i]
+            data[str(i)]['start_mn'] = self.starts_mn[i]
+            data[str(i)]['start_s'] = self.starts_s[i]
+            data[str(i)]['end_mn'] = self.ends_mn[i]
+            data[str(i)]['end_s'] = self.ends_s[i]
+            data[str(i)]['force'] = self.forces[i]
             i += 1
         return data
 
@@ -136,10 +140,11 @@ class ISPTrans(object):
         self.uid = os.getuid()
         
         self.collection = ISPCollection(self.source_dir)
-        self.sources = self.collection.media_list()
+        #self.sources = self.collection.media_list()
         self.xls_file = self.collection.xls_list()
         self.xls = ISPXLS(self.source_dir + os.sep + self.xls_file[0])
         self.trans_dict = self.xls.trans_dict()
+        #print self.trans_dict
 
         self.format = 'flv'
         self.size = '480x270'
@@ -149,7 +154,7 @@ class ISPTrans(object):
         self.async = '500'
 
         self.server = 'parisson.com'
-        self.user = 'isp'
+        self.user = 'videojur'
         self.server_dir = '/home/%s/videos/' % self.user
         
         mess = 'version %s started with the folowing parameters :' % version
@@ -178,12 +183,16 @@ class ISPTrans(object):
     def process(self):
         counter = 0
         for source in self.trans_dict.iteritems():
-
             source_dict = source[1]
-
-            media = self.source_dir + os.sep + source[0]
+            cam_dir = source_dict['cam_dir']
+            source_file = source_dict['source_file']
+            media = self.source_dir + os.sep + cam_dir + os.sep + source_file
+            course = source_dict['course']
             name = str(source_dict['dest_name'])
-            dest = self.dest_dir + os.sep + name + '.' + self.format
+            dest_dir = self.dest_dir + os.sep + 'videos' + course
+            if not os.path.exists(dest_dir):
+                os.makedirs(dest_dir)
+            dest = dest_dir + os.sep + name + '.' + self.format
 
             start_mn = source_dict['start_mn']
             start_s = source_dict['start_s']
@@ -194,23 +203,23 @@ class ISPTrans(object):
             duration = int(end - start)
             force_mode = source_dict['force']
 
-            if not source[0] in self.sources:
+            if not os.path.exists(media):
                 mess = 'does NOT exists ! Continuing...'
                 self.logger.write_error(media, mess)
                 print media, mess
                 continue
             else:
                 if not os.path.exists(dest) or force_mode != '':
-                    counter += 1
                     mess = 'transcoding from %s:%s to %s:%s -> %s' \
                             % (str(int(float(start_mn))), str(int(float(start_s))), str(int(float(end_mn))), str(int(float(end_s))), dest)
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
-                    if not counter % 3:
+                    if not counter % 2:
                         while len(get_pid('ffmpeg', self.uid)) > 1:
                             # Only 2 threads for 2 cores and then sleeping
-                            time.sleep(30)
+                            time.sleep(10)
                     os.system(command)
+                    counter += 1
 
 
 if __name__ == '__main__':
@@ -230,4 +239,3 @@ Usage : python isp_trans.py /path/to/source_dir /path/to/transcoded_source_dir /
         water_img = sys.argv[-1]
         i = ISPTrans(source_dir, dest_dir, log_file, water_img)
         i.process()
-
