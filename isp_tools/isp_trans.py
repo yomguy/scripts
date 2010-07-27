@@ -148,7 +148,7 @@ class ISPTrans(object):
 
         self.format = 'flv'
         self.size = '480x270'
-        self.vb = '500k'
+        self.vb = '288k'
         self.ab = '96k'
         self.ar = '44100'
         self.async = '500'
