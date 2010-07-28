@@ -148,8 +148,8 @@ class ISPTrans(object):
 
         self.format = 'flv'
         self.size = '480x270'
-        self.vb = '288k'
-        self.ab = '96k'
+        self.vb = '336k'
+        self.ab = '64k'
         self.ar = '44100'
         self.async = '500'
 
@@ -176,8 +176,10 @@ class ISPTrans(object):
         #command = 'ffmpeg -ss %s -t %s -i %s -vhook "/usr/lib/vhook/watermark.so -f %s" -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s &' % (start_time, duration, source_file, self.water_img, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
             
         # normal
-        command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ab %s -ar %s -async %s -y %s & ' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
-    
+        if duration == '-1':
+            command = 'ffmpeg -ss %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ac 1 -ab %s -ar %s -async %s -y %s & ' % (start_time, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+        else:
+            command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ac 1 -ab %s -ar %s -async %s -y %s & ' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
         return command
 
     def process(self):
@@ -194,13 +196,16 @@ class ISPTrans(object):
                 os.makedirs(dest_dir)
             dest = dest_dir + os.sep + name + '.' + self.format
 
-            start_mn = source_dict['start_mn']
-            start_s = source_dict['start_s']
-            end_mn = source_dict['end_mn']
-            end_s = source_dict['end_s']
-            start = int(60 * float(start_mn) + float(start_s))
-            end = 60 * float(end_mn) + float(end_s)
-            duration = int(end - start)
+            start_mn = int(float(source_dict['start_mn']))
+            start_s = int(float(source_dict['start_s']))
+            end_mn = int(float(source_dict['end_mn']))
+            end_s = int(float(source_dict['end_s']))
+            start = int(60 * start_mn + start_s)
+            if end_mn == -1 or end_s == -1:
+                duration = -1
+            else:
+                end = 60 * end_mn + end_s
+                duration = int(end - start)
             force_mode = source_dict['force']
 
             if not os.path.exists(media):
