@@ -196,6 +196,8 @@ class ISPTrans(object):
                 os.makedirs(dest_dir)
             dest = dest_dir + os.sep + name + '.' + self.format
 
+            #print '<p class="decale"><a href="index.php?contenu=cours&prepa=\'.$donneeseleves[\'prepa\'].\'&matiere=%s&nomvideo=%s">%s</a></p>' % (course, name, part)
+            
             start_mn = int(float(source_dict['start_mn']))
             start_s = int(float(source_dict['start_s']))
             end_mn = int(float(source_dict['end_mn']))
