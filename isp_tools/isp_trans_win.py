@@ -30,6 +30,57 @@ import xlrd
 import time
 import logging
 
+from ctypes import *
+
+#PSAPI.DLL
+psapi = windll.psapi
+#Kernel32.DLL
+kernel = windll.kernel32
+
+def EnumProcesses():
+    procs = []
+    arr = c_ulong * 256
+    lpidProcess= arr()
+    cb = sizeof(lpidProcess)
+    cbNeeded = c_ulong()
+    hModule = c_ulong()
+    count = c_ulong()
+    modname = c_buffer(30)
+    PROCESS_QUERY_INFORMATION = 0x0400
+    PROCESS_VM_READ = 0x0010
+    
+    #Call Enumprocesses to get hold of process id's
+    psapi.EnumProcesses(byref(lpidProcess),
+                        cb,
+                        byref(cbNeeded))
+    
+    #Number of processes returned
+    nReturned = cbNeeded.value/sizeof(c_ulong())
+    
+    pidProcess = [i for i in lpidProcess][:nReturned]
+    
+    for pid in pidProcess:
+        
+        #Get handle to the process based on PID
+        hProcess = kernel.OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ,
+                                      False, pid)
+        if hProcess:
+            psapi.EnumProcessModules(hProcess, byref(hModule), sizeof(hModule), byref(count))
+            psapi.GetModuleBaseNameA(hProcess, hModule.value, modname, sizeof(modname))
+            procs.append("".join([ i for i in modname if i != '\x00']))
+            
+            #-- Clean up
+            for i in range(modname._length_):
+                modname[i]='\x00'
+            
+            kernel.CloseHandle(hProcess)
+
+    #print procs
+    ffmpeg_procs = 0
+    for proc in procs:
+        if proc == 'ffmpeg.exe':
+            ffmpeg_procs += 1        
+    return ffmpeg_procs
 
 def get_pid(proc,uid):
     """Get a process pid filtered by arguments and uid"""
@@ -220,8 +271,8 @@ class ISPTrans(object):
                             % (str(int(float(start_mn))), str(int(float(start_s))), str(int(float(end_mn))), str(int(float(end_s))), dest)
                     self.logger.write_info(media, mess)
                     command = self.transcode_command(media, str(start), str(duration), dest)
-                    if not counter % 2:
-                        while len(get_pid('ffmpeg', self.uid)) > 1:
+                    if not counter % 2:                         
+                        while EnumProcesses() > 1:
                             # Only 2 threads for 2 cores and then sleeping
                             time.sleep(10)
                     os.system(command)
