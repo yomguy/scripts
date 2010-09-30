@@ -187,7 +187,6 @@ class ISPTrans(object):
         if not os.path.exists(self.dest_dir):
             os.makedirs(self.dest_dir)
         self.logger = Logger(log_file)
-        self.uid = os.getuid()
         
         self.collection = ISPCollection(self.source_dir)
         #self.sources = self.collection.media_list()
@@ -227,9 +226,9 @@ class ISPTrans(object):
             
         # normal
         if duration == '-1':
-            command = 'ffmpeg -ss %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ac 1 -ab %s -ar %s -async %s -y %s & ' % (start_time, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+            command = 'ffmpeg -ss %s -i "%s" -f %s -s %s -vb %s -acodec libmp3lame -ac 1 -ab %s -ar %s -async %s -y %s & ' % (start_time, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
         else:
-            command = 'ffmpeg -ss %s -t %s -i %s -f %s -s %s -vb %s -acodec libmp3lame -ac 1 -ab %s -ar %s -async %s -y %s & ' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
+            command = 'ffmpeg -ss %s -t %s -i "%s" -f %s -s %s -vb %s -acodec libmp3lame -ac 1 -ab %s -ar %s -async %s -y %s & ' % (start_time, duration, source_file, self.format, self.size, self.vb, self.ab, self.ar, self.async, dest_file)
         return command
 
     def process(self):
