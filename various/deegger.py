@@ -43,15 +43,18 @@ import urllib
 import simplejson
 from threading import Thread
 
-version = '0.1'
+version = '0.2'
 
 def prog_info():
-    return """ deegger.py v%s : easy media crawler through google search
+    return """ deegger : easy media crawler through google search api
 
+ Version:
+    %s
+    
  Depends on:
     python, python-simplejson
 
- Usage :
+ Usage:
     $ ./deegger.py FORMAT TEXT M3U_DIR
 
  Where:
