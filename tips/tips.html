@@ -3,283 +3,230 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
 <title># YomGuy's Linux Ultra Fast Tips</title>
 <style type="text/css">
 
 /*
-:Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 5196 2007-06-03 20:25:28Z wiemann $
-:Copyright: This stylesheet has been placed in the public domain.
-
-Default cascading style sheet for the HTML output of Docutils.
-
-See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
-customize this style sheet.
+Author: Peter Parente
+Date: 2008/01/22
+Version: 1.0
+Copyright: This stylesheet has been placed in the public domain - free to edit and use for all uses.
 */
 
-/* used to remove borders from tables and images */
-.borderless, table.borderless td, table.borderless th {
-  border: 0 }
-
-table.borderless td, table.borderless th {
-  /* Override padding for "table.docutils td" with "! important".
-     The right padding separates the table cells. */
-  padding: 0 0.5em 0 0 ! important }
-
-.first {
-  /* Override more specific margin styles with "! important". */
-  margin-top: 0 ! important }
-
-.last, .with-subtitle {
-  margin-bottom: 0 ! important }
-
-.hidden {
-  display: none }
-
-a.toc-backref {
-  text-decoration: none ;
-  color: black }
-
-blockquote.epigraph {
-  margin: 2em 5em ; }
-
-dl.docutils dd {
-  margin-bottom: 0.5em }
-
-/* Uncomment (and remove this text!) to get bold-faced definition list terms
-dl.docutils dt {
-  font-weight: bold }
-*/
-
-div.abstract {
-  margin: 2em 5em }
-
-div.abstract p.topic-title {
-  font-weight: bold ;
-  text-align: center }
-
-div.admonition, div.attention, div.caution, div.danger, div.error,
-div.hint, div.important, div.note, div.tip, div.warning {
-  margin: 2em ;
-  border: medium outset ;
-  padding: 1em }
-
-div.admonition p.admonition-title, div.hint p.admonition-title,
-div.important p.admonition-title, div.note p.admonition-title,
-div.tip p.admonition-title {
-  font-weight: bold ;
-  font-family: sans-serif }
-
-div.attention p.admonition-title, div.caution p.admonition-title,
-div.danger p.admonition-title, div.error p.admonition-title,
-div.warning p.admonition-title {
-  color: red ;
-  font-weight: bold ;
-  font-family: sans-serif }
-
-/* Uncomment (and remove this text!) to get reduced vertical space in
-   compound paragraphs.
-div.compound .compound-first, div.compound .compound-middle {
-  margin-bottom: 0.5em }
-
-div.compound .compound-last, div.compound .compound-middle {
-  margin-top: 0.5em }
-*/
-
-div.dedication {
-  margin: 2em 5em ;
-  text-align: center ;
-  font-style: italic }
-
-div.dedication p.topic-title {
-  font-weight: bold ;
-  font-style: normal }
-
-div.figure {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-div.footer, div.header {
-  clear: both;
-  font-size: smaller }
-
-div.line-block {
-  display: block ;
-  margin-top: 1em ;
-  margin-bottom: 1em }
-
-div.line-block div.line-block {
-  margin-top: 0 ;
-  margin-bottom: 0 ;
-  margin-left: 1.5em }
-
-div.sidebar {
-  margin: 0 0 0.5em 1em ;
-  border: medium outset ;
-  padding: 1em ;
-  background-color: #ffffee ;
-  width: 40% ;
-  float: right ;
-  clear: right }
-
-div.sidebar p.rubric {
-  font-family: sans-serif ;
-  font-size: medium }
-
-div.system-messages {
-  margin: 5em }
-
-div.system-messages h1 {
-  color: red }
-
-div.system-message {
-  border: medium outset ;
-  padding: 1em }
-
-div.system-message p.system-message-title {
-  color: red ;
-  font-weight: bold }
-
-div.topic {
-  margin: 2em }
-
-h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
-h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
-  margin-top: 0.4em }
-
-h1.title {
-  text-align: center }
-
-h2.subtitle {
-  text-align: center }
-
-hr.docutils {
-  width: 75% }
-
-img.align-left {
-  clear: left }
-
-img.align-right {
-  clear: right }
-
-ol.simple, ul.simple {
-  margin-bottom: 1em }
-
-ol.arabic {
-  list-style: decimal }
-
-ol.loweralpha {
-  list-style: lower-alpha }
-
-ol.upperalpha {
-  list-style: upper-alpha }
-
-ol.lowerroman {
-  list-style: lower-roman }
-
-ol.upperroman {
-  list-style: upper-roman }
-
-p.attribution {
-  text-align: right ;
-  margin-left: 50% }
-
-p.caption {
-  font-style: italic }
-
-p.credits {
-  font-style: italic ;
-  font-size: smaller }
-
-p.label {
-  white-space: nowrap }
-
-p.rubric {
-  font-weight: bold ;
-  font-size: larger ;
-  color: maroon ;
-  text-align: center }
-
-p.sidebar-title {
-  font-family: sans-serif ;
-  font-weight: bold ;
-  font-size: larger }
-
-p.sidebar-subtitle {
-  font-family: sans-serif ;
-  font-weight: bold }
+body {
+  font: 100% sans-serif;
+  background: #ffffff;
+  color: black;
+  margin: 2em;
+  padding: 0em 2em;
+}
 
 p.topic-title {
-  font-weight: bold }
-
-pre.address {
-  margin-bottom: 0 ;
-  margin-top: 0 ;
-  font-family: serif ;
-  font-size: 100% }
-
-pre.literal-block, pre.doctest-block {
-  margin-left: 2em ;
-  margin-right: 2em }
-
-span.classifier {
-  font-family: sans-serif ;
-  font-style: oblique }
-
-span.classifier-delimiter {
-  font-family: sans-serif ;
-  font-weight: bold }
-
-span.interpreted {
-  font-family: sans-serif }
-
-span.option {
-  white-space: nowrap }
-
-span.pre {
-  white-space: pre }
-
-span.problematic {
-  color: red }
-
-span.section-subtitle {
-  /* font-size relative to parent (h1..h6 element) */
-  font-size: 80% }
-
-table.citation {
-  border-left: solid 1px gray;
-  margin-left: 1px }
+  font-weight: bold;
+}
 
 table.docinfo {
-  margin: 2em 4em }
+  text-align: left;
+  margin: 2em 0em;
+}
+
+a[href] {
+  color: #436976;
+  background-color: transparent;
+}
+
+a.toc-backref {
+  text-decoration: none;
+}
+
+h1 a[href] {
+  color: #003a6b;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a.strong {
+  font-weight: bold;
+}
+
+img {
+  margin: 0;
+  border: 0;
+}
+
+p {
+  margin: 0.5em 0 1em 0;
+  line-height: 1.5em;
+}
+
+p a:visited {
+  color: purple;
+  background-color: transparent;
+}
+
+p a:active {
+  color: red;
+  background-color: transparent;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+p img {
+  border: 0;
+  margin: 0;
+}
+
+p.rubric {
+  font-weight: bold;
+  font-style: italic;
+}
+
+h1.title {
+  color: #003a6b;
+  font-size: 250%;
+  margin-bottom: 0em;
+}
+
+h2.subtitle {
+  color: #003a6b;
+  border-bottom: 0px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #555;
+  background-color: transparent;
+  margin: 0em;
+  padding-top: 0.5em;
+}
+
+h1 {
+  font-size: 160%;
+  margin-bottom: 0.5em;
+  border-bottom: 2px solid #aaa;
+}
+
+h2 {
+  font-size: 140%;
+  margin-bottom: 0.5em;
+  border-bottom: 1px solid #aaa;
+}
+
+h3 {
+  font-size: 130%;
+  margin-bottom: 0.5em;
+}
+
+h4 {
+  font-size: 110%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h5 {
+  font-size: 105%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+h6 {
+  font-size: 100%;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+}
+
+dt {
+  font-style: italic;
+}
+
+dd {
+  margin-bottom: 1.5em;
+}
+
+div.admonition, div.note, div.tip, div.caution, div.important {
+  margin: 2em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
+
+div.important {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+div.caution {
+  background: transparent url('../images/caution.png') 10px 2px no-repeat;
+}
+
+div.note {
+  background: transparent url('../images/note.png') 10px 2px no-repeat;
+}
+
+div.tip {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-example {
+  background: transparent url('../images/tip.png') 10px 2px no-repeat;
+}
+
+div.admonition-critical-example {
+  background: transparent url('../images/important.png') 10px 2px no-repeat;
+}
+
+p.admonition-title {
+  font-weight: bold;
+  border-bottom: 1px solid #aaa;
+  padding-left: 30px;
+}
 
 table.docutils {
-  margin-top: 0.5em ;
-  margin-bottom: 0.5em }
+  text-align: left;
+  border: 1px solid gray;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0em;
+}
 
-table.footnote {
-  border-left: solid 1px black;
-  margin-left: 1px }
+table.docutils caption {
+  font-style: italic;
+}
 
-table.docutils td, table.docutils th,
-table.docinfo td, table.docinfo th {
-  padding-left: 0.5em ;
-  padding-right: 0.5em ;
-  vertical-align: top }
+table.docutils td, table.docutils th {
+  padding: 0.25em 0.5em;
+}
 
-table.docutils th.field-name, table.docinfo th.docinfo-name {
-  font-weight: bold ;
-  text-align: left ;
-  white-space: nowrap ;
-  padding-left: 0 }
+table.docutils th {
+  background-color: #dddddd;
+}
 
-h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
-h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
-  font-size: 100% }
+div.sidebar {
+  width: 33%;
+  float: right;
+  margin: 0em 2em;
+  padding: 0em 1em;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 2px solid #555;
+  border-right: 2px solid #555;
+}
 
-ul.auto-toc {
-  list-style-type: none }
+p.sidebar-title {
+  margin-bottom: 0em;
+  color: #003a6b;
+  border-bottom: 1px solid #aaa;
+  font-weight: bold;
+}
+
+p.sidebar-subtitle {
+  margin-top: 0em;
+  font-style: italic;
+  color: #003a6b;
+}
 
 </style>
 </head>
@@ -288,6 +235,11 @@ ul.auto-toc {
 <h1 class="title"># YomGuy's Linux Ultra Fast Tips</h1>
 <h2 class="subtitle" id="yomguy-s-linux-ultra-fast-tips-1-1">YomGuy's Linux Ultra Fast Tips (1/1)</h2>
 
+<p>♫♪♫♪ ╔╦╦╦═╦╗╔═╦═╦══╦═╗ ♫♪♫♪♫♪
+♫♪♫♪ ║║║║╩╣╚╣═╣║║║║║╩╣ ♫♪♫♪♫♪
+♫♪♫♪ ╚══╩═╩═╩═╩═╩╩╩╩═╝ ♫♪♫♪♫♪</p>
+<p>This is a list of my short command line tips to get some various,
+sometimes advanced, functions on GNU/Linux systems, especially on Debian.</p>
 <div class="section" id="rename">
 <h1>RENAME</h1>
 <p>rename more than  1 file</p>
@@ -311,6 +263,7 @@ sed -i -e 's/cellar/deefuzz/g' deefuzz_cellar_mp3_234.xml
 find ./ -iname &quot;*.pyc&quot; -exec rm {} \;
 find . -name &quot;.svn&quot; -type d -exec rm -rf {} \;
 find . -name 'test*' -mtime +30 -type f -print0 |xargs -0 rm -f
+sudo find . -mtime +480 -exec rm {} \;
 </pre>
 </div>
 <div class="section" id="find-cp">
@@ -396,6 +349,7 @@ for i in *.pbm; do ocrad --charset=iso-8859-15 -o $i.txt $i; done
 <p>_:</p>
 <pre class="literal-block">
 for i in *.wav; do sox $i -s -w $i.wav; mv $i.wav converted/$i; done
+sox Jano_B-Homosapiens.mp3 -r 44100 -b 16 -s -t wav - | flac - -o Jano_B-Homosapiens.flac
 </pre>
 </div>
 <div class="section" id="convert">
@@ -405,6 +359,11 @@ for i in *.wav; do sox $i -s -w $i.wav; mv $i.wav converted/$i; done
 convert -density 150x150 telecaster_video01.eps telecaster_video01.png
 for i in `ls *.eps`; do convert -density 200x200 $i $i.png; done
 </pre>
+<dl class="docutils">
+<dt>crop::</dt>
+<dd>convert waveform_homosapiens.png -crop 100x50% waveform_homosapiens2.png
+<a class="reference external" href="http://www.imagemagick.org/Usage/crop/#crop_percent">http://www.imagemagick.org/Usage/crop/#crop_percent</a></dd>
+</dl>
 </div>
 <div class="section" id="gcc">
 <h1>GCC</h1>
@@ -536,7 +495,7 @@ mysql&gt; QUIT</p>
 </dd>
 </dl>
 <div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 262)</p>
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 278)</p>
 <p>Definition list ends without a blank line; unexpected unindent.</p>
 </div>
 <p>mysql&gt; FLUSH PRIVILEGES;</p>
@@ -570,6 +529,7 @@ ffmpeg -ss 80 -t 10 -i test_xvid.avi -f flv -vcodec flv -vb 500k -ab 96k -ar 441
 </div>
 <div class="section" id="kernel-custom">
 <h1>KERNEL CUSTOM</h1>
+<p>apt-get install kernel-package libncurses5-dev fakeroot wget bzip2</p>
 <p>patch:</p>
 <pre class="literal-block">
 diff -uprN linux-2.6.15 linux-2.6.15-rt1 &gt; patch-2.6.15-rt1-1
@@ -578,6 +538,15 @@ patch -p0 linux-2.6.15 &gt; patch-2.6.15-rt1-1
 api linux-source-2....
 cd /usr/src/linux/
 </pre>
+<p>ou:</p>
+<p>bzip2 -dc /usr/src/patch-2.6.31.4-rt14.bz2 | patch -p1 --dry-run</p>
+<p>If you didn’t get any errors (which you shouldn’t) then do:
+bzip2 -dc /usr/src/patch-2.6.31.4-rt14.bz2 | patch -p1</p>
+<p>Now the kernel source is patched with the real time preemption code by Ingo Molnar.</p>
+<p>Next is the M-Audio USB Fast Track Pro patch:
+patch -p1 /usr/src/linux/sound/usb/usbaudio.c &lt; /usr/src/usbaudio-ftp-2.6.31.4.patch</p>
+<p>MT :
+export CONCURRENCY_LEVEL=4</p>
 <p>Then run the following commands (please note that make dep is not needed any more for kernel 2.6):</p>
 <pre class="literal-block">
 make-kpkg clean
@@ -587,6 +556,9 @@ fakeroot make-kpkg --revision=custom.1.0 --append-to-version=rt9.yomguy --initrd
 <pre class="literal-block">
 fakeroot make-kpkg --append-to-version=.rt8-yomguy --initrd kernel_image kernel_headers modules_image
 </pre>
+<p>ou:</p>
+<blockquote>
+fakeroot make-kpkg --initrd --append-to-version=-yomguy kernel_image kernel_headers</blockquote>
 <p>If the compilation stops with an error, run:</p>
 <pre class="literal-block">
 make clean
@@ -616,11 +588,13 @@ Install your new kernel:</p>
 <pre class="literal-block">
 dpkg -i kernel-image-2.6.8.1_custom.1.0_i386.deb
 </pre>
+<p>OPTION:</p>
 <p>Create a ramdisk of your new kernel (otherwise your system will most likely not boot):</p>
 <pre class="literal-block">
 cd /boot/
 mkinitrd -o /boot/initrd.img-2.6.8.1 2.6.8.1
 </pre>
+<p>LILO:</p>
 <p>We are almost finished now. Edit the image=/vmlinuz stanza of your /etc/lilo.conf and add the line  initrd=/boot/initrd.img-2.6.8.1:</p>
 <pre class="literal-block">
 ###
@@ -673,7 +647,7 @@ wget http://ftp-master.debian.org/ziyi_key_2006.asc
 <pre class="literal-block">
 # apt-get install debmirror
 </pre>
-<p>Pour crï¿œer / mettre ï¿œ jour le miroir (pour les 3 distribs, par exemple) :
+<p>Pour creer / mettre a jour le miroir (pour les 3 distribs, par exemple) :
 $ debmirror /mnt/mirror --arch=i386 --dist=woody,sarge,sid -h ftp.fr.debian.org --nosource --verbose --progress
 Ensuite, dans /etc/apt/sources.list :
 deb <a class="reference external" href="file:/mnt/mirror">file:/mnt/mirror</a> sid main non-free contrib
@@ -681,7 +655,8 @@ Et ï¿œvidemment faire un apt-get update pour mettre ï¿œ jour.</p>
 </div>
 <div class="section" id="wifi">
 <h1>WIFI</h1>
-<p>kismet airsnort aircrack wmwave wpasupplicant kwirelessmonitor macchanger swscanner wavemon wireless-tools wifi-radar iwconfig iwlist</p>
+<p>kismet airsnort aircrack wmwave wpasupplicant kwirelessmonitor macchanger swscanner wavemon wireless-tools
+wifi-radar iwconfig iwlist</p>
 </div>
 <div class="section" id="zope">
 <h1>ZOPE</h1>
@@ -1046,7 +1021,11 @@ i.save()</dd>
 <p>_:</p>
 <pre class="literal-block">
 svn propdel svn:executable mp3player.swf
-svn merge -r 119:head http://svn.parisson.org/svn/deefuzz/trunk/
+svn merge -r 119:head http://svn.parisson.org/svn/deefuzzer/trunk/
+svn merge -r174:175 trunk/ tags/telecaster-0.4.0+rc1/
+svn propedit svn:externals .
+
+    deefuzzer http://svn.parisson.org/svn/deefuzzer/trunk
 </pre>
 </div>
 <div class="section" id="id1">
@@ -1117,6 +1096,7 @@ dvgrab --format raw - | ffmpeg2theora -f dv -x 320 -y 240 --deinterlace -v 4 -a 
 sudo dvgrab - | vlc --no-sub-autodetect-file - :demux=rawdv &quot;:sout=#transcode{vcodec=mp4v,vb=256,scale=1,deinterlace}:duplicate{dst=display,dst=std{access=http,mux=ts,dst=:1234}}&quot;
 
 dvgrab -buffers 1 - | ffmpeg -f dv -i - -f jack -i ffmpeg -vcodec libtheora -b 400k -s 768x480 -aspect 16:9 -acodec libvorbis -ab 64000 -f ogg - -map 0.0 -map 1.0 | oggfwd -d &quot;pb_video_live&quot; -g &quot;Teaching&quot;  -n &quot;pb_video_live&quot; localhost 8000 source2parisson /pb_video_live.ogg &amp;
+
 sleep 3
 jack_connect jack_rack:out_1 ffmpeg:input_1
 jack_connect jack_rack:out_2 ffmpeg:input_2
@@ -1168,7 +1148,7 @@ sudo su - postgres -c &quot;createuser -q --createdb --adduser parisson&quot;</d
 </tbody>
 </table>
 <div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 889)</p>
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 940)</p>
 Option list ends without a blank line; unexpected unindent.</div>
 <p>/       20 GB
 /home   136.7 GB
@@ -1176,33 +1156,63 @@ swap    3 GB</p>
 </div>
 <div class="section" id="cloning">
 <h1>CLONING</h1>
-<p># On the MASTER machine</p>
-<p># boot 300 Mo
-mkdir /mnt/sdb1
-# root 20 Go
-mkdir /mnt/sdb2
-# home 130 Go
-mkdir /mnt/sdb3</p>
-<dl class="docutils">
-<dt>_::</dt>
-<dd><p class="first">mount /dev/sdb1 /mnt/sdb1
-mount /dev/sdb2 /mnt/sdb2
-mount /dev/sdb3 /mnt/sdb3</p>
-<p class="last">rsync -a /boot/ /mnt/sdb1/
-rsync -a /home/ /mnt/sdb3/
-rsync -a --hard-links --one-file-system / /mnt/sdb2/</p>
-</dd>
-</dl>
-<p>#On the CLONED machine : boot with Debian Install CD:</p>
+<p>SSD on /dev/sda:</p>
 <pre class="literal-block">
-mount /dev/sda2 /mnt
-mount /dev/sda1 /mnt/boot
-mount -o bind /dev /mnt/dev
-mount -t proc none /mnt/proc
-chroot /mnt
-grub install /dev/sdb
-exit
+root 10 Go XFS BOOTABLE
+home 35 Go XFS
+data 15 Go XFS
 </pre>
+<p>USB Disk on /dev/sdb:</p>
+<pre class="literal-block">
+root 5 Go XFS
+home 10 Go XFS
+</pre>
+<p># Master machine system /dev/sda to USB external Ghost /dev/sdb:</p>
+<pre class="literal-block">
+su
+mkdir /mnt/root
+mount /dev/sdb1 /mnt/root
+mount /dev/sdb2 /mnt/root/home
+
+rsync -a --delete --hard-links --one-file-system / /mnt/root/
+rsync -a --delete /home/ /mnt/root/home/
+rm -rf /mnt/root/home/telecaster/archives/*
+rm -rf /mnt/root/home/telecaster/trash/*
+sync
+
+umount /mnt/root/home
+umount /mnt/root
+</pre>
+<p># Live Install ISO on USB Disk /dev/sdb BOOT
+# Ghost on USB Disk /dev/sdc
+# Destination SSD /dev/sda</p>
+<blockquote>
+<p>(AUTO)
+mkdir /mnt/root
+mount /dev/sda1 /mnt/root
+mount /dev/sda2 /mnt/root/home
+rsync -a /media/disk/ /mnt/root/
+rsync -a /media/disk-1/ /mnt/root/home/
+sync
+umount  /media/disk/
+umount  /media/disk-1/
+mount -o bind /dev /mnt/root/dev
+mount -t proc none /mnt/root/proc
+chroot /mnt/root/
+ls /dev/disk/by-uuid</p>
+<p>(MANU)
+nano /etc/fstab
+(edit to get right UUID, save)</p>
+<p>(AUTO)
+grub install /dev/sda
+update-grub
+exit
+umount /mnt/root/proc
+umount /mnt/root/dev
+umount /mnt/root/home
+umount /mnt/root
+reboot</p>
+</blockquote>
 <dl class="docutils">
 <dt># or ?::</dt>
 <dd><dl class="first docutils">
@@ -1212,7 +1222,7 @@ root (hd0,1)
 setup (hd0)</dd>
 </dl>
 <div class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 930)</p>
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 1013)</p>
 Definition list ends without a blank line; unexpected unindent.</div>
 <p class="last">quit</p>
 </dd>
@@ -1280,6 +1290,12 @@ $ python2.6
     &gt;&gt;&gt; droid.makeToast(&quot;Hello from my computer!&quot;)
     &gt;&gt;&gt; droid.speak('Hello')
 </pre>
+<dl class="docutils">
+<dt>Proxy::</dt>
+<dd>connect phone
+$ sudo /etc/init.d/udev restart
+$ adb forward <a class="reference external" href="tcp:8081">tcp:8081</a> <a class="reference external" href="tcp:8081">tcp:8081</a></dd>
+</dl>
 </div>
 <div class="section" id="conextant">
 <h1>CONEXTANT</h1>
@@ -1349,6 +1365,80 @@ rst2html -stg --stylesheet=&quot;lsr.css&quot; --traceback tips.txt tips.html
 update media_items set filename = 'items/test.wav';
 </pre>
 </div>
+<div class="section" id="funionfs">
+<h1>FUNIONFS</h1>
+<p>merge multiple dirs</p>
+<pre class="literal-block">
+funionfs -o dirs=1001:mama -o allow_other NONE media
+</pre>
+</div>
+<div class="section" id="icedove">
+<h1>ICEDOVE</h1>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 1171)</p>
+<p>Title underline too short.</p>
+<pre class="literal-block">
+ICEDOVE
+======
+</pre>
+</div>
+<p>user_pref(&quot;network.protocol-handler.app.http&quot;, &quot;/usr/bin/google-chrome&quot;);
+user_pref(&quot;network.protocol-handler.app.https&quot;, &quot;/usr/bin/google-chrome&quot;);</p>
+</div>
+<div class="section" id="postfix">
+<h1>POSTFIX</h1>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 1177)</p>
+<p>Title underline too short.</p>
+<pre class="literal-block">
+POSTFIX
+======
+</pre>
+</div>
+<p>postqueue -p
+postcat -q 9DF7520804A</p>
+</div>
+<div class="section" id="mac-address-windows">
+<h1>MAC ADDRESS (windows)</h1>
+<p>c:ping 192.168.0.2
+c:arp -a</p>
+</div>
+<div class="section" id="xorg">
+<h1>Xorg</h1>
+<p>Xorg -configure
+Xorg -config xorg.conf.new</p>
+</div>
+<div class="section" id="git">
+<h1>GIT</h1>
+<p>$ cd /var/cache/git/</p>
+<p>$ mkdir project.git</p>
+<p>$ cd project.git</p>
+<p>$ git init</p>
+<p>$ echo &quot;Short project's description&quot; &gt; .git/description</p>
+<p>$ git config --global user.name &quot;Your Name&quot;</p>
+<p>$ git config --global user.email &quot;<a class="reference external" href="mailto:you&#64;example.com">you&#64;example.com</a>&quot;</p>
+<p>$ git commit -a</p>
+<p>$ git push upload master</p>
+</div>
+<div class="section" id="swap-clean">
+<h1>SWAP (clean)</h1>
+<div class="system-message">
+<p class="system-message-title">System Message: WARNING/2 (<tt class="docutils">tips.txt</tt>, line 1214)</p>
+<p>Title underline too short.</p>
+<pre class="literal-block">
+SWAP (clean)
+===========
+</pre>
+</div>
+<p>sudo swapoff -a &amp;&amp; sudo swapon -a</p>
+</div>
+</div>
+<div class="footer">
+<hr class="footer" />
+<a class="reference external" href="tips.txt">View document source</a>.
+Generated on: 2010-11-25 13:20 UTC.
+Generated by <a class="reference external" href="http://docutils.sourceforge.net/">Docutils</a> from <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> source.
+
 </div>
 </body>
 </html>
