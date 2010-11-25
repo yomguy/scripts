@@ -956,7 +956,7 @@ USB Disk on /dev/sdb::
     root 5 Go XFS
     home 10 Go XFS
    
-# Master machine system /dev/sda to USB external Ghost /dev/sdb::
+Master machine system /dev/sda to USB external Ghost /dev/sdb::
 
     su
     mkdir /mnt/root
@@ -972,9 +972,9 @@ USB Disk on /dev/sdb::
     umount /mnt/root/home
     umount /mnt/root
 
-# Live Install ISO on USB Disk /dev/sdb BOOT
-# Ghost on USB Disk /dev/sdc
-# Destination SSD /dev/sda
+Live Install ISO on USB Disk /dev/sdb BOOT
+Ghost on USB Disk /dev/sdc
+Destination SSD /dev/sda::
 
     (AUTO)
     mkdir /mnt/root
@@ -1005,7 +1005,7 @@ USB Disk on /dev/sdb::
     reboot
 
 
-# or ?::
+OR ?::
     grub-install /dev/sda
         grub
         root (hd0,1)
@@ -1014,10 +1014,12 @@ USB Disk on /dev/sdb::
 
 http://linux.derkeiler.com/Mailing-Lists/Debian/2008-05/msg01890.html
 
-# keep your packages::
+keep your packages::
+
     sudo dpkg --get-selections > packages.txt
     sudo dpkg --set-selections < packages.txt
     sudo apt-get dselect-upgrade
+
 
 AMAROK
 =======
@@ -1168,13 +1170,13 @@ merge multiple dirs ::
 
 
 ICEDOVE
-======
+========
 user_pref("network.protocol-handler.app.http", "/usr/bin/google-chrome");
 user_pref("network.protocol-handler.app.https", "/usr/bin/google-chrome");
 
 
 POSTFIX
-======
+========
 postqueue -p
 postcat -q 9DF7520804A
 
@@ -1187,6 +1189,7 @@ Xorg
 ====
 Xorg -configure
 Xorg -config xorg.conf.new
+
 
 GIT
 ===
@@ -1211,7 +1214,7 @@ $ git push upload master
 
 
 SWAP (clean)
-===========
+================
 sudo swapoff -a && sudo swapon -a
 
 
