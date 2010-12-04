@@ -127,8 +127,8 @@ class DeeGGer(Thread):
         return results
 
     def run(self):
-        print self.results
-        print len(self.results)
+        #print self.results
+        #print len(self.results)
         parsers = []
         media_list = []
         for result in self.results:
