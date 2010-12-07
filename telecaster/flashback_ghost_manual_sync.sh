@@ -4,14 +4,12 @@
 # Ghost on USB Disk /dev/sdc
 # Destination SSD /dev/sda
 
-su
-
 if [ ! -d /mnt/root/ ]; then mkdir /mnt/root; fi
 if [ ! -d /mnt/ghost_root ]; then mkdir /mnt/ghost_root; fi
 if [ ! -d /mnt/ghost_home ]; then mkdir /mnt/ghost_home; fi
 
 mount /dev/sda1 /mnt/root
-mount /dev/sda2 /mnt/root/home
+mount /dev/sda3 /mnt/root/home
 mount /dev/sdc1 /mnt/ghost_root
 mount /dev/sdc2 /mnt/ghost_home
 
@@ -23,8 +21,9 @@ umount  /mnt/ghost_root/
 umount  /mnt/ghost_home/  
 
 # chroot MANUALLY only to CHANGE boot / fstab options
-# mount -o bind /dev /mnt/root/dev
-# mount -t proc none /mnt/root/proc    
+mount -o bind /dev /mnt/root/dev
+mount -t proc none /mnt/root/proc    
+
 # $ ls /dev/disk/by-uuid
 # $ chroot /mnt/root/
 # $ nano /etc/fstab
@@ -36,7 +35,3 @@ umount  /mnt/ghost_home/
 # umount /mnt/root/proc
 # umount /mnt/root/dev
 
-umount /mnt/root/home 
-umount /mnt/root
-
-reboot
