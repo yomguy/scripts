@@ -956,8 +956,7 @@ USB Disk on /dev/sdb::
     root 5 Go XFS
     home 10 Go XFS
    
-Master machine system /dev/sda to USB external Ghost /dev/sdb::
-Check hdparm / sdparm before !
+Master machine system /dev/sda to USB external Ghost /dev/sdb (Check hdparm / sdparm before)::
 
  su
 
