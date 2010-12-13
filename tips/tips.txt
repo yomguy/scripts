@@ -957,17 +957,19 @@ USB Disk on /dev/sdb::
     home 10 Go XFS
    
 Master machine system /dev/sda to USB external Ghost /dev/sdb::
+Check hdparm / sdparm before !
 
  su
- mkdir /mnt/root
- mount /dev/sdb1 /mn
- mount /dev/sdb2 /mn
 
- rsync -a --delete -
- rsync -a --delete -
+ mkdir /mnt/root
+ mount /dev/sdb1 /mnt/root
+ mount /dev/sdb2 /mnt/root/home
+
+ rsync -a --delete --one-file-system / /mnt/root/ 
+ rsync -a --delete /home/ /mnt/root/home/
  sync
 
- umount /mnt/root/ho
+ umount /mnt/root/home
  umount /mnt/root
 
 Live Install ISO on USB Disk /dev/sdb BOOT
