@@ -56,9 +56,13 @@ def main():
     service = sys.argv[-2]
     server = sys.argv[-3]
     emails = ['yomguy@sfr.fr','yomguy@parisson.com', 'janob@parisson.com']
-    p = ParissonMailLogger(emails, server, service, txt_file)
-    p.send()
-    p.smtp_server.quit()
+
+    date = os.path.getmtime(txt_file)
+    laps = time.time() - date
+    if laps > 120:
+        p = ParissonMailLogger(emails, server, service, txt_file)
+        p.send()
+        p.smtp_server.quit()
 
 if __name__ == '__main__':
     main()
