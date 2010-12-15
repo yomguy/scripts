@@ -59,7 +59,7 @@ def main():
 
     date = os.path.getmtime(txt_file)
     laps = time.time() - date
-    if laps > 120:
+    if laps < 60:
         p = ParissonMailLogger(emails, server, service, txt_file)
         p.send()
         p.smtp_server.quit()
