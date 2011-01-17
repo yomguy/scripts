@@ -32,3 +32,4 @@ for file in date_file_list:
 	    os.remove(file[1])
 	    print 'removed : ', y, m, file
 	    
+	    
