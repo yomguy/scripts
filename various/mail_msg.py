@@ -4,23 +4,24 @@
 import os
 import sys
 import time
+import socket
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 class ParissonMailLogger:
 
-    def __init__(self, emails, server, service, txt_file=None):
+    def __init__(self, emails, service, txt_file=None):
         self.emails = emails
-        self.server = server
+        self.server = socket.gethostbyaddr(socket.gethostname())[0]
         self.service = service
-        self.user = 'logger'
+        self.user = 'logger-no-reply'
         self.user_email = self.user + '@' + self.server
         self.smtp_server = smtplib.SMTP('localhost')
         self.date = time.strftime("%a, %d %b %Y %H:%M:%S", time.localtime())
         self.msg = self.date + ' : ' + self.service + ' has logged this information'
         self.mime_msg = MIMEMultipart()
-        self.mime_msg['Subject'] = 'URGENT ! ' + self.server + ' : ' + self.service
+        self.mime_msg['Subject'] = self.server + ' : ' + self.service
         self.mime_msg['To'] = ', '.join(self.emails)
         self.mime_msg['From'] = self.user_email
         self.mime_txt = MIMEText(self.msg)
@@ -37,10 +38,9 @@ class ParissonMailLogger:
 def main():
     txt_file = sys.argv[-1]
     service = sys.argv[-2]
-    server = sys.argv[-3]
-    emails = ['yomguy@parisson.com', 'janob@parisson.com']
+    emails = ['yomguy@parisson.com', 'webmaster@parisson.com']
 
-    p = ParissonMailLogger(emails, server, service, txt_file)
+    p = ParissonMailLogger(emails, service, txt_file)
     p.send()
     p.smtp_server.quit()
 
