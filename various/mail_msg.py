@@ -36,9 +36,9 @@ class ParissonMailLogger:
         self.smtp_server.sendmail(self.user_email, self.emails, self.mime_msg.as_string())
 
 def main():
-    txt_file = sys.argv[-1]
-    service = sys.argv[-2]
-    emails = ['yomguy@parisson.com', 'webmaster@parisson.com']
+    txt_file = sys.argv[-2]
+    service = sys.argv[-3]
+    emails = sys.argv[-1].split(',')
 
     p = ParissonMailLogger(emails, service, txt_file)
     p.send()
