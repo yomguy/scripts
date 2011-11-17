@@ -6,19 +6,24 @@ import twitter
 
 
 # @deefuzz_test3
-key='146002442-qgtArE6YrpLfL6h51LnE5TA9skcKhOqDraNDaOY'
-secret='8RWoZjllOv52PUmXbLJcu5qunY8qAa6V6pyLGBHEcg'
+test_key='146002442-qgtArE6YrpLfL6h51LnE5TA9skcKhOqDraNDaOY'
+test_secret='8RWoZjllOv52PUmXbLJcu5qunY8qAa6V6pyLGBHEcg'
 
 # @parisson_studio
-#key='223431436-8uYqGM0tLHBiMbk6Bt39oBfwXpylfLcr7t6bs311'
-#secret='SzWD3fDgBpw9qwNNrYarXTcRJSTklp0PpKXg7Iw'
+ps_key='223431436-8uYqGM0tLHBiMbk6Bt39oBfwXpylfLcr7t6bs311'
+ps_secret='SzWD3fDgBpw9qwNNrYarXTcRJSTklp0PpKXg7Iw'
+
+# @parisson_com
+pc_key='241046394-MpI5YrkgHSjW0Ab4WIlU0nJruGqesLueCWDJ1qtx'
+pc_secret='6gRzqDvqkjhRzFCfetdWfZYPQdbvQQhVEhhGHQ90JCM'
 
 # Twitter DeeFuzzer keys
 DEEFUZZER_CONSUMER_KEY = 'ozs9cPS2ci6eYQzzMSTb4g'
 DEEFUZZER_CONSUMER_SECRET = '1kNEffHgGSXO2gMNTr8HRum5s2ofx3VQnJyfd0es'
 
+escape = ['parisson_studio', 'parisson_com', 'kvraudio']
 
-class Twitter:
+class Twitter(object):
 
     def __init__(self, access_token_key, access_token_secret):
         import twitter
@@ -30,8 +35,8 @@ class Twitter:
                                consumer_secret=self.consumer_secret,
                                access_token_key=self.access_token_key,
                                access_token_secret=self.access_token_secret)
-        self.followers = self.api.GetFollowers()
-        self.friends = self.api.GetFriends()
+        self.followers = self.get_followers()
+        self.friends = self.get_friends()
         
     def post(self, message):
         try:
@@ -39,35 +44,57 @@ class Twitter:
         except:
             pass
 
-    def print_followers(self):
-        print str(len(self.followers)) + ' Followers:'
-        for f in self.followers:
-            print ' ' + f.screen_name
+    def get_friends(self):
+        l = []
+        for f in self.api.GetFriends():
+            l.append(f.screen_name)
+        return l
+    
+    def get_followers(self):
+        l = []
+        for f in self.api.GetFollowers():
+            l.append(f.screen_name)
+        return l
     
     def send_private_mess(self, mess, tags):
         for f in self.followers:
-            self.api.PostDirectMessage(f.screen_name, mess + ' #' + (' #').join(tags))
+            self.api.PostDirectMessage(f, mess + ' #' + (' #').join(tags))
 
-    def print_friends(self):
-        print str(len(self.friends)) + ' Friends:'
-        for f in self.friends:
-            print ' ' + f.screen_name
-    
     def send_friends_mess(self, mess, tags):
-        for f in self.followers:
-            self.post('@' + f.screen_name + ' ' + mess  + ' #' + ' #'.join(tags))
-    
-    
+        mess_header = mess
+        for f in self.friends:
+            if not f in escape:
+                mess = '@' + f + ' ' + mess_header  + ' #' + ' #'.join(tags)
+                print mess
+                self.post(mess)
+            
+    def add_friends(self, friends):
+        for f in friends:
+            if not f in self.friends and not f in escape:
+                self.api.CreateFriendship(f)
+
 if __name__ == '__main__':
-    mess = 'Hello World ! TEST ! RVSP' 
-    tags = ['t35t', 'test', 'TesT']
+    mess = 'TC-202 Case : the mobile media solution now released by Parisson http://bit.ly/gSvqaF'
+    tags = ['proaudio', 'broadcast']
     
-    twitt = Twitter(key, secret)
+    print ('IN')
+    twitt_in = Twitter(ps_key, ps_secret)
+    print str(len(twitt_in.followers)) + ' Followers:'
+    print twitt_in.followers
+    print str(len(twitt_in.friends)) + ' Friends:'
+    print twitt_in.friends
     
-    twitt.print_followers()
-    twitt.print_friends()
+    print ('OUT')
+    twitt_out = Twitter(pc_key, pc_secret)
+    print str(len(twitt_out.followers)) + ' Followers:'
+    print twitt_out.followers
+    print str(len(twitt_out.friends)) + ' Friends:'
+    print twitt_out.friends
     
-    twitt.send_private_mess(mess, tags)
-    twitt.send_friends_mess(mess, tags)
+    #twitt_out.add_friends(twitt_in.friends)
+    #twitt.send_private_mess(mess, tags)
+    twitt_out.send_friends_mess(mess, tags)
+    
+    print 'OK'
     
     
