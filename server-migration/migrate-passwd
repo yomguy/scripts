@@ -1,0 +1,17 @@
+#!/bin/bash
+# 
+# usage:   migrate-passwd password-file>
+#
+# remarks: the password file must be a copy of passwd that contains
+#          only the entries to be migrated.
+#          
+
+[ -f $1 ] || exit 1
+
+userlist=$(cat $1)
+
+for entry in $userlist ; do
+        username=$(echo $entry | cut -d ':' -f 1)
+        gecos=$(echo $entry | cut -d ':' -f 5)
+        adduser --force-badname --disabled-password --gecos "$gecos" "$username" > /dev/null
+done

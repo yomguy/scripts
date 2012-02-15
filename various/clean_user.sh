@@ -1,4 +1,4 @@
-#!bin/sh
+#!/bin/sh
 
 u=$1
 sudo deluser $u

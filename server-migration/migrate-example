@@ -1,0 +1,3 @@
+# migrate-shadow my-redhat-shadow-useronly-list > shadow-filter.awk
+
+# awk -f shadow-filter.awk /etc/shadow > my-new-shadow-file-with-updated-pass

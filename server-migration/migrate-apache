@@ -1,0 +1,15 @@
+#!/usr/bin/python
+
+import os, sys
+
+dir_old = '/home/pbackup/pypix/etc/apache2/sites-available/'
+dir_new = '/etc/apache2/sites-available/'
+items_old = os.listdir(dir_old)
+items_new = os.listdir(dir_new)
+
+for item in items_old:
+    if item in items_new:
+    	command = 'sudo diff '
+	args = dir_old+item+' '+dir_new+item
+    	print command+args
+	os.system(command+args)
