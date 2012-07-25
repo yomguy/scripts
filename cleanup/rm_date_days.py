@@ -17,7 +17,7 @@ for root, dirs, files in os.walk(dir):
         file_date = datetime.datetime.fromtimestamp(os.path.getmtime(file))
         diff = today - file_date
 	if diff.days >= days:
-	    #os.remove(file[1])
+	    os.remove(file)
 	    print 'removed : ', file_date, file
 	    
 	    
