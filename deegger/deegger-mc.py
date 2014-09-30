@@ -33,7 +33,7 @@ from pyquery import PyQuery as pq
 class MixCloud(object):
 
     base_url = 'https://stream21.mixcloud.com/c/m4a/64/'
-    block_size = 16384
+    block_size = 8192
 
     def __init__(self, url):
         self.url = url
