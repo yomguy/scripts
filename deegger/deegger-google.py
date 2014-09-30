@@ -52,12 +52,12 @@ def prog_info():
 
  Version:
     %s
-    
+
  Depends on:
     python, python-simplejson
 
  Usage:
-    $ ./deegger.py FORMAT TEXT M3U_DIR
+    $ ./deegger-google.py FORMAT TEXT M3U_DIR
 
  Where:
     FORMAT is the media type you are looking for
@@ -86,10 +86,10 @@ class DeeGGer(object):
         self.m3u_file = self.m3u_dir + os.sep + 'deegger_' + self.text.replace('/', '_') + '.' + self.format + '.m3u'
         self.range = 4
         self.servers = []
-        
+
         self.media_q = 'intitle:"index.of" "parent directory" "size" "last modified" "description" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery -intitle:"last modified"' % (self.format, self.format, self.format)
         #self.media_q = 'intitle:"index.of" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery' % (self.format, self.format, self.format)
-        
+
         self.query = '%s %s' % (self.text, self.media_q)
         self.q = Queue.Queue(1)
         self.results = Queue.Queue(1)
@@ -102,13 +102,13 @@ class DeeGGer(object):
             url = result['url']
             s = UrlMediaParser(self.format, self.text, url, self.q)
             s.start()
-        
+
         self.m3u = M3UPlaylist(self.q, self.m3u_file)
         self.m3u.start()
-        
+
         self.q.join()
         self.m3u.close()
-        
+
 class Producer(Thread):
     """a Producer master thread"""
 
@@ -122,13 +122,13 @@ class Producer(Thread):
         while True:
             q.put(i,1)
             i+=1
-            
+
 class GoogleSearch(object):
 
     def __init__(self, range, query):
         self.range = range
         self.query = query
-        
+
     def search(self):
         results = []
         for j in range(0, self.range):
@@ -174,7 +174,7 @@ class UrlMediaParser(Thread):
                         file_name = line[s.start():s.end()].split('"')[1]
                         if self.is_in_multiple_case(self.text, file_name):
                             q.put(self.url + '/' + file_name)
-            
+
             except:
                 pass
 
@@ -203,7 +203,7 @@ class M3UPlaylist(Thread):
 
 class Logger:
     """A logging object"""
-    
+
     def __init__(self, file):
         import logging
         self.logger = logging.getLogger('myapp')
@@ -221,16 +221,16 @@ def main():
     if len(sys.argv) <= 2:
         text = prog_info()
         sys.exit(text)
-    
+
     else:
         parser = OptionParser()
         parser.add_option("-t", "--text", dest="text", help="set the TEXT google query", metavar="TEXT")
         parser.add_option("-f", "--format", dest="format", help="set the format to search for" , metavar="FORMAT")
         parser.add_option("-o", "--output", dest="output", help="set the output directory" , metavar="OUTPUT")
         (options, args) = parser.parse_args()
-        
+
         d = DeeGGer(options, args)
         d.run()
-        
+
 if __name__ == '__main__':
     main()
