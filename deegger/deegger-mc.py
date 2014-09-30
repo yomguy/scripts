@@ -26,11 +26,14 @@ THE SOFTWARE.
 """
 
 
-import sys, urllib2, webbrowser
+import sys, urllib2
 from pyquery import PyQuery as pq
 
 
 class MixCloud(object):
+    """a MixCloud HTML resource with a hack for downloading related audio file.
+    Be carefull, the base_url and the hacky parsing method have been reverse engineered,
+    so are not safe, not scalable, even unstable..."""
 
     base_url = 'https://stream21.mixcloud.com/c/m4a/64/'
     block_size = 8192
@@ -41,8 +44,10 @@ class MixCloud(object):
         shift = 0
         if self.url[-1] == '/':
             shift = 1
-        self.id = url.split('/')[-1-shift]
+        self.slug = url.split('/')[-1-shift]
         self.user = url.split('/')[-2-shift]
+        self.media_url = self.get_media_url()
+        self.filename = self.user + '_-_' + self.slug + '.m4a'
 
     def get_media_url(self):
         div = self.pq('.cloudcast-waveform')
@@ -52,13 +57,11 @@ class MixCloud(object):
         return '/'.join(url)
 
     def download(self):
-        filename = self.user + '_-_' + self.id + '.m4a'
-        url = self.get_media_url()
-        u = urllib2.urlopen(url)
-        f = open(filename, 'wb')
+        u = urllib2.urlopen(self.media_url)
+        f = open(self.filename, 'wb')
         meta = u.info()
         file_size = int(meta.getheaders("Content-Length")[0])
-        print "Downloading: %s Bytes: %s" % (filename, file_size)
+        print "Downloading: %s Bytes: %s" % (self.filename, file_size)
         file_size_dl = 0
         while True:
             buffer = u.read(self.block_size)
@@ -75,8 +78,6 @@ class MixCloud(object):
 def main():
     url = sys.argv[-1]
     mc = MixCloud(url)
-    media_url = mc.get_media_url()
-    # webbrowser.open(media_url)
     mc.download()
 
 if __name__ == '__main__':
