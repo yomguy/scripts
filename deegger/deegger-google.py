@@ -65,7 +65,7 @@ def prog_info():
     M3U_DIR an output M3U playlist directory
 
  For example:
-    ./deegger.py wav "sample" /var/www/m3u
+    ./deegger.py -f wav -t "sample" -o /var/www/m3u
 
  Author:
     Guillaume Pellerin <yomguy@parisson.com>
@@ -91,8 +91,8 @@ class DeeGGer(object):
         #self.media_q = 'intitle:"index.of" [snd] (%s) -inurl:(jsp|php|html|aspx|htm|cf|shtml|lyrics|index|%s|%ss) -gallery' % (self.format, self.format, self.format)
 
         self.query = '%s %s' % (self.text, self.media_q)
-        self.q = Queue.Queue(1)
-        self.results = Queue.Queue(1)
+        self.q = Queue.Queue()
+        # self.results = Queue.Queue()
 
     def run(self):
         g = GoogleSearch(self.range, self.query)
@@ -107,7 +107,8 @@ class DeeGGer(object):
         self.m3u.start()
 
         self.q.join()
-        self.m3u.close()
+        # self.m3u.close()
+
 
 class Producer(Thread):
     """a Producer master thread"""
@@ -122,6 +123,7 @@ class Producer(Thread):
         while True:
             q.put(i,1)
             i+=1
+
 
 class GoogleSearch(object):
 
@@ -160,23 +162,19 @@ class UrlMediaParser(Thread):
     def get_multiple_case_string(self, _string):
         return _string.upper(), _string.lower() , _string.capitalize()
 
-
     def run(self):
         q = self.q
         media_list = []
         if self.url:
             print 'deegging : ' + self.url
-            try:
-                data = urllib.urlopen(self.url).read()
-                for line in data.split("\012"):
-                    s = re.compile('href=".*\.'+ format + '"').search(line,1)
-                    if s:
-                        file_name = line[s.start():s.end()].split('"')[1]
-                        if self.is_in_multiple_case(self.text, file_name):
-                            q.put(self.url + '/' + file_name)
+            data = urllib.urlopen(self.url).read()
+            for line in data.split("\012"):
+                s = re.compile('href=".*\.'+ self.format + '"').search(line,1)
+                if s:
+                    file_name = line[s.start():s.end()].split('"')[1]
+                    if self.is_in_multiple_case(self.text, file_name):
+                        q.put(self.url + '/' + file_name)
 
-            except:
-                pass
 
 
 class M3UPlaylist(Thread):

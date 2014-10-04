@@ -78,7 +78,7 @@ class MixCloud(object):
 def main():
     url = sys.argv[-1]
     mc = MixCloud(url)
-    mc.download()
+    print mc.media_url
 
 if __name__ == '__main__':
     main()
