@@ -1,0 +1,3 @@
+[submodule "websocketd"]
+	path = websocketd
+	url = git@github.com:joewalnes/websocketd.git
