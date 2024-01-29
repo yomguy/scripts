@@ -5,7 +5,6 @@ import os, sys, stat, time
 
 if len(sys.argv) <= 2:
     exit('Usage : python rm_date.py DAY MONTH YEAR PATH')
-    
 
 dir = sys.argv[-1]
 year = int(sys.argv[-2])
@@ -18,7 +17,7 @@ for root, dirs, files in os.walk(dir):
         #print file
         stats = os.stat(root+os.sep+file)
         lastmod_date = time.strftime("%d_%m_%Y",time.localtime(stats[stat.ST_MTIME]))
-        date_file_tuple = lastmod_date, root+os.sep+file 
+        date_file_tuple = lastmod_date, root+os.sep+file
         date_file_list.append(date_file_tuple)
 
 date_file_list.sort()
@@ -33,5 +32,3 @@ for file in date_file_list:
 	if y <= year and m <= month and d <= day:
 	    #os.remove(file[1])
 	    print 'removed : ', y, m, d, file
-	    
-	    

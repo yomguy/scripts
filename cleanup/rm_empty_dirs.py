@@ -6,9 +6,9 @@ import os, sys, stat, time
 root = sys.argv[-1]
 
 folders = list(os.walk(root))[1:]
+folders.sort()
 
 for folder in folders:
-    # folder example: ('FOLDER/3', [], ['file'])
-    if not folder[2]:
+    if not folder[2] and not folder[1]:
         os.rmdir(folder[0])
 
